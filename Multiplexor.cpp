@@ -1,21 +1,16 @@
 #include "Multiplexor.h"
 
 
-	Multiplexor::Multiplexor(int input2, int input2, int control)
-	{
-		inputOne = input1;
-		inputTwo = input2;
-		theControl = control;
-	}
+	Multiplexor::Multiplexor() {}
 
 	Multiplexor::~Multiplexor() {}
 
-	int Multiplexor::getResult()
+	int Multiplexor::getResult(int input1, int input2, int control)
 	{
-		if (theControl == 1)
+		if (control == 0)
 		{
-			return inputOne;
+			return input1;
 		}
 
-		return inputOne;
+		return input2;
 	}

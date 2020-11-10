@@ -6,9 +6,11 @@ using namespace std;
 class ALU{
 
 	public:
-		ALU(int term1, int term2, int control);
+		ALU();
 		~ALU();
-		int compute();
+		int compute(int term1, int term2, int control);
+		int add(int term1, int term2);
+		int add4(int term);
 
 
 	private:

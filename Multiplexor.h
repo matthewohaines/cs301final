@@ -10,11 +10,6 @@ class Multiplexor{
 		~Multiplexor();
 		int getResult();
 
-	private:
-		int inputOne;
-		int inputTwo;
-		int theControl;
-
 
 };
 
