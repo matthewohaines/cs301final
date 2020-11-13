@@ -6,9 +6,11 @@
 
 class MainControlUnit{
 	private:
+		int op;
+
 		int regDst;
 		int jump;
-		int branch; 
+		int branch;
 		int memRead;
 		int memToReg;
 		std::string ALUOp;
@@ -17,11 +19,11 @@ class MainControlUnit{
 		int regWrite;
 
 	public:
-		MainControlUnit(); //Default Constructor 
-		MainControlUnit(const MainControlUnit& other); //Copy Constructor 
+		MainControlUnit(); //Default Constructor
+		MainControlUnit(const MainControlUnit& other); //Copy Constructor
 		~MainControlUnit(); //Deconstructor
 
-		void setControls(std::string opcode); //Sets all variables based on the given opcode
+		void setControls(int opcode); //Sets all variables based on the given opcode
 
 		int getRegDst();
 		int getJump();
@@ -33,7 +35,8 @@ class MainControlUnit{
 		int getALUSrc();
 		int getRegWrite();
 
-
+		void printInput();
+		void printOutput();
 };
 
 #endif

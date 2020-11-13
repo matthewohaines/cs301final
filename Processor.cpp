@@ -16,7 +16,7 @@ using namespace std;
  *
  */
 
-bool isWhitespace(char c)    { return (c == ' '|| c == '\t'); };
+bool isWhitespace(char c)    { return (c == ' '|| c == '\t'); }
 
 string removeWhitespace(string str){
   int count = 0; // non-whitespace characters
@@ -138,6 +138,7 @@ int main(int argc, char *argv[])
   PCCounter *PC = new PCCounter;
   int PCount;
   InstructionMemory *instrMem = new InstructionMemory(program_input, debug_mode);
+  MainControlUnit *control = new MainControlUnit;
 
   if (debug_mode == true){
     cout << "------------ Start running program -------------" << endl;
@@ -155,6 +156,11 @@ int main(int argc, char *argv[])
   instrMem->decode(PCount);
   instrMem->printInput();
   instrMem->printOutput();
+
+  control->setControls(instrMem->getOpcode());
+  control->printInput();
+  control->printOutput();
+
 
   // if (debug_mode == true)
   //   cout << "imm = " << instrMem->getImm() << endl;
