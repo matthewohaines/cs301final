@@ -50,7 +50,7 @@ void ASM::printMIPSInst(int address) {
   //      << " (MIPS instruction at address 0x" << address << ")" << endl;
 
   cout << std::hex << "MIPS instruction at address 0x" << address << ": " << endl;
-  cout << "\t" << instructionMemory[address].first << endl;
+  cout << "\t" << instructionMemory[address].first << endl << endl;
 }
 
 void ASM::printBinaryInst(int address) {
@@ -60,7 +60,7 @@ void ASM::printBinaryInst(int address) {
   //      << " (Binary encoding of instruction at address 0x" << address << ")" << endl;
 
   cout << std::hex << "Binary encoding of instruction at address 0x" << address << ": " << endl;
-  cout << "\t" << instructionMemory[address].second << endl;
+  cout << "\t" << instructionMemory[address].second << endl << endl;
 }
 
 // int ASM::getBinaryInstAt(hex address)
