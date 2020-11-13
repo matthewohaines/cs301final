@@ -17,11 +17,6 @@ using namespace std;
 			return add(term1, term2);
 		}
 
-		if (operation== "addi") 
-		{
-			return add(term1, term2);
-		}
-
 		if (operation == "sub") 
 		{
 			return subtract(term1, term2);
@@ -34,25 +29,28 @@ using namespace std;
 
 		if (operation == "lw") 
 		{
-			/* code */
+			add(term1, term2);
 		}
 
 		if (operation == "sw")
 		{
-
+			add(term1, term2);
 		}
 
 		if (operation == "beq")
 		{
-			/* code */
+			if (subtract(term1, term2) == 0)
+			{ 
+				return 1;
+			}
+			 return 0;
+
 		}
 
-		if (operation == "j")
-		{
-			/* code */
-		}
+
 		return 0;
-	}
+		}
+	
 
 	int ALU::add(int term1, int term2){
 		return term1 + term2;
@@ -74,6 +72,8 @@ using namespace std;
 		}
 		return 0;
 	}
+
+
 
 
 
