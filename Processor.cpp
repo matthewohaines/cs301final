@@ -110,11 +110,6 @@ int main(int argc, char *argv[])
             write_to_file = false;
         }
       }
-
-      // string::size_type idx = line.find('=');
-      // if (idx != string::npos)
-	    //   param = line.substr(0,idx);
-
     }
   }
 
@@ -135,15 +130,25 @@ int main(int argc, char *argv[])
     cout << "\twrite_to_file = " << write_to_file << endl << endl;
   }
 
+  // initialize objects and other variables
   PCCounter *PC = new PCCounter;
   int PCount;
   InstructionMemory *instrMem = new InstructionMemory(program_input, debug_mode);
-  MainControlUnit *control = new MainControlUnit;
+  MainControlUnit *control = new MainControlUnit();
+  RegisterFile *registers = new RegisterFile(register_file_input);
+  SignExtendUnit *signExtend = new SignExtendUnit();
+  Multiplexor *muxRegInput = new Multiplexor();
+  Multiplexor *muxALUInput = new Multiplexor();
+  Multiplexor *muxWriteBack = new Multiplexor();
+  Multiplexor *muxJump = new Multiplexor();
+  Multiplexor *muxBranch = new Multiplexor();
 
   if (debug_mode == true){
     cout << "------------ Start running program -------------" << endl;
   }
 
+  // loop
+  // cout << "------------ Iteration " << count << "-------------" << endl;
   PCount = PC->getCount();
 
   cout << std::hex << "PC output: 0x" << PCount << endl << endl;
@@ -151,7 +156,7 @@ int main(int argc, char *argv[])
   instrMem->printMIPSInst(PCount);
 
   if (debug_mode == true)
-    instrMem->printBinaryInst(0x400000);
+    instrMem->printBinaryInst(PCount);
 
   instrMem->decode(PCount);
   instrMem->printInput();
@@ -161,9 +166,6 @@ int main(int argc, char *argv[])
   control->printInput();
   control->printOutput();
 
-
-  // if (debug_mode == true)
-  //   cout << "imm = " << instrMem->getImm() << endl;
 
 
 
@@ -184,5 +186,12 @@ int main(int argc, char *argv[])
 
   delete PC;
   delete instrMem;
-
+  delete control;
+  delete registers;
+  delete signExtend;
+  delete muxRegInput;
+  delete muxALUInput;
+  delete muxWriteBack;
+  delete muxJump;
+  delete muxBranch;
 }
