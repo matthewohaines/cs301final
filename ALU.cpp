@@ -56,7 +56,8 @@ using namespace std;
 		return term1 + term2;
 	}
 
-	int ALU::add4(int term){
+	int ALU::add4(int term)
+	{
 		return term + 4;
 	}
 
