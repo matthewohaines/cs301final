@@ -8,13 +8,13 @@ Instruction::Instruction()
   myRS = myRT = myRD = NumRegisters;
 }
 
-Instruction::Instruction(Opcode op, Register rs, Register rt, Register rd, int imm)
+Instruction::Instruction(Opcode op, Register rs, Register rt, Register rd, int imm, string mips_inst)
 // You can specify all the fields to initialize the Instruction
 {
-  setValues(op, rs, rt, rd, imm);
+  setValues(op, rs, rt, rd, imm, mips_inst);
 }
 
-void Instruction::setValues(Opcode op, Register rs, Register rt, Register rd, int imm)
+void Instruction::setValues(Opcode op, Register rs, Register rt, Register rd, int imm, string mips_inst)
 // You can specify all the fields to initialize the Instruction
 {
 
@@ -36,20 +36,22 @@ void Instruction::setValues(Opcode op, Register rs, Register rt, Register rd, in
 
   myImmediate = imm;
 
+  mipsInst = mips_inst;
+
   //  if(!( (imm & 0xFFFF0000) << 1))  // make sure it has nothing in upper 16 bits
-  //    myImmediate = imm;  
+  //    myImmediate = imm;
 
 }
 
 string Instruction::getString()
-// Returns a string which represents all of the fields 
+// Returns a string which represents all of the fields
 {
   stringstream s ;
-  s << "OP: \t" << myOpcode << "\t" << "RD: " << myRD << "\t" << 
+  s << "OP: \t" << myOpcode << "\t" << "RD: " << myRD << "\t" <<
     "RS: " << myRS << "\t" << "RT: " << "\t" << myRT << "\t" <<
     "Imm: " << myImmediate;
-  
+
   return s.str();
-  
+
 }
 

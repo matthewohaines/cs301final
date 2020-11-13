@@ -1,11 +1,10 @@
 #ifndef __OPCODE_H__
 #define __OPCODE_H__
 
-using namespace std;
-
 #include <iostream>
 #include <string>
 
+using namespace std;
 
 // Listing of all supported MIPS instructions
 enum Opcode {
