@@ -4,6 +4,7 @@
 #include "MainControlUnit.h"
 #include "Multiplexor.h"
 #include "SignExtendUnit.h"
+// #include "PCCounter.h"
 
 using namespace std;
 
@@ -17,8 +18,17 @@ using namespace std;
 bool isWhitespace(char c)    { return (c == ' '|| c == '\t'); };
 
 string removeWhitespace(string str){
-  int count = 0;
-  return "";
+  int count = 0; // non-whitespace characters
+
+  // iterate through string, if we have a non-whitespace character, put it at
+  // position count and increment count.
+  for (int i = 0; i < str.length(); i++){
+    if (!isWhitespace(str.at(i))){
+      str.at(count++) = str.at(i);
+    }
+  }
+
+  return str.substr(0, count);
 }
 
 int main(int argc, char *argv[])
@@ -51,6 +61,7 @@ int main(int argc, char *argv[])
   else{
     string line;
     string param;
+    string value;
     while(getline(in, line)){
       // get rid of comments (could contain "=")
       string::size_type idx = line.find('#');
@@ -61,42 +72,40 @@ int main(int argc, char *argv[])
       string::size_type idx1 = line.find('=');
       if (idx1 != string::npos) {
         param = line.substr(0,idx1);
-
-        // cout << line << endl;
-        // cout << line.substr(idx1 - 5, 5) << endl;
+        value = removeWhitespace(line.substr(idx1 + 1));
 
         // set the parameters
         if (param.find("program_input") != -1){
-          program_input = line.substr(idx1 + 1);
+          program_input = value;
         }
         else if (param.find("memory_contents_input") != -1) {
-          memory_contents_input = line.substr(idx1 + 1);
+          memory_contents_input = value;
         }
         else if (param.find("register_file_input") != -1) {
-          register_file_input = line.substr(idx1 + 1);
+          register_file_input = value;
         }
         else if (param.find("output_mode") != -1) {
-          output_mode = line.substr(idx1 + 1);
+          output_mode = value;
         }
         else if (param.find("debug_mode") != -1) {
-          if (line.substr(idx1 + 1, 4).compare("true") == 0)
+          if (value.compare("true") == 0)
             debug_mode = true;
-          else if (line.substr(idx1 + 1, 5).compare("false") == 0)
+          else if (value.compare("false") == 0)
             debug_mode = false;
         }
         else if (param.find("print_memory_contents") != -1) {
-          if (line.substr(idx1 + 1, 4).compare("true") == 0)
+          if (value.compare("true") == 0)
             print_memory_contents = true;
-          else if (line.substr(idx1 + 1, 5).compare("false") == 0)
+          else if (value.compare("false") == 0)
             print_memory_contents = false;
         }
         else if (param.find("output_file") != -1) {
-          output_file = line.substr(idx1 + 1);
+          output_file = value;
         }
         else if (param.find("write_to_file") != -1) {
-          if (line.substr(idx1 + 1, 4).compare("true") == 0)
+          if (value.compare("true") == 0)
             write_to_file = true;
-          else if (line.substr(idx1 + 1, 5).compare("false") == 0)
+          else if (value.compare("false") == 0)
             write_to_file = false;
         }
       }
@@ -126,6 +135,7 @@ int main(int argc, char *argv[])
   }
 
 
+
   InstructionMemory *instrMem = new InstructionMemory(program_input);
 
   instrMem->printMIPSInst(0x400000);
@@ -134,6 +144,12 @@ int main(int argc, char *argv[])
   // cout << instrMem->decode(0x400000) << endl;
   // cout << instrMem->decode(0x400004) << endl;
   // cout << instrMem->decode(0x400008) << endl;
+
+  // string cow = "wow wow wee wow wow";
+  // cout << cow << endl;
+  // string moo = removeWhitespace(cow);
+  // cout << moo << endl;
+  // cout << cow << endl;
 
 
   delete instrMem;
