@@ -1,8 +1,6 @@
 #ifndef __ASMPARSER_H__
 #define __ASMPARSER_H__
 
-using namespace std;
-
 #include <iostream>
 #include <fstream>
 #include "Instruction.h"
@@ -12,6 +10,8 @@ using namespace std;
 #include <sstream>
 #include <stdlib.h>
 #include <map>
+
+using namespace std;
 
 /* This class reads in a MIPS assembly file and checks its syntax.  If
  * the file is syntactically correct, this class will retain a list
@@ -43,7 +43,7 @@ class ASMParser{
 
   RegisterTable registers;                 // encodings for registers
   OpcodeTable opcodes;                     // encodings of opcodes
-  int myLabelAddress;   // Used to assign labels addresses
+  int myAddress;     // Used to assign addresses to labels and branches
 
   // Decomposes a line of assembly code into strings for the opcode field and operands,
   // checking for syntax errors and counting the number of operands.
@@ -51,7 +51,9 @@ class ASMParser{
 
   // Given an Opcode, a string representing the operands, and the number of operands,
   // breaks operands apart and stores fields into Instruction.
-  bool getOperands(Instruction &i, Opcode o, string *operand, int operand_count);
+  bool getOperands(Instruction &i, Opcode o, string *operand, int operand_count, string mips_inst);
+
+// add string line as a parameter, and store it in instruction
 
 
   // Helper functions

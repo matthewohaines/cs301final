@@ -3,15 +3,15 @@
 
 using namespace std;
 
-/* This file reads in a MIPS assembly file specified at the command line.
+/*
+ * This file reads in a MIPS assembly file specified at the command line.
  * If the file is correct syntactically, each instruction in the file
  * will be translated into its 32 bit MIPS binary encoding and entered into the
- * instructionMemory
+ * instructionMemory map
  *
  */
 
-ASM::ASM(string filename)
-{
+ASM::ASM(string filename) {
   ASMParser *parser;
 
   parser = new ASMParser(filename);
@@ -23,6 +23,8 @@ ASM::ASM(string filename)
 
   Instruction i;
 
+  int address = 0x400000;
+
   //Iterate through instructions, printing each encoding.
   i = parser->getNextInstruction();
   while( i.getOpcode() != UNDEFINED){
@@ -30,16 +32,35 @@ ASM::ASM(string filename)
     // cout << i.getEncoding() << endl;
 
     // map(curr address get binary encoding.)
+    instructionMemory[address] = pair(i.getMIPS(), i.getEncoding());
 
     i = parser->getNextInstruction();
+    address += 4;
   }
 }
 
-void ASM::print(int address)
-{
-  cout << "Instruction at address " << address << ": (MIPS) "
-       << instructionMemory[address].first << " : (binary encoding) "
-       << instructionMemory[address].second << endl;
+// string ASM::getBinaryInstAt(int address) {
+//   return instructionMemory[address].second;
+// }
+
+void ASM::printMIPSInst(int address) {
+  // cout << std::hex << "Instruction at address 0x" << address << " (MIPS): "
+  //      << instructionMemory[address].first << endl;
+  // cout << instructionMemory[address].first << std::hex
+  //      << " (MIPS instruction at address 0x" << address << ")" << endl;
+
+  cout << std::hex << "MIPS instruction at address 0x" << address << ": " << endl;
+  cout << "\t" << instructionMemory[address].first << endl;
+}
+
+void ASM::printBinaryInst(int address) {
+  // cout << std::hex << "Instruction at address 0x" << address << "(binary encoding): "
+  //      << instructionMemory[address].second << endl;
+  // cout << instructionMemory[address].second << std::hex
+  //      << " (Binary encoding of instruction at address 0x" << address << ")" << endl;
+
+  cout << std::hex << "Binary encoding of instruction at address 0x" << address << ": " << endl;
+  cout << "\t" << instructionMemory[address].second << endl;
 }
 
 // int ASM::getBinaryInstAt(hex address)

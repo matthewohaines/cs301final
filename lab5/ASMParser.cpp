@@ -1,6 +1,5 @@
-#include "ASMParser.h"
-
 #include <bitset>
+#include "ASMParser.h"
 
 ASMParser::ASMParser(string filename)
   // Specify a text file containing MIPS assembly instructions. Function
@@ -9,7 +8,7 @@ ASMParser::ASMParser(string filename)
   Instruction i;
   myFormatCorrect = true;
 
-  myLabelAddress = 0x400000;
+  myAddress = 0x400000;
 
   // first iteration through file to find labels and their addresses
   ifstream in1;
@@ -25,7 +24,7 @@ ASMParser::ASMParser(string filename)
       if (idx != string::npos)
 	      line = line.substr(0,idx);
 
-      // check if the line is blank (don't want to increment myLabelAddress)
+      // check if the line is blank (don't want to increment myAddress)
       bool emptyLine = true;
       int size = line.length();
       for (int i = 0; i < size; i ++){
@@ -41,12 +40,14 @@ ASMParser::ASMParser(string filename)
         if (idx1 != string::npos) {
           string label = line.substr(0,idx1);
           // add label and its address to the symbolTable map
-          symbolTable[label] = myLabelAddress;
+          symbolTable[label] = myAddress;
         }
-        myLabelAddress += 4;
+        myAddress += 4;
       }
     }
   }
+
+  myAddress = 0x400000; // looping through file again, start at address 0x400000
 
   ifstream in;
   in.open(filename.c_str());
@@ -99,7 +100,7 @@ ASMParser::ASMParser(string filename)
           break;
         }
 
-        bool success = getOperands(i, o, operand, operand_count);
+        bool success = getOperands(i, o, operand, operand_count, line);
         if(!success){
           myFormatCorrect = false;
           break;
@@ -110,6 +111,7 @@ ASMParser::ASMParser(string filename)
 
         myInstructions.push_back(i);
 
+        myAddress += 4;
       }
     }
   }
@@ -255,7 +257,7 @@ int ASMParser::cvtNumString2Number(string s)
 
 
 bool ASMParser::getOperands(Instruction &i, Opcode o,
-			    string *operand, int operand_count)
+			    string *operand, int operand_count, string mips_inst)
   // Given an Opcode, a string representing the operands, and the number of operands,
   // breaks operands apart and stores fields into Instruction.
 {
@@ -314,13 +316,11 @@ bool ASMParser::getOperands(Instruction &i, Opcode o,
             return false;
         }
 
-        if(opcodes.getInstType(o) == ITYPE){     // Need to finish here!!!
-          // imm = imm - PC + 4;
+        if(opcodes.getInstType(o) == ITYPE){ // must be branch instr
+          imm = imm - myAddress + 4; // offset = label address - PC + 4
         }
 
         imm = imm / 4;
-
-	      // myLabelAddress += 4;  // increment the label generator
       }
       else  // There is an error
 	      return false;
@@ -328,7 +328,7 @@ bool ASMParser::getOperands(Instruction &i, Opcode o,
 
   }
 
-  i.setValues(o, rs, rt, rd, imm);
+  i.setValues(o, rs, rt, rd, imm, mips_inst);
 
   return true;
 }

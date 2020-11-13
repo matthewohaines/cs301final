@@ -16,11 +16,11 @@ class Instruction{
   Instruction();
 
   // You can specify all the fields to initialize the Instruction
-  Instruction(Opcode op, Register rs, Register rt, Register rd, int imm);
+  Instruction(Opcode op, Register rs, Register rt, Register rd, int imm, string mips_inst);
   ~Instruction() {};
 
   // Allows you to specify all the fields of the Instruction
-  void setValues(Opcode op, Register rs, Register rt, Register rd, int imm);
+  void setValues(Opcode op, Register rs, Register rt, Register rd, int imm, string mips_inst);
 
   // Returns the various fields for the Instruction
   Opcode getOpcode()   { return myOpcode;}
@@ -29,8 +29,11 @@ class Instruction{
   Register getRT()     { return myRT; };
   int getImmediate()   { return myImmediate; };
 
-  // Returns a string which represents all of the fields 
+  // Returns a string which represents all of the fields
   string getString();
+
+  // Returns a string which represents the MIPS instruction
+  string getMIPS() { return mipsInst; };
 
   // Stores the 32 bit binary encoding of MIPS instruction passed in
   void setEncoding(string s) { myEncoding = s;};
@@ -39,6 +42,8 @@ class Instruction{
   string getEncoding() { return myEncoding; };
 
  private:
+  string mipsInst;
+
   Opcode myOpcode;
   Register myRS;
   Register myRT;
