@@ -13,7 +13,7 @@ class RegisterFile{
 		int readData2;
 		int writeReg;
 		int writeData;
-		int regWrite; 
+		int regWrite;
 
 		int array[32]; // creates 32 int array, all initialized to 0
 
@@ -21,7 +21,7 @@ class RegisterFile{
 	public:
 		RegisterFile(string filename);
 		~RegisterFile();
-		readRegister1(int readReg1)
+		// readRegister1(int readReg1)
 
 
 };

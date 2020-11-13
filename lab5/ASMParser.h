@@ -10,6 +10,7 @@
 #include <sstream>
 #include <stdlib.h>
 #include <map>
+#include <bitset>
 
 using namespace std;
 

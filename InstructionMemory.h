@@ -2,6 +2,7 @@
 #define __INSTRUCTIONMEMORY_H__
 
 #include <iostream>
+#include <bitset>
 #include "lab5/ASM.h"
 
 using namespace std;
@@ -9,7 +10,7 @@ using namespace std;
 class InstructionMemory{
  public:
   // Constructor & deconstructor
-  InstructionMemory(string Program_input);
+  InstructionMemory(string Program_input, bool debug_mode);
   ~InstructionMemory();
 
   // returns binary encoding of instruction at address
@@ -18,34 +19,44 @@ class InstructionMemory{
   //////////////////////////////////////////////////////////////////////////////
   // getters
   // return string of binary encoding
-  string getOpcode() { return opcode; };
-  string getRs() { return rs; };
-  string getRt() { return rt; };
-  string getRd() { return rd; };
-  string getShamt() { return shamt; };
-  string getFunct() { return funct; };
-  string getImm() { return immediate; };
-  string getJumpAddress() { return jumpAddress; };
+  int getOpcode() { return opcode; };
+  int getRs() { return rs; };
+  int getRt() { return rt; };
+  int getRd() { return rd; };
+  int getShamt() { return shamt; };
+  int getFunct() { return funct; };
+  int getImm() { return immediate; };
+  int getJumpAddress() { return jumpAddress; };
 
   void printMIPSInst(int address);
   void printBinaryInst(int address);
 
+  void printInput();
+  void printOutput();
+
+
  private:
-  // string assemblyFile;
+  bool debug;
+
+  int PCount;            // input PCount set everytime decode is called
+  string currInstr;      // current instruction
 
   ASM *instrMem;         // instance of ASM
-  // string currInstr;
 
-  InstType instrType;    // Type of instruction
-  string opcode;         // (Inst[31-26])
-  string rs;             // (Inst[25-21])
-  string rt;             // (Inst[20-16])
-  string rd;             // (Inst[15-11])
-  string shamt;          // (Inst[10-6])
-  string funct;          // (Inst[5-0]
-  string immediate;      // (Inst[15-0])
-  string jumpAddress;    // (Inst[25-0])
+  int opcode;         // (Inst[31-26])
+  int rs;             // (Inst[25-21])
+  int rt;             // (Inst[20-16])
+  int rd;             // (Inst[15-11])
+  int shamt;          // (Inst[10-6])
+  int funct;          // (Inst[5-0]
+  int immediate;      // (Inst[15-0])
+  int jumpAddress;    // (Inst[25-0])
 
+  // // Returns true if s represents a valid binary integer
+  // bool isStringBinaryNum(string s);
+
+  // // Converts a string to an integer.  Assumes s is something like "101" and produces 5
+  // int  cvtNumString2Number(string s);
 
 };
 

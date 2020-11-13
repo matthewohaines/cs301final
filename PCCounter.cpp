@@ -14,7 +14,7 @@ int PCCounter::getCount()
 	return count;
 }
 
-int PCCounter::setCount(int theCount)
+void PCCounter::setCount(int theCount)
 {
 	count = theCount;
 }

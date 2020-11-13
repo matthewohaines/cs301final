@@ -1,5 +1,5 @@
-#include "PCCounter.h"
-#include<iostream>
+#include "RegisterFile.h"
+#include <iostream>
 using namespace std;
 
 RegisterFile::RegisterFile(string filename)

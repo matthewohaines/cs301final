@@ -4,7 +4,8 @@
 #include "MainControlUnit.h"
 #include "Multiplexor.h"
 #include "SignExtendUnit.h"
-// #include "PCCounter.h"
+#include "PCCounter.h"
+#include "RegisterFile.h"
 
 using namespace std;
 
@@ -134,12 +135,35 @@ int main(int argc, char *argv[])
     cout << "\twrite_to_file = " << write_to_file << endl << endl;
   }
 
+  PCCounter *PC = new PCCounter;
+  int PCount;
+  InstructionMemory *instrMem = new InstructionMemory(program_input, debug_mode);
+
+  if (debug_mode == true){
+    cout << "------------ Start running program -------------" << endl;
+  }
+
+  PCount = PC->getCount();
+
+  cout << std::hex << "PC output: 0x" << PCount << endl << endl;
+
+  instrMem->printMIPSInst(PCount);
+
+  if (debug_mode == true)
+    instrMem->printBinaryInst(0x400000);
+
+  instrMem->decode(PCount);
+  instrMem->printInput();
+  instrMem->printOutput();
+
+  // if (debug_mode == true)
+  //   cout << "imm = " << instrMem->getImm() << endl;
 
 
-  InstructionMemory *instrMem = new InstructionMemory(program_input);
 
-  instrMem->printMIPSInst(0x400000);
-  instrMem->printBinaryInst(0x400000);
+  // instrMem->printMIPSInst(0x400000);
+  // instrMem->printBinaryInst(0x400000);
+  // instrMem->printMIPSInst(PCount);
 
   // cout << instrMem->decode(0x400000) << endl;
   // cout << instrMem->decode(0x400004) << endl;
@@ -152,6 +176,7 @@ int main(int argc, char *argv[])
   // cout << cow << endl;
 
 
+  delete PC;
   delete instrMem;
 
 }
