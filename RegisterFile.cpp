@@ -5,12 +5,12 @@
 using namespace std;
 
 
-bool isWhitespace(char c)
+bool isitWhitespace(char c)
 { 
 	return (c == ' '|| c == '\t'); 
 }
 
-string removeWhitespace(string str)
+string removetheWhitespace(string str)
 {
   int count = 0; // non-whitespace characters
 
@@ -18,11 +18,13 @@ string removeWhitespace(string str)
   // position count and increment count.
   for (int i = 0; i < str.length(); i++)
   {
-    if (!isWhitespace(str.at(i)))
+    if (!isitWhitespace(str.at(i)))
     {
       str.at(count++) = str.at(i);
     }
   }
+
+  return str.substr(0, count);
 }
 
 bool isColon(char c) 
@@ -33,30 +35,32 @@ bool isColon(char c)
 
 RegisterFile::RegisterFile(string filename)
 {
-	std::ifstream infile {filename} // get first two numbers, set as i, then for array[i], store the hex values
+	std::ifstream infile {filename}; // get first two numbers, set as i, then for array[i], store the hex values
 	std::string line;
-	while (getLine(infile, line))
+	while (getline(infile, line))
 	{
-		line.removeWhitespace();
+		removetheWhitespace(line);
 		int index = 0;
-		while (line.at(index) != ";")
+		string registerNumber;
+		while (line.at(index) != ';')
 		{
-			string registerNumber += line.at(index);
-			index++;
+			registerNumber += line.at(index);
+			index++;   
 		}
 
 		stringstream registerInt(registerNumber);
 		int i;
 		registerInt >> i;
 
+		string registerData;
 		while( index < line.size())
 		{
-			string registerData += line.at(index);
+			registerData += line.at(index);
 			index++;
 		}
 
 		string hexString = "0x" + registerData;
-		stringstream hexInt(hexData);
+		stringstream hexInt(hexString);
 		int theData;
 		hexInt >> theData;
 
