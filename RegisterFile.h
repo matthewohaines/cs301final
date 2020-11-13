@@ -2,6 +2,8 @@
 #define __REGISTERFILE_H__
 
 #include <iostream>
+#include<fstream>
+#include<sstream>
 using namespace std;
 
 
@@ -15,7 +17,7 @@ class RegisterFile{
 		int writeData;
 		int regWrite;
 
-		int array[32]; // creates 32 int array, all initialized to 0
+		int registerArray[32]; // creates 32 int array, all initialized to 0
 
 
 	public:

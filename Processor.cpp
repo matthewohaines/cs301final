@@ -16,7 +16,7 @@ using namespace std;
  *
  */
 
-bool isWhitespace(char c)    { return (c == ' '|| c == '\t'); };
+bool isWhitespace(char c)    { return (c == ' '|| c == '\t'); }
 
 string removeWhitespace(string str){
   int count = 0; // non-whitespace characters
