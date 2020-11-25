@@ -4,16 +4,52 @@
 
 InstructionMemory::InstructionMemory(string Program_input, bool debug_mode) {
   debug = debug_mode;
-  instrMem = new ASM(Program_input);
+  // instrMem = new ASM(Program_input);
+
+  ASMParser *parser;
+
+  parser = new ASMParser(Program_input);
+
+  if(parser->isFormatCorrect() == false){
+    cerr << "Format of input file is incorrect " << endl;
+    exit(1);
+  }
+
+  Instruction i;
+
+  maxAddress = 0x400000;
+
+  //Iterate through instructions, printing each encoding.
+  i = parser->getNextInstruction();
+  while( i.getOpcode() != UNDEFINED){
+    // cout << i.getString() << endl;
+    // cout << i.getEncoding() << endl;
+
+    // map(address, instruction)
+    instMem[maxAddress] = i;
+
+    i = parser->getNextInstruction();
+    maxAddress += 4;
+  }
+
+  delete parser;
 }
 
 InstructionMemory::~InstructionMemory() {
-  delete instrMem;
+  // delete instrMem;
 }
 
-string InstructionMemory::decode(int address) {
+bool InstructionMemory::decode(int address) {
+  if (address >= maxAddress) {
+    return false;
+  }
+
+
   PCount = address;
-  currInstr = instrMem->getBinaryInstAt(address);
+  // currInstr = instrMem->getBinaryInstAt(address);
+  currInstr = instMem[address].getEncoding();
+
+  // cout << "CurrInstr = " << currInstr << endl << endl;
 
   opcode = bitset<6>(currInstr.substr(0, 6)).to_ulong();        // (Inst[31-26])
   rs = bitset<5>(currInstr.substr(6, 5)).to_ulong();            // (Inst[25-21])
@@ -24,15 +60,19 @@ string InstructionMemory::decode(int address) {
   immediate = bitset<16>(currInstr.substr(16, 16)).to_ulong();  // (Inst[15-0])
   jumpAddress = bitset<26>(currInstr.substr(6, 26)).to_ulong(); // (Inst[25-0])
 
-  return currInstr;
+  return true;
 }
 
 void InstructionMemory::printMIPSInst(int address) {
-  instrMem->printMIPSInst(address);
+  // instrMem->printMIPSInst(address);
+  cout << std::hex << "MIPS instruction at address 0x" << address << ": " << endl;
+  cout << "\t" << instMem[address].getMIPS() << endl << endl;
 }
 
 void InstructionMemory::printBinaryInst(int address) {
-  instrMem->printBinaryInst(address);
+  // instrMem->printBinaryInst(address);
+  cout << std::hex << "Binary encoding of instruction at address 0x" << address << ": " << endl;
+  cout << "\t" << instMem[address].getEncoding() << endl << endl;
 }
 
 void InstructionMemory::printInput() {

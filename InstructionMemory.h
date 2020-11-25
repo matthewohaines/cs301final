@@ -3,7 +3,9 @@
 
 #include <iostream>
 #include <bitset>
-#include "lab5/ASM.h"
+// #include "lab5/ASM.h"
+#include "lab5/ASMParser.h"
+#include "lab5/Instruction.h"
 
 using namespace std;
 
@@ -14,7 +16,7 @@ class InstructionMemory{
   ~InstructionMemory();
 
   // returns binary encoding of instruction at address
-  string decode(int address);
+  bool decode(int address);
 
   //////////////////////////////////////////////////////////////////////////////
   // getters
@@ -27,6 +29,7 @@ class InstructionMemory{
   int getFunct() { return funct; };
   int getImm() { return immediate; };
   int getJumpAddress() { return jumpAddress; };
+  int getMaxAddress() { return maxAddress; };
 
   void printMIPSInst(int address);
   void printBinaryInst(int address);
@@ -40,8 +43,12 @@ class InstructionMemory{
 
   int PCount;            // input PCount set everytime decode is called
   string currInstr;      // current instruction
+  int maxAddress;        // first address that does not contain an instruction
 
-  ASM *instrMem;         // instance of ASM
+  // ASM *instrMem;         // instance of ASM
+  map<int, Instruction> instMem; // map for addresses and their
+                                 // corresponding instruction
+
 
   int opcode;         // (Inst[31-26])
   int rs;             // (Inst[25-21])

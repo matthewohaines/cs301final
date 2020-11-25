@@ -131,11 +131,12 @@ int main(int argc, char *argv[])
   }
 
   // initialize objects and other variables
+  int instCount = 0;
   PCCounter *PC = new PCCounter;
   int PCount;
   InstructionMemory *instrMem = new InstructionMemory(program_input, debug_mode);
   MainControlUnit *control = new MainControlUnit();
-  RegisterFile *registers = new RegisterFile(register_file_input);
+  // RegisterFile *registers = new RegisterFile(register_file_input);
   SignExtendUnit *signExtend = new SignExtendUnit();
   Multiplexor *muxRegInput = new Multiplexor();
   Multiplexor *muxALUInput = new Multiplexor();
@@ -143,29 +144,48 @@ int main(int argc, char *argv[])
   Multiplexor *muxJump = new Multiplexor();
   Multiplexor *muxBranch = new Multiplexor();
 
+  int maxAddress = instrMem->getMaxAddress();
+
   if (debug_mode == true){
     cout << "------------ Start running program -------------" << endl;
   }
 
   // loop
   // cout << "------------ Iteration " << count << "-------------" << endl;
-  PCount = PC->getCount();
+  while ((PCount = PC->getCount()) < maxAddress) {
+    if (output_mode.compare("single_step") == 0){
+      cout << "Single step output mode, enter a character to continue: ";
+      char c;
+      cin >> c;
+    }
 
-  cout << std::hex << "PC output: 0x" << PCount << endl << endl;
+    cout << std::dec << "------------------------------ Iteration " << instCount
+         << " " << "------------------------------" << endl;
+    // PCount = PC->getCount();
 
-  instrMem->printMIPSInst(PCount);
+    cout << std::hex << "PC output: 0x" << PCount << endl << endl;
 
-  if (debug_mode == true)
-    instrMem->printBinaryInst(PCount);
+    instrMem->printMIPSInst(PCount);
 
-  instrMem->decode(PCount);
-  instrMem->printInput();
-  instrMem->printOutput();
+    if (debug_mode == true)
+      instrMem->printBinaryInst(PCount);
 
-  control->setControls(instrMem->getOpcode());
-  control->printInput();
-  control->printOutput();
+    instrMem->decode(PCount);
+    instrMem->printInput();
+    instrMem->printOutput();
 
+    // cout << "opcode = " << instrMem->getOpcode() << endl;
+
+    control->setControls(instrMem->getOpcode());
+    control->printInput();
+    control->printOutput();
+
+    PC->setCount(PCount + 4);
+
+    instCount ++;
+
+    cout << endl;
+  }
 
 
 
@@ -187,7 +207,7 @@ int main(int argc, char *argv[])
   delete PC;
   delete instrMem;
   delete control;
-  delete registers;
+  // delete registers;
   delete signExtend;
   delete muxRegInput;
   delete muxALUInput;
