@@ -70,5 +70,19 @@ RegisterFile::RegisterFile(string filename)
 
 RegisterFile::~RegisterFile(){}
 
+int RegisterFile::readReg1(int readReg1)
+{
+	return 0;
+}
 
-// 12:ab236711
+  // input number 0-31, return registerArray[#]
+int RegisterFile::readReg2(int readReg2)
+{
+	return 0;
+}
+
+
+int RegisterFile::printRegisters()
+{
+	return 0;
+}

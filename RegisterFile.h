@@ -23,7 +23,9 @@ class RegisterFile{
 	public:
 		RegisterFile(string filename);
 		~RegisterFile();
-		// readRegister1(int readReg1)
+		int readReg1(int readReg1);
+		int readReg2(int readReg2);
+		int printRegisters();
 
 
 };
