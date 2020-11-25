@@ -313,22 +313,22 @@ bool ASMParser::getOperands(Instruction &i, Opcode o,
           imm = symbolTable[operand[imm_p]];
           if (imm == 0) // not a valid label
             return false;
-
-          // need to do arithmetic on labels
-          if(opcodes.getInstType(o) == ITYPE){ // must be branch instruction
-            // cout << "offset = address - (PC + 4)" << endl;
-            // cout << "\taddress = " << imm << endl;
-            // cout << "\tPC + 4 = " << myAddress + 4 << endl;
-            imm = imm - (myAddress + 4); // offset = address - (PC + 4)
-            // cout << "\toffset = " << imm << endl;
-          }
-          imm = imm / 4;
         }
+
+        // need to do arithmetic on labels
+        if(opcodes.getInstType(o) == ITYPE){ // must be branch instruction
+          // cout << "offset = address - (PC + 4)" << endl;
+          // cout << "\taddress = " << imm << endl;
+          // cout << "\tPC + 4 = " << myAddress + 4 << endl;
+          imm = imm - (myAddress + 4); // offset = address - (PC + 4)
+          // cout << "\toffset = " << imm << endl;
+        }
+        imm = imm / 4;
+
       }
       else  // There is an error
 	      return false;
     }
-
   }
 
   i.setValues(o, rs, rt, rd, imm, mips_inst);
