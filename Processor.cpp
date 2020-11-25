@@ -1,6 +1,7 @@
 #include <iostream>
 #include "InstructionMemory.h"
 #include "ALU.h"
+#include "ALUControlUnit.h"
 #include "MainControlUnit.h"
 #include "Multiplexor.h"
 #include "SignExtendUnit.h"
@@ -143,6 +144,7 @@ int main(int argc, char *argv[])
   Multiplexor *muxWriteBack = new Multiplexor();
   Multiplexor *muxJump = new Multiplexor();
   Multiplexor *muxBranch = new Multiplexor();
+  ALUControlUnit *aluControl = new ALUControlUnit();
 
   int maxAddress = instrMem->getMaxAddress();
 
@@ -179,6 +181,24 @@ int main(int argc, char *argv[])
     control->setControls(instrMem->getOpcode());
     control->printInput();
     control->printOutput();
+
+
+    // muxRegInput
+    // muxRegInput->
+
+    // Sign extend
+    signExtend->signExtend(instrMem->getImm());
+    cout << std::hex << "Imm: " << instrMem->getImm() << endl;
+    cout << std::hex << "Imm sign extended: " << signExtend->signExtend(instrMem->getImm()) << endl;
+    // signExtend->printInput();
+    // signExtend->printOutput();
+
+
+
+
+
+
+
 
     PC->setCount(PCount + 4);
 
