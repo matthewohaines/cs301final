@@ -16,7 +16,7 @@ class ALUControlUnit{
 		ALUControlUnit(const ALUControlUnit& other);
 		~ALUControlUnit();
 
-		void setALUControl(std::string ALUOpcode, int function, int op);
+		void setALUControl(std::string ALUOpcode, int function);
 		int getALUControl();
 
 		void printInput();
