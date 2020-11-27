@@ -80,6 +80,14 @@ int RegisterFile::readReg2(int readReg2)
 	return registerArray[readReg2];
 }
 
+void RegisterFile::writeRegister(int regWrite, int writeRegister, int writeData)
+{
+	if (regWrite == 1)
+	{
+		registerArray[writeRegister]  = writeData;
+	}
+	return;
+}
 
 void RegisterFile::printRegisters()
 {
@@ -87,6 +95,5 @@ void RegisterFile::printRegisters()
 	{
 		cout << registerArray [i] << endl;
 	}
-
 	return;
 }

@@ -25,6 +25,7 @@ class RegisterFile{
 		~RegisterFile();
 		int readReg1(int readReg1);
 		int readReg2(int readReg2);
+		void writeRegister(int regWrite, int writeRegister, int writeData);
 		void printRegisters();
 
 
