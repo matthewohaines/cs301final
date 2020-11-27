@@ -15,6 +15,7 @@ class PCCounter{
 		~PCCounter();
 		int getCount();
 		void setCount(int theCount);
+		void printCounter();
 
 
 };
