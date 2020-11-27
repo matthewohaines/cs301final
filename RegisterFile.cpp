@@ -72,17 +72,21 @@ RegisterFile::~RegisterFile(){}
 
 int RegisterFile::readReg1(int readReg1)
 {
-	return 0;
+	return registerArray[readReg1];
 }
 
-  // input number 0-31, return registerArray[#]
 int RegisterFile::readReg2(int readReg2)
 {
-	return 0;
+	return registerArray[readReg2];
 }
 
 
-int RegisterFile::printRegisters()
+void RegisterFile::printRegisters()
 {
-	return 0;
+	for (int i = 0; i <= 31; i++)
+	{
+		cout << registerArray [i] << endl;
+	}
+
+	return;
 }
