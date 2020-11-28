@@ -53,6 +53,6 @@ void ALUControlUnit::printInput(){
 
 void ALUControlUnit::printOutput(){
 	std::cout << "Control output: " << std::endl;
-	std:cout << std::hex << "\tALU Control = " << ALUControl << std::endl;
+	std::cout << std::hex << "\tALU Control = " << ALUControl << std::endl;
 	std::cout << std::endl;
 }

@@ -13,7 +13,7 @@ class RegisterFile{
 		int readRegister2;
 		int readData1;
 		int readData2;
-		int writeReg;
+		int writeRegister;
 		int writeData;
 		int regWrite;
 
@@ -23,8 +23,13 @@ class RegisterFile{
 	public:
 		RegisterFile(string filename);
 		~RegisterFile();
-		// readRegister1(int readReg1)
-
+		void readRegisters(int readReg1, int readReg2);
+		int getReadData1();
+		int getReadData2();
+		void writeBack(int regWrite, int writeRegister, int writeData);
+		void printReadInputs();
+		void printReadOutputs();
+		void printRegisterFile();
 
 };
 

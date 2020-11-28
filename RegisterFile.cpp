@@ -70,5 +70,79 @@ RegisterFile::RegisterFile(string filename)
 
 RegisterFile::~RegisterFile(){}
 
+void RegisterFile::readRegisters(int readReg1, int readReg2)
+{
+	readData1 = readReg1;
+	readData2 = readReg2;
+}
 
-// 12:ab236711
+int RegisterFile::getReadData1()
+{
+	return readData1;
+}
+
+int RegisterFile::getReadData2()
+{
+	return readData2;
+}
+
+
+void RegisterFile::writeBack(int regWrite, int writeRegister, int writeData)
+{
+	if (regWrite == 1)
+	{
+		registerArray[writeRegister]  = writeData;
+	}
+	return;
+}
+
+void RegisterFile::printReadInputs()
+{
+	cout << readRegister1 << ", " << readRegister2 << endl;
+}
+
+void RegisterFile::printReadOutputs()
+{
+	cout << regWrite << ", " << writeRegister << ", " << writeData << endl;
+}
+
+void RegisterFile::printRegisterFile()
+{
+	for (int i = 0; i <= 31; i++)
+	{
+		cout << registerArray[i] << endl;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

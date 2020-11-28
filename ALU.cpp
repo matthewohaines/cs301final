@@ -7,52 +7,78 @@ a certain function will be operated on these two terms */
 #include<iostream>
 using namespace std;
 
-	ALU::ALU(){}
+	ALU::ALU(std::string theControl, int theinput1, int theinput2)
+	{
+		control = theControl;
+		input1 = theinput1;
+		input2 = theinput2;
+	}
 
 	ALU::~ALU() {}
 
-	int ALU::setALUControl(int term1, int term2, std::string operation){ // a bunch of ints representing output for ALU on diagram
+	void ALU::compute(int term1, int term2, std::string operation){ // a bunch of ints representing output for ALU on diagram
 		if (operation == "add")  // if ALUop is 10, r-type instruciton, so either add or sub
 		{
-			return add(term1, term2);
+			result =  add(term1, term2);
 		}
 
 		if (operation == "sub") 
 		{
-			return subtract(term1, term2);
+			result =  subtract(term1, term2);
 		}
 
 		if (operation == "slt") 
 		{
-			return slt(term1, term2);
+			result =  slt(term1, term2);
 		}
 
 		if (operation == "lw") 
 		{
-			add(term1, term2);
+			result = add(term1, term2);
 		}
 
 		if (operation == "sw")
 		{
-			add(term1, term2);
+			result = add(term1, term2);
 		}
 
 		if (operation == "beq")
 		{
 			if (subtract(term1, term2) == 0)
 			{ 
-				return 1;
+				result = 1;
 			}
-			 return 0;
+			 result =  0;
 
 		}
 
-
-		return 0;
+		return;
 		}
-	
 
-	int ALU::add(int term1, int term2){
+	int ALU::getALUResult()
+	{
+		return result;
+	}
+
+	int ALU::getZero()
+	{
+		return zero;
+	}
+
+	void ALU::printInputs()
+	{
+		cout << control << ", " << input1 << ", "  << input2 << endl;
+	}
+
+	void ALU::printOutputs()
+	{
+		cout << result << ", " << zero << endl;
+	}
+
+/*----------HELPER METHODS---------------*/
+
+	int ALU::add(int term1, int term2)
+	{
 		return term1 + term2;
 	}
 
@@ -61,7 +87,8 @@ using namespace std;
 		return term + 4;
 	}
 
-	int ALU::subtract(int term1, int term2){
+	int ALU::subtract(int term1, int term2)
+	{
 		return term1 - term2;
 	}
 
@@ -73,8 +100,6 @@ using namespace std;
 		}
 		return 0;
 	}
-
-
 
 
 
