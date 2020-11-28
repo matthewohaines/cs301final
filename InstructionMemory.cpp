@@ -1,5 +1,3 @@
-// using namespace std;
-
 #include "InstructionMemory.h"
 
 InstructionMemory::InstructionMemory(string Program_input, bool debug_mode) {
@@ -76,12 +74,12 @@ void InstructionMemory::printBinaryInst(int address) {
 }
 
 void InstructionMemory::printInput() {
-  cout << "Instruction memory input:" << endl;
-  cout << std::hex << "\tPCount = 0x" << PCount << endl << endl;
+  cout << "input:" << endl;
+  cout << std::hex << "\tPCount = 0x" << PCount << endl;
 }
 
 void InstructionMemory::printOutput() {
-  cout << "Instruction memory output:" << endl;
+  cout << "output:" << endl;
 
   if (debug == true) {
     cout << "In binary: " << endl;

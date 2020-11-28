@@ -4,12 +4,22 @@
 #include <iostream>
 #include <string>
 
+using namespace std;
+
 class ShiftLeft{
-public:
+ public:
 	ShiftLeft();
 	ShiftLeft(const ShiftLeft& other);
 	~ShiftLeft();
 
-	std::string shiftLeft2(std::string binaryNum);
+	void shiftLeft2(int binaryNum);
+	int getResult() { return output; };
+	void printInput();
+	void printOutput();
+
+ private:
+	int input;
+	int output;
+
 };
 #endif

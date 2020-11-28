@@ -424,7 +424,9 @@ string ASMParser::encodeITYPE(Instruction i, Opcode op)
     str += "00000";
 
   if(IMMpos >= 0){
+    // cout << "immediate value: " << i.getImmediate() << endl;
     str += bitset<16>(i.getImmediate()).to_string();
+    // cout << "converted to binary: " << bitset<16>(i.getImmediate()) << endl;
   }
   else  // shouldn't reach this case, but just in case
     str += "0000000000000000";
