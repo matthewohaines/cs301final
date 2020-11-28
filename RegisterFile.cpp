@@ -5,12 +5,12 @@
 using namespace std;
 
 
-bool isitWhitespace(char c)
+bool RegisterFile::isitWhitespace(char c)
 { 
 	return (c == ' '|| c == '\t'); 
 }
 
-string removetheWhitespace(string str)
+string RegisterFile::removetheWhitespace(string str)
 {
   int count = 0; // non-whitespace characters
 
@@ -27,7 +27,7 @@ string removetheWhitespace(string str)
   return str.substr(0, count);
 }
 
-bool isColon(char c) 
+bool RegisterFile::isColon(char c) 
 { 
 	return (c == ':');
 }
