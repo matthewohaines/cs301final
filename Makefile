@@ -1,5 +1,5 @@
 EXECS = Processor
-OBJS = Processor.o InstructionMemory.o ASMParser.o Instruction.o Opcode.o RegisterTable.o MainControlUnit.o Multiplexor.o SignExtendUnit.o ALU.o PCCounter.o RegisterFile.o ALUControlUnit.o
+OBJS = Processor.o InstructionMemory.o ASMParser.o Instruction.o Opcode.o RegisterTable.o MainControlUnit.o Multiplexor.o SignExtendUnit.o ALU.o PCCounter.o RegisterFile.o ALUControlUnit.o ShiftLeft.o
 
 
 CC = g++

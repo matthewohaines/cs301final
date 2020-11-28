@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <bitset>
-// #include "lab5/ASM.h"
 #include "lab5/ASMParser.h"
 #include "lab5/Instruction.h"
 
