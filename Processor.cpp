@@ -187,9 +187,9 @@ int main(int argc, char *argv[])
     // muxRegInput->
 
     // Sign extend
-    signExtend->signExtend(instrMem->getImm());
-    cout << std::hex << "Imm: " << instrMem->getImm() << endl;
-    cout << std::hex << "Imm sign extended: " << signExtend->signExtend(instrMem->getImm()) << endl;
+    // signExtend->signExtend(instrMem->getImm());
+    // cout << std::hex << "Imm: " << instrMem->getImm() << endl;
+    // cout << std::hex << "Imm sign extended: " << signExtend->signExtend(instrMem->getImm()) << endl;
     // signExtend->printInput();
     // signExtend->printOutput();
 
