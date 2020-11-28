@@ -315,7 +315,7 @@ bool ASMParser::getOperands(Instruction &i, Opcode o,
             return false;
         }
 
-        // need to do arithmetic on labels
+        // check if branch instruction and we need to calculate offset
         if(opcodes.getInstType(o) == ITYPE){ // must be branch instruction
           // cout << "offset = address - (PC + 4)" << endl;
           // cout << "\taddress = " << imm << endl;
@@ -323,6 +323,7 @@ bool ASMParser::getOperands(Instruction &i, Opcode o,
           imm = imm - (myAddress + 4); // offset = address - (PC + 4)
           // cout << "\toffset = " << imm << endl;
         }
+        // addresses and offsets are both divided by 4
         imm = imm / 4;
 
       }

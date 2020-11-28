@@ -1,6 +1,7 @@
 #include <iostream>
 #include "InstructionMemory.h"
 #include "ALU.h"
+#include "ALUControlUnit.h"
 #include "MainControlUnit.h"
 #include "Multiplexor.h"
 #include "SignExtendUnit.h"
@@ -134,15 +135,25 @@ int main(int argc, char *argv[])
   int instCount = 0;
   PCCounter *PC = new PCCounter;
   int PCount;
+  // ALU *alu1 = new ALU();
+
   InstructionMemory *instrMem = new InstructionMemory(program_input, debug_mode);
   MainControlUnit *control = new MainControlUnit();
   // RegisterFile *registers = new RegisterFile(register_file_input);
   SignExtendUnit *signExtend = new SignExtendUnit();
+  int signExtendedImm;
+
+  // multiplexors
   Multiplexor *muxRegInput = new Multiplexor();
+  int writeReg;
   Multiplexor *muxALUInput = new Multiplexor();
+  int aluInput2;
   Multiplexor *muxWriteBack = new Multiplexor();
   Multiplexor *muxJump = new Multiplexor();
   Multiplexor *muxBranch = new Multiplexor();
+
+  ALUControlUnit *aluControl = new ALUControlUnit();
+  // ALU *alu3 = new ALU();
 
   int maxAddress = instrMem->getMaxAddress();
 
@@ -150,8 +161,8 @@ int main(int argc, char *argv[])
     cout << "------------ Start running program -------------" << endl;
   }
 
+
   // loop
-  // cout << "------------ Iteration " << count << "-------------" << endl;
   while ((PCount = PC->getCount()) < maxAddress) {
     if (output_mode.compare("single_step") == 0){
       cout << "Single step output mode, enter a character to continue: ";
@@ -161,7 +172,6 @@ int main(int argc, char *argv[])
 
     cout << std::dec << "------------------------------ Iteration " << instCount
          << " " << "------------------------------" << endl;
-    // PCount = PC->getCount();
 
     cout << std::hex << "PC output: 0x" << PCount << endl << endl;
 
@@ -174,11 +184,52 @@ int main(int argc, char *argv[])
     instrMem->printInput();
     instrMem->printOutput();
 
-    // cout << "opcode = " << instrMem->getOpcode() << endl;
+    // alu1->compute(PCount, 4, 2);
+    // cout << "ALU 1 input:" << endl;
+    // alu1->printInputs();
+    // cout << "ALU 1 output:" << endl;
+    // alu1->printOutputs();
 
     control->setControls(instrMem->getOpcode());
     control->printInput();
     control->printOutput();
+
+
+    writeReg = muxRegInput->getResult(instrMem->getRt(), instrMem->getRd(), control->getRegDst());
+    cout << "Multiplexer 1 input:\n \t";
+    muxRegInput->printInputs();
+    cout << endl;
+    cout << "Multiplexer 1 output:\n \t";
+    muxRegInput->printOutput();
+    cout << endl;
+
+    // registers->readRegisters(instrMem->getRs(), instrMem->getRt());
+    // registers->printReadInputs();
+    // registers->printReadOutputs();
+
+    // Sign extend needs to be able to deal with ints
+    // signExtendedImm = signExtend->signExtend(instrMem->getImm());
+    // cout << std::hex << "Imm: " << instrMem->getImm() << endl;
+    // cout << std::hex << "Imm sign extended: " << signExtend->signExtend(instrMem->getImm()) << endl;
+    // signExtend->printInput();
+    // signExtend->printOutput();
+
+    // aluInput2 = muxALUInput->getResult(registers->getReadData2(), signExtendedImm)
+    // cout << "Multiplexer 2 input:" << endl;
+    // muxALUInput->printInputs();
+    // cout << "Multiplexer 2 output:" << endl;
+    // muxALUInput->printOutput();
+
+    aluControl->setALUControl(control->getALUOp(), instrMem->getFunct());
+    aluControl->printInput();
+    aluControl->printOutput();
+
+    // alu3->compute(registers->getReadData1(), aluInput2, aluControl->getALUControl());
+    // alu3->printInputs();
+    // alu3->printOutputs();
+
+
+
 
     PC->setCount(PCount + 4);
 
@@ -214,4 +265,5 @@ int main(int argc, char *argv[])
   delete muxWriteBack;
   delete muxJump;
   delete muxBranch;
+  delete aluControl;
 }
