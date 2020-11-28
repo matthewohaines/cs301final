@@ -30,6 +30,9 @@ class RegisterFile{
 		void printReadInputs();
 		void printReadOutputs();
 		void printRegisterFile();
+		bool isitWhitespace(char c);
+		string removetheWhitespace(string str);
+		bool isColon(char c);
 
 };
 
