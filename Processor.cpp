@@ -152,8 +152,8 @@ int main(int argc, char *argv[])
     cout << "------------ Start running program -------------" << endl;
   }
 
+
   // loop
-  // cout << "------------ Iteration " << count << "-------------" << endl;
   while ((PCount = PC->getCount()) < maxAddress) {
     if (output_mode.compare("single_step") == 0){
       cout << "Single step output mode, enter a character to continue: ";
@@ -234,4 +234,5 @@ int main(int argc, char *argv[])
   delete muxWriteBack;
   delete muxJump;
   delete muxBranch;
+  delete aluControl;
 }
