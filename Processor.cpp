@@ -154,22 +154,24 @@ int main(int argc, char *argv[])
   // RegisterFile *registers = new RegisterFile(register_file_input);
   SignExtendUnit *signExtend = new SignExtendUnit();
   int signExtendedImm;
+
+  // execute
   ShiftLeft *shiftLeftBranch = new ShiftLeft();
   // ALU *alu2 = new ALU();
-
   Multiplexor *muxALUInput = new Multiplexor();
   int aluInput2;
   ALUControlUnit *aluControl = new ALUControlUnit();
   // ALU *alu3 = new ALU();
-  DataMemory *dataMem = new DataMemory(memory_contents_input);
-  Multiplexor *muxWriteBack = new Multiplexor();
-  int writeBackData;
 
+  // memory
   Multiplexor *muxBranch = new Multiplexor();
   int addressBranch;
   int branchControl;
   Multiplexor *muxJump = new Multiplexor();
   int addressJump;
+  DataMemory *dataMem = new DataMemory(memory_contents_input);
+  Multiplexor *muxWriteBack = new Multiplexor();
+  int writeBackData;
 
 
   int maxAddress = instrMem->getMaxAddress();
@@ -190,6 +192,7 @@ int main(int argc, char *argv[])
     cout << std::dec << "------------------------------ Iteration " << instCount
          << " " << "------------------------------" << endl;
 
+    // fetch
     cout << "---------- PC ----------" << endl;
     cout << std::hex << "PC output: 0x" << PCount << endl << endl;
 
@@ -210,6 +213,7 @@ int main(int argc, char *argv[])
     // cout << "output:" << endl;
     // alu1->printOutputs();
 
+    // decode
     shiftLeftJump->shiftLeft2(instrMem->getJumpAddress());
     cout << "---------- Shift-left 1 ----------" << endl;
     shiftLeftJump->printInput();
@@ -229,7 +233,6 @@ int main(int argc, char *argv[])
     control->printInput();
     control->printOutput();
 
-
     writeReg = muxRegInput->getResult(instrMem->getRt(), instrMem->getRd(), control->getRegDst());
     cout << "---------- Multiplexer 1 ----------\ninput:\n \t";
     muxRegInput->printInputs();
@@ -242,12 +245,12 @@ int main(int argc, char *argv[])
     // registers->printReadInputs();
     // registers->printReadOutputs();
 
-    // Sign extend
     signExtend->signExtend(instrMem->getImm());
     cout << "---------- Signextend ----------" << endl;
     signExtend->printInput();
     signExtend->printOutput();
 
+    // execute
     shiftLeftBranch->shiftLeft2(signExtend->getSignExtended());
     cout << "---------- Shift-left 1 ----------" << endl;
     shiftLeftBranch->printInput();
@@ -260,12 +263,12 @@ int main(int argc, char *argv[])
     // cout << "output:" << endl;
     // alu2->printOutputs();
 
-    // aluInput2 = muxALUInput->getResult(registers->getReadData2(), signExtendedImm)
+    // aluInput2 = muxALUInput->getResult(registers->getReadData2(), signExtendedImm, control->getALUSrc())
     cout << "---------- Multiplexer 2 ----------\ninput:\n \t";
     // muxALUInput->printInputs();
-    // cout << "output:\n \t";
+    cout << "output:\n \t";
     // muxALUInput->printOutput();
-    // cout << endl;
+    cout << endl;
 
     aluControl->setALUControl(control->getALUOp(), instrMem->getFunct());
     cout << "---------- ALU Control ----------" << endl;
@@ -277,6 +280,22 @@ int main(int argc, char *argv[])
     // alu3->printInputs();
     // alu3->printOutputs();
 
+    // memory
+    // branchControl = control->getBranch() && alu3->getALUResult(); // hmm, don't think this will work...
+    // addressBranch = muxBranch->getResult(alu1->getALUResult(), alu2->getALUResult(), branchControl);
+    cout << "---------- Multiplexer 5 ----------\ninput:\n \t";
+    // muxBranch->printInputs();
+    cout << "output:\n \t";
+    // muxBranch->printOutputs();
+    cout << endl;
+
+    // addressJump = muxJump->getResult(addressBranch, jumpAddress, control->getJump());
+    cout << "---------- Multiplexer 4 ----------\ninput:\n \t";
+    // muxJump->printInputs();
+    cout << "output:\n \t";
+    // muxJump->printOutputs();
+    cout << endl;
+
     // input_address is not a string!!!
     // dataMem->readingAndWritingData(std::string input_address, control->getMemRead(), control->getMemWrite(), registers->getReadData2());
     cout << "---------- Data Memory ----------" << endl;
@@ -286,32 +305,34 @@ int main(int argc, char *argv[])
     // writeBackData = muxWriteBack->getResult(dataMem->getReadData(), alu3->getALUResult(), control->getMemToReg());
     cout << "---------- Multiplexer 3 ----------\ninput:\n \t";
     // muxWriteBack->printInputs();
-    // cout << "output:\n \t";
+    cout << "output:\n \t";
     // muxWriteBack->printOutputs();
-    // cout << endl;
+    cout << endl;
 
-    // branchControl = control->getBranch() && alu3->getALUResult();
-    // addressBranch = muxBranch->getResult(alu1->getALUResult(), alu2->getALUResult(), branchControl);
-    cout << "---------- Multiplexer 5 ----------\ninput:\n \t";
-    // muxBranch->printInputs();
-    // cout << "output:\n \t";
-    // muxBranch->printOutputs();
-    // cout << endl;
-
-    // addressJump = muxJump->getResult(addressBranch, jumpAddress, control->getJump());
-    cout << "---------- Multiplexer 4 ----------\ninput:\n \t";
-    // muxJump->printInputs();
-    // cout << "output:\n \t";
-    // muxJump->printOutputs();
-    // cout << endl;
-
+    // write back
     // Registers->writeBack(control->getRegWrite(), writeReg, writeBackData);
     cout << "---------- Registers (write back) ----------" << endl;
     // need to write this method still....
     // Registers->printWriteInput();
 
+    // set PC
     // PC->setCount(addressJump);
     PC->setCount(PCount + 4);
+
+    if (print_memory_contents == true) {
+      cout << "---------- Print Memory Contents ----------" << endl;
+      cout << "Registers:" << endl;
+      // registers->printRegisterFile();
+      cout << endl;
+
+      cout << "Instruction Memory:" << endl;
+      instrMem->printInstructionMemory();
+      cout << endl;
+
+      cout << "Data Memory" << endl;
+      dataMem->printMemory();
+      cout << endl;
+    }
 
     instCount ++;
     cout << endl;

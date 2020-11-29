@@ -36,6 +36,8 @@ class InstructionMemory{
   void printInput();
   void printOutput();
 
+  void printInstructionMemory();
+
 
  private:
   bool debug;

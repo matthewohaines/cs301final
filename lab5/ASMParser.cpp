@@ -99,6 +99,11 @@ ASMParser::ASMParser(string filename)
           break;
         }
 
+        // string mipsInstrustion = opcode + "\t";
+        // for (int i = 0; i < operand_count; i ++) {
+        //   mipsInstrustion += operand[i] + " ";
+        // }
+
         bool success = getOperands(i, o, operand, operand_count, line);
         if(!success){
           myFormatCorrect = false;

@@ -110,6 +110,14 @@ void InstructionMemory::printOutput() {
   cout << endl;
 }
 
+void InstructionMemory::printInstructionMemory() {
+  cout << "address  : binary encoding                  : MIPS instruction" << endl;
+  for (map<int, Instruction>::iterator it = instMem.begin(); it != instMem.end(); ++it) {
+    cout << hex << "0x" << it->first << " : " << it->second.getEncoding()
+         << " : " << it->second.getMIPS() << endl;
+  }
+}
+
 
 // bool InstructionMemory::isStringBinaryNum(string s)
 //   // Returns true if s represents a valid decimal integer
