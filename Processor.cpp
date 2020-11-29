@@ -338,7 +338,27 @@ int main(int argc, char *argv[])
     cout << endl;
   }
 
+  if (write_to_file == true){
+    ofstream output_file;
+    myfile.open ("asmout.mach");
+  }
 
+  //Iterate through instructions, printing each encoding.
+  i = parser->getNextInstruction();
+  while( i.getOpcode() != UNDEFINED){
+    // cout << i.getString() << endl;
+    cout << i.getEncoding() << endl;
+
+    // added output to file after turned in
+    myfile << i.getEncoding() << endl;
+
+    i = parser->getNextInstruction();
+  }
+
+  if (write_to_file == true){
+    output_file.close();
+  }
+  myfile.close();
 
   // int num = -12;
   // cout << "num: " << num << endl;
