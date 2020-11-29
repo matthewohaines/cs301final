@@ -7,7 +7,7 @@
 
 class DataMemory{
 private:
-	std::map<std::string,std::string> memory;
+	std::map<std::string,int> memory;
 	std::string dataMemory;
 	std::string address;
 	int writeData;

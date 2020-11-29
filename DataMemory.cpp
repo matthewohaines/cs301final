@@ -6,7 +6,7 @@
 
 DataMemory::DataMemory(std::string memoryInput){
 	std::string key;
-	std::string value;
+	int value;
 	char col;
 	std::ifstream infile;
 
@@ -27,13 +27,17 @@ void DataMemory::readingAndWritingData(std::string inputAddress, int readControl
 	memWrite = writeControl;
 	writeData = inputWriteInfo;
 	address = inputAddress;
+	std::map<std::string,int>::key_compare keycomp = memory.key_comp();
+	std::map<std::string,int>::iterator it = memory.begin();
+
+	while(keycomp((*it++).first, address));
 
 	if (memRead == 1){
-
+		readData = memory.at(address);
 	}
 
 	if(memWrite == 1){
-
+		memory.at(address) = writeData;
 	}
 }
 
