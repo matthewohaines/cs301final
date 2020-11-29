@@ -5,12 +5,12 @@
 using namespace std;
 
 
-bool isitWhitespace(char c)
+bool RegisterFile::isitWhitespace(char c)
 { 
 	return (c == ' '|| c == '\t'); 
 }
 
-string removetheWhitespace(string str)
+string RegisterFile::removetheWhitespace(string str)
 {
   int count = 0; // non-whitespace characters
 
@@ -27,7 +27,7 @@ string removetheWhitespace(string str)
   return str.substr(0, count);
 }
 
-bool isColon(char c) 
+bool RegisterFile::isColon(char c) 
 { 
 	return (c == ':');
 }
@@ -70,17 +70,24 @@ RegisterFile::RegisterFile(string filename)
 
 RegisterFile::~RegisterFile(){}
 
-int RegisterFile::readReg1(int readReg1)
+void RegisterFile::readRegisters(int readReg1, int readReg2)
 {
-	return registerArray[readReg1];
+	readData1 = readReg1;
+	readData2 = readReg2;
 }
 
-int RegisterFile::readReg2(int readReg2)
+int RegisterFile::getReadData1()
 {
-	return registerArray[readReg2];
+	return readData1;
 }
 
-void RegisterFile::writeRegister(int regWrite, int writeRegister, int writeData)
+int RegisterFile::getReadData2()
+{
+	return readData2;
+}
+
+
+void RegisterFile::writeBack(int regWrite, int writeRegister, int writeData)
 {
 	if (regWrite == 1)
 	{
@@ -89,11 +96,53 @@ void RegisterFile::writeRegister(int regWrite, int writeRegister, int writeData)
 	return;
 }
 
-void RegisterFile::printRegisters()
+void RegisterFile::printReadInputs()
+{
+	cout << readRegister1 << ", " << readRegister2 << endl;
+}
+
+void RegisterFile::printReadOutputs()
+{
+	cout << regWrite << ", " << writeRegister << ", " << writeData << endl;
+}
+
+void RegisterFile::printRegisterFile()
 {
 	for (int i = 0; i <= 31; i++)
 	{
-		cout << registerArray [i] << endl;
+		cout << registerArray[i] << endl;
 	}
-	return;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,5 +1,9 @@
 EXECS = Processor
+<<<<<<< HEAD
 OBJS = Processor.o InstructionMemory.o ASMParser.o Instruction.o Opcode.o RegisterTable.o MainControlUnit.o Multiplexor.o SignExtendUnit.o ALU.o PCCounter.o RegisterFile.o ALUControlUnit.o DataMemory.o
+=======
+OBJS = Processor.o InstructionMemory.o ASMParser.o Instruction.o Opcode.o RegisterTable.o MainControlUnit.o Multiplexor.o SignExtendUnit.o ALU.o PCCounter.o RegisterFile.o ALUControlUnit.o ShiftLeft.o
+>>>>>>> d46948157a56a4a909b8517a313226cd641ca082
 
 
 CC = g++

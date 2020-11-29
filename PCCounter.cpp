@@ -18,3 +18,8 @@ void PCCounter::setCount(int theCount)
 {
 	count = theCount;
 }
+
+void PCCounter::printCounter()
+{
+	cout << count << endl;
+}

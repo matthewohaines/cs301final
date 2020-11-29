@@ -315,7 +315,7 @@ bool ASMParser::getOperands(Instruction &i, Opcode o,
             return false;
         }
 
-        // need to do arithmetic on labels
+        // check if branch instruction and we need to calculate offset
         if(opcodes.getInstType(o) == ITYPE){ // must be branch instruction
           // cout << "offset = address - (PC + 4)" << endl;
           // cout << "\taddress = " << imm << endl;
@@ -323,6 +323,7 @@ bool ASMParser::getOperands(Instruction &i, Opcode o,
           imm = imm - (myAddress + 4); // offset = address - (PC + 4)
           // cout << "\toffset = " << imm << endl;
         }
+        // addresses and offsets are both divided by 4
         imm = imm / 4;
 
       }
@@ -423,7 +424,9 @@ string ASMParser::encodeITYPE(Instruction i, Opcode op)
     str += "00000";
 
   if(IMMpos >= 0){
+    // cout << "immediate value: " << i.getImmediate() << endl;
     str += bitset<16>(i.getImmediate()).to_string();
+    // cout << "converted to binary: " << bitset<16>(i.getImmediate()) << endl;
   }
   else  // shouldn't reach this case, but just in case
     str += "0000000000000000";

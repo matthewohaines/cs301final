@@ -6,13 +6,16 @@ ShiftLeft::ShiftLeft(){}
 ShiftLeft::ShiftLeft(const ShiftLeft& other){}
 ShiftLeft::~ShiftLeft(){}
 
-std::string ShiftLeft::shiftLeft2(std::string binaryNum){
-	if (binaryNum.length() == 32){
-		binaryNum = binaryNum.substr(2,31) + "00";
-	}
-	if (binaryNum.length() == 26){
-		binaryNum = binaryNum.substr(2,25) + "00";
-	}
+void ShiftLeft::shiftLeft2(int binaryNum){
+	input = binaryNum;
+	output = binaryNum * 4; // same as shifting left twice in binary
+}
 
-	return(binaryNum);
+void ShiftLeft::printInput(){
+	cout << "Input:" << endl;
+	cout << hex << "\t0x" << input << endl;
+}
+void ShiftLeft::printOutput(){
+	cout << "Output:" << endl;
+	cout << hex << "\t0x" << output << endl << endl;
 }
