@@ -7,9 +7,9 @@
 
 class DataMemory{
 private:
-	std::map<std::string,int> memory;
+	std::map<int,int> memory;
 	std::string dataMemory;
-	std::string address;
+	int address;
 	int writeData;
 	int readData;
 	int memWrite; 
@@ -20,7 +20,7 @@ public:
 	DataMemory(const DataMemory& other);
 	~DataMemory();
 
-	void readingAndWritingData(std::string input_address, int readControl, int writeControl, int inputWriteInfo);
+	void readingAndWritingData(int input_address, int readControl, int writeControl, int inputWriteInfo);
 	int getReadData();
 
 	void printInput();
