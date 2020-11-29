@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <bitset>
 #include "InstructionMemory.h"
 #include "ALU.h"
 #include "ALUControlUnit.h"
@@ -9,6 +10,7 @@
 #include "PCCounter.h"
 #include "RegisterFile.h"
 #include "ShiftLeft.h"
+#include "DataMemory.h"
 
 using namespace std;
 
@@ -143,22 +145,32 @@ int main(int argc, char *argv[])
 
   // decode
   ShiftLeft *shiftLeftJump = new ShiftLeft();
+  bitset<32> jumpAdd;
+  bitset<32> pc;
+  int jumpAddress;
   MainControlUnit *control = new MainControlUnit();
   Multiplexor *muxRegInput = new Multiplexor();
   int writeReg;
   // RegisterFile *registers = new RegisterFile(register_file_input);
   SignExtendUnit *signExtend = new SignExtendUnit();
   int signExtendedImm;
+  ShiftLeft *shiftLeftBranch = new ShiftLeft();
+  // ALU *alu2 = new ALU();
 
-  // multiplexors
   Multiplexor *muxALUInput = new Multiplexor();
   int aluInput2;
-  Multiplexor *muxWriteBack = new Multiplexor();
-  Multiplexor *muxJump = new Multiplexor();
-  Multiplexor *muxBranch = new Multiplexor();
-
   ALUControlUnit *aluControl = new ALUControlUnit();
   // ALU *alu3 = new ALU();
+  DataMemory *dataMem = new DataMemory(memory_contents_input);
+  Multiplexor *muxWriteBack = new Multiplexor();
+  int writeBackData;
+
+  Multiplexor *muxBranch = new Multiplexor();
+  int addressBranch;
+  int branchControl;
+  Multiplexor *muxJump = new Multiplexor();
+  int addressJump;
+
 
   int maxAddress = instrMem->getMaxAddress();
 
@@ -187,20 +199,30 @@ int main(int argc, char *argv[])
       instrMem->printBinaryInst(PCount);
 
     instrMem->decode(PCount);
-    cout << "---------- Instruction memory ----------" << endl;
+    cout << "---------- Instruction Memory ----------" << endl;
     instrMem->printInput();
     instrMem->printOutput();
 
     // alu1->compute(PCount, 4, 2);
-    // cout << "ALU 1 input:" << endl;
+    cout << "---------- ALU 1 ----------" << endl;
+    // cout << "input:" << endl;
     // alu1->printInputs();
-    // cout << "ALU 1 output:" << endl;
+    // cout << "output:" << endl;
     // alu1->printOutputs();
 
     shiftLeftJump->shiftLeft2(instrMem->getJumpAddress());
     cout << "---------- Shift-left 1 ----------" << endl;
     shiftLeftJump->printInput();
     shiftLeftJump->printOutput();
+
+    // concatinating jump addres (already sifted left 2) with most significant
+    // 4 digits of PC + 4
+    jumpAdd = bitset<32>(shiftLeftJump->getResult());
+    pc = bitset<32>(PCount);
+    for (int i = 28; i < 32; i ++) {
+      jumpAdd[i] = pc[i];
+    }
+    jumpAddress = jumpAdd.to_ulong();
 
     control->setControls(instrMem->getOpcode());
     cout << "---------- Control ----------" << endl;
@@ -216,6 +238,7 @@ int main(int argc, char *argv[])
     cout << endl;
 
     // registers->readRegisters(instrMem->getRs(), instrMem->getRt());
+    cout << "---------- Registers (read) ----------" << endl;
     // registers->printReadInputs();
     // registers->printReadOutputs();
 
@@ -225,28 +248,72 @@ int main(int argc, char *argv[])
     signExtend->printInput();
     signExtend->printOutput();
 
+    shiftLeftBranch->shiftLeft2(signExtend->getSignExtended());
+    cout << "---------- Shift-left 1 ----------" << endl;
+    shiftLeftBranch->printInput();
+    shiftLeftBranch->printOutput();
+
+    // alu2->compute(alu1->getALUResult(), shiftLeftBranch->getResult(), 2);
+    cout << "---------- ALU 2 ----------" << endl;
+    // cout << "inputs:" << endl;
+    // alu2->printInputs();
+    // cout << "output:" << endl;
+    // alu2->printOutputs();
+
     // aluInput2 = muxALUInput->getResult(registers->getReadData2(), signExtendedImm)
-    // cout << "Multiplexer 2 input:" << endl;
+    cout << "---------- Multiplexer 2 ----------\ninput:\n \t";
     // muxALUInput->printInputs();
-    // cout << "Multiplexer 2 output:" << endl;
+    // cout << "output:\n \t";
     // muxALUInput->printOutput();
+    // cout << endl;
 
     aluControl->setALUControl(control->getALUOp(), instrMem->getFunct());
-    cout << "---------- ALU control ----------" << endl;
+    cout << "---------- ALU Control ----------" << endl;
     aluControl->printInput();
     aluControl->printOutput();
 
     // alu3->compute(registers->getReadData1(), aluInput2, aluControl->getALUControl());
+    cout << "---------- ALU 3 ----------" << endl;
     // alu3->printInputs();
     // alu3->printOutputs();
 
+    // input_address is not a string!!!
+    // dataMem->readingAndWritingData(std::string input_address, control->getMemRead(), control->getMemWrite(), registers->getReadData2());
+    cout << "---------- Data Memory ----------" << endl;
+    // dataMem->printInput();
+    // dataMem->printOutput();
 
+    // writeBackData = muxWriteBack->getResult(dataMem->getReadData(), alu3->getALUResult(), control->getMemToReg());
+    cout << "---------- Multiplexer 3 ----------\ninput:\n \t";
+    // muxWriteBack->printInputs();
+    // cout << "output:\n \t";
+    // muxWriteBack->printOutputs();
+    // cout << endl;
 
+    // branchControl = control->getBranch() && alu3->getALUResult();
+    // addressBranch = muxBranch->getResult(alu1->getALUResult(), alu2->getALUResult(), branchControl);
+    cout << "---------- Multiplexer 5 ----------\ninput:\n \t";
+    // muxBranch->printInputs();
+    // cout << "output:\n \t";
+    // muxBranch->printOutputs();
+    // cout << endl;
 
+    // addressJump = muxJump->getResult(addressBranch, jumpAddress, control->getJump());
+    cout << "---------- Multiplexer 4 ----------\ninput:\n \t";
+    // muxJump->printInputs();
+    // cout << "output:\n \t";
+    // muxJump->printOutputs();
+    // cout << endl;
+
+    // Registers->writeBack(control->getRegWrite(), writeReg, writeBackData);
+    cout << "---------- Registers (write back) ----------" << endl;
+    // need to write this method still....
+    // Registers->printWriteInput();
+
+    // PC->setCount(addressJump);
     PC->setCount(PCount + 4);
 
     instCount ++;
-
     cout << endl;
   }
 
@@ -278,7 +345,9 @@ int main(int argc, char *argv[])
 
 
   delete PC;
+  // delete alu1;
   delete instrMem;
+  delete shiftLeftJump;
   delete control;
   // delete registers;
   delete signExtend;
@@ -286,6 +355,10 @@ int main(int argc, char *argv[])
   delete muxALUInput;
   delete muxWriteBack;
   delete muxJump;
-  delete muxBranch;
+  delete muxBranch;\
+  delete shiftLeftBranch;
+  // delete alu2;
   delete aluControl;
+  // delete alu3;
+  delete dataMem;
 }
