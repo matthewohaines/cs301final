@@ -338,51 +338,22 @@ int main(int argc, char *argv[])
     cout << endl;
   }
 
-  if (write_to_file == true){
-    ofstream output_file;
-    myfile.open ("asmout.mach");
-  }
 
-  //Iterate through instructions, printing each encoding.
-  i = parser->getNextInstruction();
-  while( i.getOpcode() != UNDEFINED){
-    // cout << i.getString() << endl;
-    cout << i.getEncoding() << endl;
+  // if (write_to_file == true){
+  //   ofstream myfile;
+  //   myfile.open (output_file);
 
-    // added output to file after turned in
-    myfile << i.getEncoding() << endl;
+  //   cout << i.getEncoding() << endl;
+  //   myfile << i.getEncoding() << endl;
 
-    i = parser->getNextInstruction();
-  }
+  //   myfile.close();
+  // }
 
-  if (write_to_file == true){
-    output_file.close();
-  }
-  myfile.close();
 
   // int num = -12;
   // cout << "num: " << num << endl;
   // cout << "num in binary: " << bitset<16>(num) << endl;
   // cout << "num converted back to int: " << bitset<8>(num).to_ulong() << endl;
-
-  // int some16DigitBinIn = 000012;
-  // cout << hex << "Test hex output: " << some16DigitBinIn << endl;
-  // cout << "0x" << setfill('0') << setw(8) << right << hex << some16DigitBinIn << endl;
-
-
-  // instrMem->printMIPSInst(0x400000);
-  // instrMem->printBinaryInst(0x400000);
-  // instrMem->printMIPSInst(PCount);
-
-  // cout << instrMem->decode(0x400000) << endl;
-  // cout << instrMem->decode(0x400004) << endl;
-  // cout << instrMem->decode(0x400008) << endl;
-
-  // string cow = "wow wow wee wow wow";
-  // cout << cow << endl;
-  // string moo = removeWhitespace(cow);
-  // cout << moo << endl;
-  // cout << cow << endl;
 
 
   delete PC;
