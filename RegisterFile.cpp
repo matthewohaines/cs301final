@@ -50,7 +50,7 @@ RegisterFile::RegisterFile(string filename)
 	{
 		removetheWhitespace(line);
 
-		cout << "line = " << line << endl;
+		// cout << "line = " << line << endl;
 
 		// get rid of comments (could contain ":")
 		string::size_type idx = line.find('#');
