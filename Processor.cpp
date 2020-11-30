@@ -585,16 +585,60 @@ int main(int argc, char *argv[])
     if (print_memory_contents == true) {
       cout << "---------- Print Memory Contents ----------" << endl;
       cout << "Registers:" << endl;
-      registers->printRegisterFile();
+      // regimsters->printRegisterFile();
+      for (int i = 0; i <= 31; i++)
+      {
+        cout << dec << i << " : " << hex << "0x" << registers->getRegister(i) << endl;
+      }
       cout << endl;
 
       cout << "Instruction Memory:" << endl;
-      instrMem->printInstructionMemory();
+      // instrMem->printInstructionMemory();
+      cout << "address  : binary encoding                  : MIPS instruction" << endl;
+      map<int, Instruction> instructionMemory = instrMem->getInstrMem();
+      for (map<int, Instruction>::iterator it = instructionMemory.begin();
+           it != instructionMemory.end(); ++it) {
+        cout << hex << "0x" << it->first << " : " << it->second.getEncoding()
+             << " : " << it->second.getMIPS() << endl;
+      }
       cout << endl;
 
-      cout << "Data Memory" << endl;
-      dataMem->printMemory();
+      cout << "Data Memory:" << endl;
+      cout << "address  : data" << endl;
+      // dataMem->printMemory();
+      map<int, int> dataMemory = dataMem->getDataMemory();
+      for (map<int, int>::iterator it = dataMemory.begin(); it != dataMemory.end(); ++it) {
+        cout << hex << "0x" << it->first << " : 0x" << it->second << endl;
+      }
       cout << endl;
+
+      if (write_to_file == true) {
+        myfile << "---------- Print Memory Contents ----------" << endl;
+        myfile << "Registers:" << endl;
+        for (int i = 0; i <= 31; i++)
+        {
+          myfile << dec << i << " : " << hex << registers->getRegister(i) << endl;
+        }
+        myfile << endl;
+
+        myfile << "Instruction Memory:" << endl;
+        myfile << "address  : binary encoding                  : MIPS instruction" << endl;
+        map<int, Instruction> instructionMemory = instrMem->getInstrMem();
+        for (map<int, Instruction>::iterator it = instructionMemory.begin();
+            it != instructionMemory.end(); ++it) {
+          myfile << hex << "0x" << it->first << " : " << it->second.getEncoding()
+              << " : " << it->second.getMIPS() << endl;
+        }
+        myfile << endl;
+
+        myfile << "Data Memory:" << endl;
+        myfile << "address  : data" << endl;
+        map<int, int> dataMemory = dataMem->getDataMemory();
+        for (map<int, int>::iterator it = dataMemory.begin(); it != dataMemory.end(); ++it) {
+          myfile << hex << "0x" << it->first << " : 0x" << it->second << endl;
+        }
+        myfile << endl;
+      }
     }
 
     instCount ++;

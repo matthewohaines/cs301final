@@ -41,11 +41,11 @@ RegisterFile::RegisterFile(string filename)
 	string line;
 	string regNum;
 	string value;
-	int i;
-			unsigned int theData;
-			int data;
-			stringstream hexInt;
-			stringstream registerInt;
+	// int i;
+	// unsigned int theData;
+	// int data;
+	// stringstream hexInt;
+	// stringstream registerInt;
 	while (getline(infile, line))
 	{
 		removetheWhitespace(line);
@@ -64,6 +64,7 @@ RegisterFile::RegisterFile(string filename)
 			value = line.substr(idx1 + 1);
 
 			int i;
+			// needed an unsigned int otherwise bigger hex values were not converted right
 			unsigned int theData;
 			int data;
 			stringstream hexInt;

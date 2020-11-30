@@ -12,7 +12,7 @@ private:
 	int address;
 	int writeData;
 	int readData;
-	int memWrite; 
+	int memWrite;
 	int memRead;
 
 public:
@@ -22,6 +22,9 @@ public:
 
 	void readingAndWritingData(int input_address, int readControl, int writeControl, int inputWriteInfo);
 	int getReadData();
+
+	// added this so we can print dataMemory from processor
+	std::map<int, int> getDataMemory() { return memory; };
 
 	void printInput();
 	void printOutput();
