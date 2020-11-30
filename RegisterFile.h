@@ -2,8 +2,9 @@
 #define __REGISTERFILE_H__
 
 #include <iostream>
-#include<fstream>
-#include<sstream>
+#include <fstream>
+#include <sstream>
+
 using namespace std;
 
 
@@ -26,6 +27,7 @@ class RegisterFile{
 		void readRegisters(int readReg1, int readReg2);
 		int getReadData1();
 		int getReadData2();
+		int getRegister(int reg) { return registerArray[reg]; };
 		void writeBack(int regWrite, int writeRegister, int writeData);
 		void printReadInputs();
 		void printReadOutputs();
