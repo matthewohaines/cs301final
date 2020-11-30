@@ -11,7 +11,7 @@ class ALU{
 		int input1;
 		int input2;
 		int result;
-		const static int zero = 0;
+		const int zero = 0;
 
 		int add(int term1, int term2);
 		int add4(int term);
