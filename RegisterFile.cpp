@@ -6,8 +6,8 @@ using namespace std;
 
 
 bool RegisterFile::isitWhitespace(char c)
-{ 
-	return (c == ' '|| c == '\t'); 
+{
+	return (c == ' '|| c == '\t');
 }
 
 string RegisterFile::removetheWhitespace(string str)
@@ -27,53 +27,98 @@ string RegisterFile::removetheWhitespace(string str)
   return str.substr(0, count);
 }
 
-bool RegisterFile::isColon(char c) 
-{ 
+bool RegisterFile::isColon(char c)
+{
 	return (c == ':');
 }
 
 
 RegisterFile::RegisterFile(string filename)
 {
-	std::ifstream infile {filename}; // get first two numbers, set as i, then for array[i], store the hex values
-	std::string line;
+	// std::ifstream infile (filename); // get first two numbers, set as i, then for array[i], store the hex values
+	ifstream infile;
+	infile.open(filename);
+	string line;
+	string regNum;
+	string value;
+	int i;
+			unsigned int theData;
+			int data;
+			stringstream hexInt;
+			stringstream registerInt;
 	while (getline(infile, line))
 	{
 		removetheWhitespace(line);
-		int index = 0;
-		string registerNumber;
-		while (line.at(index) != ';')
-		{
-			registerNumber += line.at(index);
-			index++;   
+
+		cout << "line = " << line << endl;
+
+		// get rid of comments (could contain ":")
+		string::size_type idx = line.find('#');
+		if (idx != string::npos)
+			line = line.substr(0,idx);
+
+		// looking for ":" to find parameters
+		string::size_type idx1 = line.find(':');
+		if (idx1 != string::npos) {
+			regNum = line.substr(0,idx1);
+			value = line.substr(idx1 + 1);
+
+			int i;
+			unsigned int theData;
+			int data;
+			stringstream hexInt;
+			stringstream registerInt;
+			registerInt << regNum;
+			registerInt >> i;
+			hexInt << hex << value;
+			hexInt >> theData;
+			data = static_cast<int>(theData);
+
+			registerArray[i] = data;
 		}
 
-		stringstream registerInt(registerNumber);
-		int i;
-		registerInt >> i;
+		// int index = 0;
+		// string registerNumber;
+		// while (line.at(index) != ':')
+		// {
+		// 	registerNumber += line.at(index);
+		// 	index++;
+		// }
 
-		string registerData;
-		while( index < line.size())
-		{
-			registerData += line.at(index);
-			index++;
-		}
+		// stringstream registerInt(registerNumber);
+		// int i;
+		// registerInt >> i;
 
-		string hexString = "0x" + registerData;
-		stringstream hexInt(hexString);
-		int theData;
-		hexInt >> theData;
+		// index ++;  // increment past colon
+		// string registerData;
+		// while( index < line.size())
+		// {
+		// 	registerData += line.at(index);
+		// 	index++;
+		// }
 
-		registerArray[i] = theData;
+		// string hexString = "0x" + registerData;
+		// // stringstream hexInt(hexString);
+		// stringstream hexInt;
+		// int theData;
+		// hexInt << hex << registerData;
+		// hexInt >> theData;
+
+		// cout << registerData << endl;
+		// cout << "hexString = " << hexString << endl;
+		// cout << hex << theData << endl;
+
+		// registerArray[i] = theData;
 	}
+	infile.close();
 }
 
 RegisterFile::~RegisterFile(){}
 
 void RegisterFile::readRegisters(int readReg1, int readReg2)
 {
-	readData1 = readReg1;
-	readData2 = readReg2;
+	readData1 = registerArray[readReg1];
+	readData2 = registerArray[readReg2];
 }
 
 int RegisterFile::getReadData1()
@@ -110,7 +155,7 @@ void RegisterFile::printRegisterFile()
 {
 	for (int i = 0; i <= 31; i++)
 	{
-		cout << registerArray[i] << endl;
+		cout << dec << i << " : " << hex << registerArray[i] << endl;
 	}
 }
 
