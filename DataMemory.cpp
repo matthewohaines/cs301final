@@ -5,7 +5,7 @@
 #include <map>
 
 DataMemory::DataMemory(std::string memoryInput){
-	std::string key;
+	int key;
 	int value;
 	char col;
 	std::ifstream infile;
@@ -22,13 +22,13 @@ DataMemory::DataMemory(std::string memoryInput){
 DataMemory::DataMemory(const DataMemory& other){}
 DataMemory::~DataMemory(){}
 
-void DataMemory::readingAndWritingData(std::string inputAddress, int readControl, int writeControl, int inputWriteInfo){
+void DataMemory::readingAndWritingData(int inputAddress, int readControl, int writeControl, int inputWriteInfo){
 	memRead = readControl;
 	memWrite = writeControl;
 	writeData = inputWriteInfo;
 	address = inputAddress;
-	std::map<std::string,int>::key_compare keycomp = memory.key_comp();
-	std::map<std::string,int>::iterator it = memory.begin();
+	std::map<int,int>::key_compare keycomp = memory.key_comp();
+	std::map<int,int>::iterator it = memory.begin();
 
 	while(keycomp((*it++).first, address));
 
