@@ -29,6 +29,8 @@ class InstructionMemory{
   int getImm() { return immediate; };
   int getJumpAddress() { return jumpAddress; };
   int getMaxAddress() { return maxAddress; };
+  map<int, Instruction> getInstrMem() { return instMem; };
+  string getCurrInstr() { return currInstr; };
 
   void printMIPSInst(int address);
   void printBinaryInst(int address);

@@ -117,6 +117,7 @@ int main(int argc, char *argv[])
       }
     }
   }
+  in.close();
 
   if(formatCorrect == false){
     cerr << "Format of configuration file is incorrect " << endl;
@@ -135,6 +136,22 @@ int main(int argc, char *argv[])
     cout << "\twrite_to_file = " << write_to_file << endl << endl;
   }
 
+  ofstream myfile;
+  if (write_to_file == true){
+    myfile.open (output_file);
+    if (debug_mode == true){
+      myfile << "Read configuration file:" << endl;
+      myfile << "\tprogram_input = " << program_input << endl;
+      myfile << "\tmemory_contents_input = " << memory_contents_input << endl;
+      myfile << "\tregister_file_input = " << register_file_input << endl;
+      myfile << "\toutput_mode = " << output_mode << endl;
+      myfile << "\tdebug_mode = " << debug_mode << endl;
+      myfile << "\tprint_memory_contents = " << print_memory_contents << endl;
+      myfile << "\toutput_file = " << output_file << endl;
+      myfile << "\twrite_to_file = " << write_to_file << endl << endl;
+    }
+  }
+
   // initialize objects and other variables
   // fetch
   int instCount = 0;
@@ -151,7 +168,7 @@ int main(int argc, char *argv[])
   MainControlUnit *control = new MainControlUnit();
   Multiplexor *muxRegInput = new Multiplexor();
   int writeReg;
-  // RegisterFile *registers = new RegisterFile(register_file_input);
+  RegisterFile *registers = new RegisterFile(register_file_input);
   SignExtendUnit *signExtend = new SignExtendUnit();
   int signExtendedImm;
 
@@ -178,6 +195,9 @@ int main(int argc, char *argv[])
 
   if (debug_mode == true){
     cout << "------------ Start running program -------------" << endl;
+    if (write_to_file == true) {
+      myfile << "------------ Start running program -------------" << endl;
+    }
   }
 
 
@@ -187,37 +207,132 @@ int main(int argc, char *argv[])
       cout << "Single step output mode, enter a character to continue: ";
       char c;
       cin >> c;
+      if (write_to_file == true) {
+        myfile << "Single step output mode, enter a character to continue: " << endl;
+      }
     }
 
-    cout << std::dec << "------------------------------ Iteration " << instCount
+    cout << dec << "------------------------------ Iteration " << instCount
          << " " << "------------------------------" << endl;
+    if (write_to_file == true) {
+      myfile << dec << "------------------------------ Iteration " << instCount
+             << " " << "------------------------------" << endl;
+    }
 
     // fetch
     cout << "---------- PC ----------" << endl;
-    cout << std::hex << "PC output: 0x" << PCount << endl << endl;
+    cout << hex << "output: 0x" << PCount << endl << endl;
 
-    instrMem->printMIPSInst(PCount);
+    // instrMem->printMIPSInst(PCount);
+    cout << hex << "MIPS instruction at address 0x" << PCount << ": " << endl;
+    cout << "\t" << instrMem->getInstrMem().at(PCount).getMIPS() << endl << endl;
 
-    if (debug_mode == true)
-      instrMem->printBinaryInst(PCount);
+    if (debug_mode == true) {
+      // instrMem->printBinaryInst(PCount);
+      cout << hex << "Binary encoding of instruction at address 0x" << PCount << ": " << endl;
+      cout << "\t" << instrMem->getInstrMem().at(PCount).getEncoding() << endl << endl;
+    }
 
     instrMem->decode(PCount);
     cout << "---------- Instruction Memory ----------" << endl;
-    instrMem->printInput();
-    instrMem->printOutput();
+    // instrMem->printInput();
+    cout << "input:" << endl;
+    cout << hex << "\tPCount = 0x" << PCount << endl;
+    // instrMem->printOutput();
+    cout << "output:" << endl;
+    if (debug_mode == true) {
+      cout << "In binary: " << endl;
+      cout << "\topcode = " << instrMem->getCurrInstr().substr(0, 6) << endl;       // (Inst[31-26])
+      cout << "\trs = " << instrMem->getCurrInstr().substr(6, 5) << endl;           // (Inst[25-21])
+      cout << "\trd = " << instrMem->getCurrInstr().substr(11, 5) << endl;          // (Inst[20-16])
+      cout << "\trs = " << instrMem->getCurrInstr().substr(16, 5) << endl;          // (Inst[15-11])
+      cout << "\tshmat = " << instrMem->getCurrInstr().substr(21, 5) << endl;       // (Inst[10-6])
+      cout << "\tfunct = " << instrMem->getCurrInstr().substr(26, 6) << endl;       // (Inst[5-0]
+      cout << "\timmediate = " << instrMem->getCurrInstr().substr(16, 16) << endl;  // (Inst[15-0])
+      cout << "\tjumpAddress = " << instrMem->getCurrInstr().substr(6, 26) << endl; // (Inst[25-0])
+
+      cout << "In hexadecimal: " << endl;
+    }
+    cout << hex << "\topcode = 0x" << instrMem->getOpcode() << endl;
+    cout << hex << "\trs = 0x" << instrMem->getRs() << endl;
+    cout << hex << "\trt = 0x" << instrMem->getRt() << endl;
+    cout << hex << "\trd = 0x" << instrMem->getRd() << endl;
+    cout << hex << "\tshamt = 0x" << instrMem->getShamt() << endl;
+    cout << hex << "\tfunct = 0x" << instrMem->getFunct() << endl;
+    cout << hex << "\timmediate = 0x" << instrMem->getImm() << endl;
+    cout << hex << "\tjumpAddress = 0x" << instrMem->getJumpAddress() << endl;
+    cout << endl;
+
+
 
     // alu1->compute(PCount, 4, 2);
     cout << "---------- ALU 1 ----------" << endl;
-    // cout << "input:" << endl;
-    // alu1->printInputs();
-    // cout << "output:" << endl;
-    // alu1->printOutputs();
+    cout << "inputs:" << endl;
+    cout << hex << "\tinput 1 = 0x" << PCount << endl;
+    cout << "\tinput 2 = 0x" << 4 << endl;
+    cout << "\tcontrol = 0x" << 2 << endl;
+    cout << "output:" << endl;
+    // cout << hex << "\tresult = " << alu1->getALUResult() << endl;
+    cout << endl;
+
+    if (write_to_file == true) {
+      myfile << "---------- PC ----------" << endl;
+      myfile << hex << "output: 0x" << PCount << endl << endl;
+
+      myfile << hex << "MIPS instruction at address 0x" << PCount << ": " << endl;
+      myfile << "\t" << instrMem->getInstrMem().at(PCount).getMIPS() << endl << endl;
+      if (debug_mode == true) {
+        myfile << hex << "Binary encoding of instruction at address 0x" << PCount << ": " << endl;
+        myfile << "\t" << instrMem->getInstrMem().at(PCount).getEncoding() << endl << endl;
+      }
+
+      myfile << "---------- Instruction Memory ----------" << endl;
+      myfile << "input:" << endl;
+      myfile << hex << "\tPCount = 0x" << PCount << endl;
+      myfile << "output:" << endl;
+      if (debug_mode == true) {
+        myfile << "In binary: " << endl;
+        myfile << "\topcode = " << instrMem->getCurrInstr().substr(0, 6) << endl;       // (Inst[31-26])
+        myfile << "\trs = " << instrMem->getCurrInstr().substr(6, 5) << endl;           // (Inst[25-21])
+        myfile << "\trd = " << instrMem->getCurrInstr().substr(11, 5) << endl;          // (Inst[20-16])
+        myfile << "\trs = " << instrMem->getCurrInstr().substr(16, 5) << endl;          // (Inst[15-11])
+        myfile << "\tshmat = " << instrMem->getCurrInstr().substr(21, 5) << endl;       // (Inst[10-6])
+        myfile << "\tfunct = " << instrMem->getCurrInstr().substr(26, 6) << endl;       // (Inst[5-0]
+        myfile << "\timmediate = " << instrMem->getCurrInstr().substr(16, 16) << endl;  // (Inst[15-0])
+        myfile << "\tjumpAddress = " << instrMem->getCurrInstr().substr(6, 26) << endl; // (Inst[25-0])
+
+        myfile << "In hexadecimal: " << endl;
+      }
+      myfile << hex << "\topcode = 0x" << instrMem->getOpcode() << endl;
+      myfile << hex << "\trs = 0x" << instrMem->getRs() << endl;
+      myfile << hex << "\trt = 0x" << instrMem->getRt() << endl;
+      myfile << hex << "\trd = 0x" << instrMem->getRd() << endl;
+      myfile << hex << "\tshamt = 0x" << instrMem->getShamt() << endl;
+      myfile << hex << "\tfunct = 0x" << instrMem->getFunct() << endl;
+      myfile << hex << "\timmediate = 0x" << instrMem->getImm() << endl;
+      myfile << hex << "\tjumpAddress = 0x" << instrMem->getJumpAddress() << endl;
+      myfile << endl;
+
+      myfile << "---------- ALU 1 ----------" << endl;
+      myfile << "inputs:" << endl;
+      myfile << hex << "\tinput 1 = 0x" << PCount << endl;
+      myfile << "\tinput 2 = 0x" << 4 << endl;
+      myfile << "\tcontrol = 0x" << 2 << endl;
+      myfile << "output:" << endl;
+      // myfile << hex << "\tresult = " << alu1->getALUResult() << endl;
+      cout << endl;
+    }
+
 
     // decode
     shiftLeftJump->shiftLeft2(instrMem->getJumpAddress());
     cout << "---------- Shift-left 1 ----------" << endl;
-    shiftLeftJump->printInput();
-    shiftLeftJump->printOutput();
+    // shiftLeftJump->printInput();
+    cout << "input:" << endl;
+    cout << hex << "\t0x" << instrMem->getJumpAddress() << endl;
+    // shiftLeftJump->printOutput();
+    cout << "output:" << endl;
+    cout << hex << "\t0x" << shiftLeftJump->getResult() << endl << endl;
 
     // concatinating jump addres (already sifted left 2) with most significant
     // 4 digits of PC + 4
@@ -230,55 +345,201 @@ int main(int argc, char *argv[])
 
     control->setControls(instrMem->getOpcode());
     cout << "---------- Control ----------" << endl;
-    control->printInput();
-    control->printOutput();
-
-    writeReg = muxRegInput->getResult(instrMem->getRt(), instrMem->getRd(), control->getRegDst());
-    cout << "---------- Multiplexer 1 ----------\ninput:\n \t";
-    muxRegInput->printInputs();
-    cout << "output:\n \t";
-    muxRegInput->printOutput();
+    // control->printInput();
+    cout << "input: " << endl;
+    cout << hex << "\topcode = 0x" << instrMem->getOpcode() << endl;
+     // control->printOutput();
+    cout << "output: " << endl;
+    cout << hex << "\tRegDst = 0x" << control->getRegDst() << endl;
+    cout << hex << "\tjump = 0x" << control->getJump() << endl;
+    cout << hex << "\tbranch = 0x" << control->getBranch() << endl;
+    cout << hex << "\tmemRead = 0x" << control->getMemRead() << endl;
+    cout << hex << "\tmemToReg = 0x" << control->getMemToReg() << endl;
+    cout << hex << "\tALUOp = 0x" << control->getALUOp() << endl;  // this will work if ALUOp is an int
+    cout << hex << "\tmemWrite = 0x" << control->getMemWrite() << endl;
+    cout << hex << "\tALUSrc = 0x" << control->getALUSrc() << endl;
+    cout << hex << "\tregWrite = 0x" << control->getRegWrite() << endl;
     cout << endl;
 
-    // registers->readRegisters(instrMem->getRs(), instrMem->getRt());
+    writeReg = muxRegInput->getResult(instrMem->getRt(), instrMem->getRd(), control->getRegDst());
+    cout << "---------- Multiplexer 1 ----------" << endl;
+    cout << "inputs: " << endl;
+    cout << hex << "\trt = 0x" << instrMem->getRt() << endl;
+    cout << hex << "\trd = 0x" << instrMem->getRd() << endl;
+    cout << hex << "\tcontrol = 0x" << control->getRegDst() << endl;
+    cout << "output:" << endl;
+    cout << hex << "\tresult = 0x" << writeReg << endl;
+    cout << endl;
+
+    registers->readRegisters(instrMem->getRs(), instrMem->getRt());
     cout << "---------- Registers (read) ----------" << endl;
-    // registers->printReadInputs();
-    // registers->printReadOutputs();
+    cout << "inputs: " << endl;
+    cout << hex << "\tRead register 1 = 0x" << instrMem->getRs() << endl;
+    cout << hex << "\tRead register 2 = 0x" << instrMem->getRt() << endl;
+    cout << "outputs:" << endl;
+    cout << hex << "\tRead data 1 = 0x" << registers->getReadData1() << endl;
+    cout << hex << "\tRead data 2 = 0x" << registers->getReadData2() << endl;
+    cout << endl;
 
     signExtend->signExtend(instrMem->getImm());
     cout << "---------- Signextend ----------" << endl;
-    signExtend->printInput();
-    signExtend->printOutput();
+    // signExtend->printInput();
+    cout << "input:" << endl;
+    cout << hex << "\t0x" << setfill('0') << setw(4) << right << instrMem->getImm() << endl;
+    // signExtend->printOutput();
+    cout << "output:" << endl;
+    cout << hex << "\t0x" << setfill('0') << setw(8) << right << signExtend->getSignExtended() << endl;
+    cout << endl;
+
+    if (write_to_file == true) {
+      myfile << "---------- Shift-left 1 ----------" << endl;
+      myfile << "input:" << endl;
+      myfile << hex << "\t0x" << instrMem->getJumpAddress() << endl;
+      myfile << "output:" << endl;
+      myfile << hex << "\t0x" << shiftLeftJump->getResult() << endl << endl;
+
+      myfile << "---------- Control ----------" << endl;
+      myfile << "input: " << endl;
+      myfile << hex << "\topcode = 0x" << instrMem->getOpcode() << endl;
+      myfile << "output: " << endl;
+      myfile << hex << "\tRegDst = 0x" << control->getRegDst() << endl;
+      myfile << hex << "\tjump = 0x" << control->getJump() << endl;
+      myfile << hex << "\tbranch = 0x" << control->getBranch() << endl;
+      myfile << hex << "\tmemRead = 0x" << control->getMemRead() << endl;
+      myfile << hex << "\tmemToReg = 0x" << control->getMemToReg() << endl;
+      myfile << hex << "\tALUOp = 0x" << control->getALUOp() << endl;  // this will work if ALUOp is an int
+      myfile << hex << "\tmemWrite = 0x" << control->getMemWrite() << endl;
+      myfile << hex << "\tALUSrc = 0x" << control->getALUSrc() << endl;
+      myfile << hex << "\tregWrite = 0x" << control->getRegWrite() << endl;
+      myfile << endl;
+
+      myfile << "---------- Multiplexer 1 ----------" << endl;
+      myfile << "inputs: " << endl;
+      myfile << hex << "\trt = 0x" << instrMem->getRt() << endl;
+      myfile << hex << "\trd = 0x" << instrMem->getRd() << endl;
+      myfile << hex << "\tcontrol = 0x" << control->getRegDst() << endl;
+      myfile << "output:" << endl;
+      myfile << hex << "\tresult = 0x" << writeReg << endl;
+      myfile << endl;
+
+      myfile << "---------- Registers (read) ----------" << endl;
+      myfile << "inputs: " << endl;
+      myfile << hex << "\tRead register 1 = 0x" << instrMem->getRs() << endl;
+      myfile << hex << "\tRead register 2 = 0x" << instrMem->getRt() << endl;
+      myfile << "outputs:" << endl;
+      myfile << hex << "\tRead data 1 = 0x" << registers->getReadData1() << endl;
+      myfile << hex << "\tRead data 2 = 0x" << registers->getReadData2() << endl;
+      myfile << endl;
+
+      myfile << "---------- Signextend ----------" << endl;
+      myfile << "input:" << endl;
+      myfile << hex << "\t0x" << setfill('0') << setw(4) << right << instrMem->getImm() << endl;
+      myfile << "output:" << endl;
+      myfile << hex << "\t0x" << setfill('0') << setw(8) << right << signExtend->getSignExtended() << endl;
+      myfile << endl;
+    }
+
 
     // execute
     shiftLeftBranch->shiftLeft2(signExtend->getSignExtended());
     cout << "---------- Shift-left 1 ----------" << endl;
-    shiftLeftBranch->printInput();
-    shiftLeftBranch->printOutput();
+    // shiftLeftBranch->printInput();
+    cout << "input:" << endl;
+    cout << hex << "\t0x" << signExtend->getSignExtended() << endl;
+    // shiftLeftBranch->printOutput();
+    cout << "output:" << endl;
+    cout << hex << "\t0x" << shiftLeftBranch->getResult() << endl;
+    cout << endl;
+
 
     // alu2->compute(alu1->getALUResult(), shiftLeftBranch->getResult(), 2);
     cout << "---------- ALU 2 ----------" << endl;
-    // cout << "inputs:" << endl;
     // alu2->printInputs();
-    // cout << "output:" << endl;
+    cout << "inputs:" << endl;
+    // cout << hex << "\tinput 1 = 0x" << alu1->getALUResult() << endl;
+    // cout << hex << "\tinput 2 = 0x" << shiftLeftBranch->getResult() << endl;
+    // cout << hex << "\tcontrol = 0x" << 2 << endl;
     // alu2->printOutputs();
+    cout << "output:" << endl;
+    // cout << hex << "\tresult = 0x" << alu2->getALUResult() << endl;
+    cout << endl;
 
-    // aluInput2 = muxALUInput->getResult(registers->getReadData2(), signExtendedImm, control->getALUSrc())
-    cout << "---------- Multiplexer 2 ----------\ninput:\n \t";
-    // muxALUInput->printInputs();
-    cout << "output:\n \t";
-    // muxALUInput->printOutput();
+    aluInput2 = muxALUInput->getResult(registers->getReadData2(), signExtend->getSignExtended(), control->getALUSrc());
+    cout << "---------- Multiplexer 2 ----------" << endl;
+    cout << "inputs: " << endl;
+    cout << hex << "\tread data 2 = 0x" << registers->getReadData2() << endl;
+    cout << hex << "\tsignextended immediate = 0x" << signExtend->getSignExtended() << endl;
+    cout << hex << "\tconrotl = 0x" << control->getALUSrc() << endl;
+    cout << "output:" << endl;
+    cout << hex << "\tresult = 0x" << aluInput2 << endl;
     cout << endl;
 
     aluControl->setALUControl(control->getALUOp(), instrMem->getFunct());
     cout << "---------- ALU Control ----------" << endl;
-    aluControl->printInput();
-    aluControl->printOutput();
+    // aluControl->printInput();
+    cout << "inputs:" << endl;
+    cout << hex << "\tALU opcode = 0x" << control->getALUOp() << endl;
+    cout << hex << "\tfunction = 0x" << instrMem->getFunct() << endl;
+    // aluControl->printOutput();
+    cout << "output:" << endl;
+    cout << hex << "\tALU control = 0x" << aluControl->getALUControl() << endl;
+    cout << endl;
 
     // alu3->compute(registers->getReadData1(), aluInput2, aluControl->getALUControl());
     cout << "---------- ALU 3 ----------" << endl;
-    // alu3->printInputs();
-    // alu3->printOutputs();
+    cout << "inputs:" << endl;
+    cout << hex << "\tinput 1 = 0x" << registers->getReadData1() << endl;
+    cout << hex << "\tinput 2 = 0x" << aluInput2 << endl;
+    cout << hex << "\tcontrol = 0x" << aluControl->getALUControl() << endl;
+    cout << "output:" << endl;
+    // cout << hex << "\tresult = 0x" << alu3->getALUResult() << endl;
+    cout << endl;
+
+    if (write_to_file == true) {
+      myfile << "---------- Shift-left 1 ----------" << endl;
+      myfile << "input:" << endl;
+      myfile << hex << "\t0x" << signExtend->getSignExtended() << endl;
+      myfile << "output:" << endl;
+      myfile << hex << "\t0x" << shiftLeftBranch->getResult() << endl;
+      myfile << endl;
+
+      myfile << "---------- ALU 2 ----------" << endl;
+      myfile << "inputs:" << endl;
+      // myfile << hex << "\tinput 1 = 0x" << alu1->getALUResult() << endl;
+      // myfile << hex << "\tinput 2 = 0x" << shiftLeftBranch->getResult() << endl;
+      // myfile << hex << "\tcontrol = 0x" << 2 << endl;
+      myfile << "output:" << endl;
+      // myfile << hex << "\tresult = 0x" << alu2->getALUResult() << endl;
+      myfile << endl;
+
+      myfile << "---------- Multiplexer 2 ----------" << endl;
+      myfile << "inputs: " << endl;
+      myfile << hex << "\tread data 2 = 0x" << registers->getReadData2() << endl;
+      myfile << hex << "\tsignextended immediate = 0x" << signExtend->getSignExtended() << endl;
+      myfile << hex << "\tconrotl = 0x" << control->getALUSrc() << endl;
+      myfile << "output:" << endl;
+      myfile << hex << "\tresult = 0x" << aluInput2 << endl;
+      myfile << endl;
+
+      myfile << "---------- ALU Control ----------" << endl;
+      myfile << "inputs:" << endl;
+      myfile << hex << "\tALU opcode = 0x" << control->getALUOp() << endl;
+      myfile << hex << "\tfunction = 0x" << instrMem->getFunct() << endl;
+      myfile << "output:" << endl;
+      myfile << hex << "\tALU control = 0x" << aluControl->getALUControl() << endl;
+      myfile << endl;
+
+      myfile << "---------- ALU 3 ----------" << endl;
+      myfile << "inputs:" << endl;
+      myfile << hex << "\tinput 1 = 0x" << registers->getReadData1() << endl;
+      myfile << hex << "\tinput 2 = 0x" << aluInput2 << endl;
+      myfile << hex << "\tcontrol = 0x" << aluControl->getALUControl() << endl;
+      myfile << "output:" << endl;
+      // myfile << hex << "\tresult = 0x" << alu3->getALUResult() << endl;
+      myfile << endl;
+    }
+
+
 
     // memory
     // branchControl = control->getBranch() && alu3->getALUResult(); // hmm, don't think this will work...
@@ -296,8 +557,7 @@ int main(int argc, char *argv[])
     // muxJump->printOutputs();
     cout << endl;
 
-    // input_address is not a string!!!
-    // dataMem->readingAndWritingData(std::string input_address, control->getMemRead(), control->getMemWrite(), registers->getReadData2());
+    // dataMem->readingAndWritingData(alu3->getALUResult(), control->getMemRead(), control->getMemWrite(), registers->getReadData2());
     cout << "---------- Data Memory ----------" << endl;
     // dataMem->printInput();
     // dataMem->printOutput();
@@ -318,11 +578,14 @@ int main(int argc, char *argv[])
     // set PC
     // PC->setCount(addressJump);
     PC->setCount(PCount + 4);
+    cout << "---------- PC ----------" << endl;
+    cout << "input: " << (PCount + 4) << endl << endl;
+    // cout << "input: " << addressJump << endl << endl;
 
     if (print_memory_contents == true) {
       cout << "---------- Print Memory Contents ----------" << endl;
       cout << "Registers:" << endl;
-      // registers->printRegisterFile();
+      registers->printRegisterFile();
       cout << endl;
 
       cout << "Instruction Memory:" << endl;
@@ -338,6 +601,9 @@ int main(int argc, char *argv[])
     cout << endl;
   }
 
+  if (write_to_file == true) {
+    myfile.close();
+  }
 
 
   // int num = -12;
@@ -345,32 +611,13 @@ int main(int argc, char *argv[])
   // cout << "num in binary: " << bitset<16>(num) << endl;
   // cout << "num converted back to int: " << bitset<8>(num).to_ulong() << endl;
 
-  // int some16DigitBinIn = 000012;
-  // cout << hex << "Test hex output: " << some16DigitBinIn << endl;
-  // cout << "0x" << setfill('0') << setw(8) << right << hex << some16DigitBinIn << endl;
-
-
-  // instrMem->printMIPSInst(0x400000);
-  // instrMem->printBinaryInst(0x400000);
-  // instrMem->printMIPSInst(PCount);
-
-  // cout << instrMem->decode(0x400000) << endl;
-  // cout << instrMem->decode(0x400004) << endl;
-  // cout << instrMem->decode(0x400008) << endl;
-
-  // string cow = "wow wow wee wow wow";
-  // cout << cow << endl;
-  // string moo = removeWhitespace(cow);
-  // cout << moo << endl;
-  // cout << cow << endl;
-
 
   delete PC;
   // delete alu1;
   delete instrMem;
   delete shiftLeftJump;
   delete control;
-  // delete registers;
+  delete registers;
   delete signExtend;
   delete muxRegInput;
   delete muxALUInput;

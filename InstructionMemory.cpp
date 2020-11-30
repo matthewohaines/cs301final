@@ -91,7 +91,7 @@ void InstructionMemory::printOutput() {
     cout << "\tfunct = " << currInstr.substr(26, 6) << endl;       // (Inst[5-0]
     cout << "\timmediate = " << currInstr.substr(16, 16) << endl;  // (Inst[15-0])
     cout << "\tjumpAddress = " << currInstr.substr(6, 26) << endl; // (Inst[25-0])
-    cout << "-----------------------" << endl;
+    // cout << "-----------------------" << endl;
     cout << "In hexadecimal: " << endl;
   }
 
