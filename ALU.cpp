@@ -7,53 +7,48 @@ a certain function will be operated on these two terms */
 #include<iostream>
 using namespace std;
 
-	ALU::ALU(std::string theControl, int theinput1, int theinput2)
-	{
-		control = theControl;
-		input1 = theinput1;
-		input2 = theinput2;
-	}
+	ALU::ALU(){}
 
 	ALU::~ALU() {}
 
-	void ALU::compute(int term1, int term2, std::string operation){ // a bunch of ints representing output for ALU on diagram
-		if (operation == "add")  // if ALUop is 10, r-type instruciton, so either add or sub
+	void ALU::compute(int term1, int term2, int operation)
+	{ // a bunch of ints representing output for ALU on diagram
+		if (operation == 2)  // if ALUop is 10, r-type instruciton, so either add or sub
 		{
 			result =  add(term1, term2);
 		}
 
-		if (operation == "sub") 
+		if (operation == 6) 
 		{
 			result =  subtract(term1, term2);
 		}
 
-		if (operation == "slt") 
+		if (operation == 7) 
 		{
 			result =  slt(term1, term2);
 		}
 
-		if (operation == "lw") 
-		{
-			result = add(term1, term2);
-		}
+		// if (operation == "lw") 
+		// {
+		// 	result = add(term1, term2);
+		// }
 
-		if (operation == "sw")
-		{
-			result = add(term1, term2);
-		}
+		// if (operation == "sw")
+		// {
+		// 	result = add(term1, term2);
+		// }
 
-		if (operation == "beq")
-		{
-			if (subtract(term1, term2) == 0)
-			{ 
-				result = 1;
-			}
-			 result =  0;
+		// if (operation == "beq")
+		// {
+		// 	if (subtract(term1, term2) == 0)
+		// 	{ 
+		// 		result = 1;
+		// 	}
+		// 	 result =  0;
 
-		}
-
+		// }
 		return;
-		}
+	}
 
 	int ALU::getALUResult()
 	{

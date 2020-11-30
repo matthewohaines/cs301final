@@ -19,9 +19,9 @@ class ALU{
 		int slt(int term1, int term2);
 
 	public:
-		ALU(std::string theControl, int theinput1, int theinput2);
+		ALU();
 		~ALU();
-		void compute(int term1, int term2, std::string operation);
+		void compute(int term1, int term2, int operation);
 		int getALUResult();
 		int getALUControl();
 		int getZero();
