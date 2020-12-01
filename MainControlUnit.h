@@ -13,7 +13,7 @@ class MainControlUnit{
 		int branch;
 		int memRead;
 		int memToReg;
-		std::string ALUOp;
+		int ALUOp;
 		int memWrite;
 		int ALUSrc;
 		int regWrite;
@@ -30,7 +30,7 @@ class MainControlUnit{
 		int getBranch();
 		int getMemRead();
 		int getMemToReg();
-		std::string getALUOp();
+		int getALUOp();
 		int getMemWrite();
 		int getALUSrc();
 		int getRegWrite();

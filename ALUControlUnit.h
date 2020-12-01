@@ -6,7 +6,7 @@
 
 class ALUControlUnit{
 	private:
-		std::string ALUOp;
+		int ALUOp;
 		int instruction;
 		int ALUControl;
 
@@ -16,7 +16,7 @@ class ALUControlUnit{
 		ALUControlUnit(const ALUControlUnit& other);
 		~ALUControlUnit();
 
-		void setALUControl(std::string ALUOpcode, int function);
+		void setALUControl(int ALUOpcode, int function);
 		int getALUControl();
 
 		void printInput();
