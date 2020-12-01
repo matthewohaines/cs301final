@@ -5,6 +5,8 @@
 #include <string>
 #include <map>
 
+using namespace std;
+
 class DataMemory{
 private:
 	std::map<int,int> memory;
@@ -14,6 +16,9 @@ private:
 	int readData;
 	int memWrite;
 	int memRead;
+
+	bool isWhitespace(char c);
+	string removeWhitespace(string str);
 
 public:
 	DataMemory(std::string memoryInput);
