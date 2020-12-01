@@ -19,7 +19,7 @@ void MainControlUnit::setControls(int opcode){
 		memWrite = 0;
 		branch = 0;
 		jump = 0;
-		ALUOp = "10";
+		ALUOp = 2 ; //10
 	}
 
 	if (opcode == 35) { // LW Control Values (100011)
@@ -31,7 +31,7 @@ void MainControlUnit::setControls(int opcode){
 		memWrite = 0;
 		branch = 0;
 		jump = 0;
-		ALUOp = "00";
+		ALUOp = 0 ; // 00
 	}
 
 	if (opcode == 43) { // SW Control Values (101011)
@@ -43,7 +43,7 @@ void MainControlUnit::setControls(int opcode){
 		memWrite = 1;
 		branch = 0;
 		jump = 0;
-		ALUOp = "00";
+		ALUOp = 0; // 00
 	}
 
 
@@ -56,7 +56,7 @@ void MainControlUnit::setControls(int opcode){
 		memWrite = 0;
 		branch = 1;
 		jump = 0;
-		ALUOp = "01";
+		ALUOp = 1; // 01
 	}
 
 	if (opcode == 2) {//Jump Control Values (000010)
@@ -68,7 +68,7 @@ void MainControlUnit::setControls(int opcode){
 		memWrite = 0;
 		branch = 0;
 		jump = 1;
-		ALUOp = "-1";
+		ALUOp = -1; // -1
 	}
 
 	if (opcode == 8) { //ADDI Control Values (001000)
@@ -80,7 +80,7 @@ void MainControlUnit::setControls(int opcode){
 		memWrite = 0;
 		branch = 0;
 		jump = 0;
-		ALUOp = "11";
+		ALUOp = 3; // 11
 	}
 }
 
@@ -89,7 +89,7 @@ int MainControlUnit::getJump() {return(jump);}
 int MainControlUnit::getBranch() {return(branch);}
 int MainControlUnit::getMemRead() {return(memRead);}
 int MainControlUnit::getMemToReg() {return(memToReg);}
-std::string MainControlUnit::getALUOp() {return(ALUOp);}
+int MainControlUnit::getALUOp() {return(ALUOp);}
 int MainControlUnit::getMemWrite() {return(memWrite);}
 int MainControlUnit::getALUSrc() {return(ALUSrc);}
 int MainControlUnit::getRegWrite() {return(regWrite);}

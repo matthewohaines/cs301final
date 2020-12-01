@@ -6,11 +6,11 @@ ALUControlUnit::ALUControlUnit(){}
 ALUControlUnit::ALUControlUnit(const ALUControlUnit& other){}
 ALUControlUnit::~ALUControlUnit(){}
 
-void ALUControlUnit::setALUControl(std::string ALUOpcode, int function){
+void ALUControlUnit::setALUControl(int ALUOpcode, int function){
 	ALUOp = ALUOpcode;
 	instruction = function;
 
-	if (ALUOp.compare("10") == 0){
+	if (ALUOp == 2){
 		if(instruction == 32){
 			ALUControl = 2;
 		}
@@ -23,19 +23,19 @@ void ALUControlUnit::setALUControl(std::string ALUOpcode, int function){
 
 	}
 		
-	if(ALUOp.compare("00") == 0){
+	if(ALUOp == 0){
 		ALUControl = 2;
 	}
 
-	if(ALUOp.compare("01") == 0){
+	if(ALUOp == 1){
 		ALUControl = 6;
 	}
 	
-	if(ALUOp.compare("11") == 0){
+	if(ALUOp == 3){
 		ALUControl = 2;
 	}
 
-	if(ALUOp.compare("-1") == 0){
+	if(ALUOp == -1){
 		ALUControl = 6;
 	}
 }
