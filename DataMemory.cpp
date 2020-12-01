@@ -43,7 +43,7 @@ DataMemory::DataMemory(std::string memoryInput){
 			// needed an unsigned int otherwise bigger hex values were not converted right
 			unsigned int theData;
 			int data;
-			stringstream addressNum;
+			stringstream addressNum; // using stringstream to convert string to int
 			stringstream hexInt;
 			addressNum << hex << addr;
 			addressNum >> i;
@@ -85,7 +85,8 @@ void DataMemory::readingAndWritingData(int inputAddress, int readControl, int wr
 		}
 	}
 	catch (...) {
-		cerr << hex << "Error: Trying to access address 0x" << address << " which is not contained in the memory file!" << endl;
+		cerr << hex << "Error: Trying to access address 0x" << address
+		     << " which is not contained in the memory file!" << endl;
 		exit(1);
 	}
 }
