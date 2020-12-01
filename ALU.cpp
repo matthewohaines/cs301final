@@ -26,27 +26,12 @@ using namespace std;
 		if (operation == 7) 
 		{
 			result =  slt(term1, term2);
+			if (result == 0)
+			{
+				zero = 1;
+			}
 		}
 
-		// if (operation == "lw") 
-		// {
-		// 	result = add(term1, term2);
-		// }
-
-		// if (operation == "sw")
-		// {
-		// 	result = add(term1, term2);
-		// }
-
-		// if (operation == "beq")
-		// {
-		// 	if (subtract(term1, term2) == 0)
-		// 	{ 
-		// 		result = 1;
-		// 	}
-		// 	 result =  0;
-
-		// }
 		return;
 	}
 
