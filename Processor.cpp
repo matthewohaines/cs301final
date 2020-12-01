@@ -557,17 +557,15 @@ int main(int argc, char *argv[])
 
     addressJump = muxJump->getResult(addressBranch, jumpAddress, control->getJump());
     cout << "---------- Multiplexer 4 ----------" << endl;
-    // muxBranch->printInputs();
     cout << "inputs: " << endl;
     cout << hex << "\tMUX 5 result = 0x" << addressBranch << endl;
     cout << hex << "\tjump address = 0x" << jumpAddress << endl;
     cout << hex << "\tconrotl = 0x" << control->getJump() << endl;
-    // muxBranch->printOutputs();
     cout << "output:" << endl;
     cout << hex << "\tresult = 0x" << addressJump << endl;
     cout << endl;
 
-    // dataMem->readingAndWritingData(alu3->getALUResult(), control->getMemRead(), control->getMemWrite(), registers->getReadData2());
+    dataMem->readingAndWritingData(alu3->getALUResult(), control->getMemRead(), control->getMemWrite(), registers->getReadData2());
     cout << "---------- Data Memory ----------" << endl;
     // dataMem->printInput();
     cout << "inputs: " << endl;
@@ -577,19 +575,19 @@ int main(int argc, char *argv[])
     cout << hex << "\tmemWrite = 0x" << control->getMemWrite() << endl;
     // dataMem->printOutput();
     cout << "output:" << endl;
-    // cout << hex << "\tread data = 0x" << dataMem->getReadData() << endl;
+    cout << hex << "\tread data = 0x" << dataMem->getReadData() << endl;
     cout << endl;
 
-    // writeBackData = muxWriteBack->getResult(dataMem->getReadData(), alu3->getALUResult(), control->getMemToReg());
+    writeBackData = muxWriteBack->getResult(dataMem->getReadData(), alu3->getALUResult(), control->getMemToReg());
     cout << "---------- Multiplexer 3 ----------" << endl;
     // muxWriteBack->printInputs();
     cout << "inputs: " << endl;
-    // cout << hex << "\tread data = 0x" << dataMem->getReadData() << endl;
+    cout << hex << "\tread data = 0x" << dataMem->getReadData() << endl;
     cout << hex << "\tALU 3 result = 0x" << alu3->getALUResult() << endl;
     cout << hex << "\tcontrol = 0x" << control->getMemToReg() << endl;
     // muxWriteBack->printOutputs();
     cout << "output:" << endl;
-    // cout << hex << "\tresult = 0x" << writeBackData << endl;
+    cout << hex << "\tresult = 0x" << writeBackData << endl;
     cout << endl;
 
 
@@ -619,49 +617,49 @@ int main(int argc, char *argv[])
       myfile << hex << "\tmemRead = 0x" << control->getMemRead() << endl;
       myfile << hex << "\tmemWrite = 0x" << control->getMemWrite() << endl;
       myfile << "output:" << endl;
-      // myfile << hex << "\tread data = 0x" << dataMem->getReadData() << endl;
+      myfile << hex << "\tread data = 0x" << dataMem->getReadData() << endl;
       myfile << endl;
 
       myfile << "---------- Multiplexer 3 ----------" << endl;
       myfile << "inputs: " << endl;
-      // myfile << hex << "\tread data = 0x" << dataMem->getReadData() << endl;
+      myfile << hex << "\tread data = 0x" << dataMem->getReadData() << endl;
       myfile << hex << "\tALU 3 result = 0x" << alu3->getALUResult() << endl;
       myfile << hex << "\tcontrol = 0x" << control->getMemToReg() << endl;
       myfile << "output:" << endl;
-      // myfile << hex << "\tresult = 0x" << writeBackData << endl;
+      myfile << hex << "\tresult = 0x" << writeBackData << endl;
       myfile << endl;
     }
 
 
 
     // write back
-    // Registers->writeBack(control->getRegWrite(), writeReg, writeBackData);
+    registers->writeBack(control->getRegWrite(), writeReg, writeBackData);
     cout << "---------- Registers (write back) ----------" << endl;
     cout << "inputs: " << endl;
     cout << hex << "\twrite register = 0x" << writeReg << endl;
-    // cout << hex << "\twrite data = 0x" << writeBackData << endl;
+    cout << hex << "\twrite data = 0x" << writeBackData << endl;
     cout << hex << "\tregWrite = 0x" << control->getRegWrite() << endl;
     cout << endl;
 
 
     // set PC
-    // PC->setCount(addressJump);
-    PC->setCount(PCount + 4);
+    PC->setCount(addressJump);
+    // PC->setCount(PCount + 4);
     cout << "---------- PC ----------" << endl;
     // cout << "inmput: " << (PCount + 4) << endl << endl;
-    // cout << "input: " << addressJump << endl << endl;
+    cout << "input: " << addressJump << endl << endl;
 
 
     if (write_to_file == true) {
       myfile << "---------- Registers (write back) ----------" << endl;
       myfile << "inputs: " << endl;
       myfile << hex << "\twrite register = 0x" << writeReg << endl;
-      // myfile << hex << "\twrite data = 0x" << writeBackData << endl;
+      myfile << hex << "\twrite data = 0x" << writeBackData << endl;
       myfile << hex << "\tregWrite = 0x" << control->getRegWrite() << endl;
       myfile << endl;
 
       myfile << "---------- PC ----------" << endl;
-      // myfile << "input: " << addressJump << endl << endl;
+      myfile << "input: " << addressJump << endl << endl;
     }
 
 
@@ -687,7 +685,7 @@ int main(int argc, char *argv[])
       cout << endl;
 
       cout << "Data Memory:" << endl;
-      cout << "address  : data" << endl;
+      cout << "address    : data" << endl;
       // dataMem->printMemory();
       map<int, int> dataMemory = dataMem->getDataMemory();
       for (map<int, int>::iterator it = dataMemory.begin(); it != dataMemory.end(); ++it) {
@@ -716,7 +714,7 @@ int main(int argc, char *argv[])
         myfile << endl;
 
         myfile << "Data Memory:" << endl;
-        myfile << "address  : data" << endl;
+        myfile << "address    : data" << endl;
         map<int, int> dataMemory = dataMem->getDataMemory();
         for (map<int, int>::iterator it = dataMemory.begin(); it != dataMemory.end(); ++it) {
           myfile << hex << "0x" << it->first << " : 0x" << it->second << endl;
