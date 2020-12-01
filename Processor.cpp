@@ -689,7 +689,7 @@ int main(int argc, char *argv[])
       // dataMem->printMemory();
       map<int, int> dataMemory = dataMem->getDataMemory();
       for (map<int, int>::iterator it = dataMemory.begin(); it != dataMemory.end(); ++it) {
-        cout << m
+        cout << hex << "0x" << it->first << " : 0x" << it->second << endl;
       }
       cout << endl;
 
