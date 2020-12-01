@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
   bool debug_mode = false;
   bool print_memory_contents = false;
   string output_file;
-  bool write_to_file = false;  // missing in final project doc list
+  bool write_to_file = false;  // missing in final project doc (bulleted list)
 
   ifstream in;
   in.open(configuration_file.c_str());
@@ -272,7 +272,7 @@ int main(int argc, char *argv[])
     cout << "\tinput 2 = 0x" << 4 << endl;
     cout << "\tcontrol = 0x" << 2 << endl;
     cout << "output:" << endl;
-    cout << hex << "\tresult = " << alu1->getALUResult() << endl;
+    cout << hex << "\tresult = 0x" << alu1->getALUResult() << endl;
     cout << endl;
 
     if (write_to_file == true) {
@@ -319,7 +319,7 @@ int main(int argc, char *argv[])
       myfile << "\tinput 2 = 0x" << 4 << endl;
       myfile << "\tcontrol = 0x" << 2 << endl;
       myfile << "output:" << endl;
-      myfile << hex << "\tresult = " << alu1->getALUResult() << endl;
+      myfile << hex << "\tresult = 0x" << alu1->getALUResult() << endl;
       cout << endl;
     }
 
@@ -469,7 +469,7 @@ int main(int argc, char *argv[])
     cout << "inputs: " << endl;
     cout << hex << "\tread data 2 = 0x" << registers->getReadData2() << endl;
     cout << hex << "\tsignextended immediate = 0x" << signExtend->getSignExtended() << endl;
-    cout << hex << "\tconrotl = 0x" << control->getALUSrc() << endl;
+    cout << hex << "\tcontrol = 0x" << control->getALUSrc() << endl;
     cout << "output:" << endl;
     cout << hex << "\tresult = 0x" << aluInput2 << endl;
     cout << endl;
@@ -516,7 +516,7 @@ int main(int argc, char *argv[])
       myfile << "inputs: " << endl;
       myfile << hex << "\tread data 2 = 0x" << registers->getReadData2() << endl;
       myfile << hex << "\tsignextended immediate = 0x" << signExtend->getSignExtended() << endl;
-      myfile << hex << "\tconrotl = 0x" << control->getALUSrc() << endl;
+      myfile << hex << "\tcontrol = 0x" << control->getALUSrc() << endl;
       myfile << "output:" << endl;
       myfile << hex << "\tresult = 0x" << aluInput2 << endl;
       myfile << endl;
@@ -549,7 +549,7 @@ int main(int argc, char *argv[])
     cout << "inputs: " << endl;
     cout << hex << "\tPC + 4 = 0x" << alu1->getALUResult() << endl;
     cout << hex << "\tbranch address = 0x" << alu2->getALUResult() << endl;
-    cout << hex << "\tconrotl = 0x" << branchControl << endl;
+    cout << hex << "\tcontrol = 0x" << branchControl << endl;
     // muxBranch->printOutputs();
     cout << "output:" << endl;
     cout << hex << "\tresult = 0x" << addressBranch << endl;
@@ -560,7 +560,7 @@ int main(int argc, char *argv[])
     cout << "inputs: " << endl;
     cout << hex << "\tMUX 5 result = 0x" << addressBranch << endl;
     cout << hex << "\tjump address = 0x" << jumpAddress << endl;
-    cout << hex << "\tconrotl = 0x" << control->getJump() << endl;
+    cout << hex << "\tcontrol = 0x" << control->getJump() << endl;
     cout << "output:" << endl;
     cout << hex << "\tresult = 0x" << addressJump << endl;
     cout << endl;
@@ -596,7 +596,7 @@ int main(int argc, char *argv[])
       myfile << "inputs: " << endl;
       myfile << hex << "\tPC + 4 = 0x" << alu1->getALUResult() << endl;
       myfile << hex << "\tbranch address = 0x" << alu2->getALUResult() << endl;
-      myfile << hex << "\tconrotl = 0x" << branchControl << endl;
+      myfile << hex << "\tcontrol = 0x" << branchControl << endl;
       myfile << "output:" << endl;
       myfile << hex << "\tresult = 0x" << addressBranch << endl;
       myfile << endl;
@@ -605,7 +605,7 @@ int main(int argc, char *argv[])
       myfile << "inputs: " << endl;
       myfile << hex << "\tMUX 5 result = 0x" << addressBranch << endl;
       myfile << hex << "\tjump address = 0x" << jumpAddress << endl;
-      myfile << hex << "\tconrotl = 0x" << control->getJump() << endl;
+      myfile << hex << "\tcontrol = 0x" << control->getJump() << endl;
       myfile << "output:" << endl;
       myfile << hex << "\tresult = 0x" << addressJump << endl;
       myfile << endl;
@@ -647,7 +647,7 @@ int main(int argc, char *argv[])
     // PC->setCount(PCount + 4);
     cout << "---------- PC ----------" << endl;
     // cout << "inmput: " << (PCount + 4) << endl << endl;
-    cout << "input: " << addressJump << endl << endl;
+    cout << "input: 0x" << addressJump << endl << endl;
 
 
     if (write_to_file == true) {
@@ -659,7 +659,7 @@ int main(int argc, char *argv[])
       myfile << endl;
 
       myfile << "---------- PC ----------" << endl;
-      myfile << "input: " << addressJump << endl << endl;
+      myfile << "input: 0x" << addressJump << endl << endl;
     }
 
 
@@ -689,7 +689,7 @@ int main(int argc, char *argv[])
       // dataMem->printMemory();
       map<int, int> dataMemory = dataMem->getDataMemory();
       for (map<int, int>::iterator it = dataMemory.begin(); it != dataMemory.end(); ++it) {
-        cout << hex << "0x" << it->first << " : 0x" << it->second << endl;
+        cout << m
       }
       cout << endl;
 
@@ -699,7 +699,7 @@ int main(int argc, char *argv[])
         myfile << "Registers:" << endl;
         for (int i = 0; i <= 31; i++)
         {
-          myfile << dec << i << " : " << hex << registers->getRegister(i) << endl;
+          myfile << dec << i << " : " << hex << "0x" << registers->getRegister(i) << endl;
         }
         myfile << endl;
 
@@ -709,7 +709,7 @@ int main(int argc, char *argv[])
         for (map<int, Instruction>::iterator it = instructionMemory.begin();
             it != instructionMemory.end(); ++it) {
           myfile << hex << "0x" << it->first << " : " << it->second.getEncoding()
-              << " : " << it->second.getMIPS() << endl;
+                 << " : " << it->second.getMIPS() << endl;
         }
         myfile << endl;
 
