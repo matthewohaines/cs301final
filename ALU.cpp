@@ -1,8 +1,8 @@
 #include "ALU.h"
 
 
-/* the ALU is given two terms and a control, 
-depending on what this control is, 
+/* the ALU is given two terms and a control,
+depending on what this control is,
 a certain function will be operated on these two terms */
 #include<iostream>
 using namespace std;
@@ -18,18 +18,20 @@ using namespace std;
 			result =  add(term1, term2);
 		}
 
-		if (operation == 6) 
+		if (operation == 6)
 		{
 			result =  subtract(term1, term2);
 		}
 
-		if (operation == 7) 
+		if (operation == 7)
 		{
 			result =  slt(term1, term2);
 			if (result == 0)
 			{
 				zero = 1;
 			}
+			else
+				zero = 0;
 		}
 
 		return;

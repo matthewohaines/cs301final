@@ -48,10 +48,8 @@ class InstructionMemory{
   string currInstr;      // current instruction
   int maxAddress;        // first address that does not contain an instruction
 
-  // ASM *instrMem;         // instance of ASM
   map<int, Instruction> instMem; // map for addresses and their
                                  // corresponding instruction
-
 
   int opcode;         // (Inst[31-26])
   int rs;             // (Inst[25-21])
@@ -61,13 +59,6 @@ class InstructionMemory{
   int funct;          // (Inst[5-0]
   int immediate;      // (Inst[15-0])
   int jumpAddress;    // (Inst[25-0])
-
-  // // Returns true if s represents a valid binary integer
-  // bool isStringBinaryNum(string s);
-
-  // // Converts a string to an integer.  Assumes s is something like "101" and produces 5
-  // int  cvtNumString2Number(string s);
-
 };
 
 #endif
