@@ -13,7 +13,7 @@ void MainControlUnit::setControls(int opcode){
 	if (opcode == 0) { // R-Type Control Values (000000)
 		regDst = 1;
 		ALUSrc = 0;
-		memToReg = 0;
+		memToReg = 1;
 		regWrite = 1;
 		memRead = 0;
 		memWrite = 0;
@@ -25,7 +25,7 @@ void MainControlUnit::setControls(int opcode){
 	if (opcode == 35) { // LW Control Values (100011)
 		regDst = 0;
 		ALUSrc = 1;
-		memToReg = 1;
+		memToReg = 0;
 		regWrite = 1;
 		memRead = 1;
 		memWrite = 0;
@@ -50,7 +50,7 @@ void MainControlUnit::setControls(int opcode){
 	if (opcode == 4) { //BEQ Control Values (000100)
 		regDst = -1;
 		ALUSrc = 0;
-		memToReg = 0;
+		memToReg = -1;
 		regWrite = 0;
 		memRead = 0;
 		memWrite = 0;
@@ -74,7 +74,7 @@ void MainControlUnit::setControls(int opcode){
 	if (opcode == 8) { //ADDI Control Values (001000)
 		regDst = 0;
 		ALUSrc = 1;
-		memToReg = 0;
+		memToReg = 1;
 		regWrite = 1;
 		memRead = 0;
 		memWrite = 0;

@@ -14,7 +14,7 @@ void ALUControlUnit::setALUControl(int ALUOpcode, int function){
 		if(instruction == 32){
 			ALUControl = 2;
 		}
-		if(instruction == 43){
+		if(instruction == 34){
 			ALUControl = 6;
 		}
 		if(instruction == 42){
@@ -22,7 +22,7 @@ void ALUControlUnit::setALUControl(int ALUOpcode, int function){
 		}
 
 	}
-		
+
 	if(ALUOp == 0){
 		ALUControl = 2;
 	}
@@ -30,7 +30,7 @@ void ALUControlUnit::setALUControl(int ALUOpcode, int function){
 	if(ALUOp == 1){
 		ALUControl = 6;
 	}
-	
+
 	if(ALUOp == 3){
 		ALUControl = 2;
 	}

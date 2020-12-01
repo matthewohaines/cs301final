@@ -154,7 +154,7 @@ int main(int argc, char *argv[])
 
   // initialize objects and other variables
   // fetch
-  int instCount = 0;
+  int instCount = 1;
   PCCounter *PC = new PCCounter;
   int PCount;
   ALU *alu1 = new ALU();
@@ -244,8 +244,8 @@ int main(int argc, char *argv[])
       cout << "In binary: " << endl;
       cout << "\topcode = " << instrMem->getCurrInstr().substr(0, 6) << endl;       // (Inst[31-26])
       cout << "\trs = " << instrMem->getCurrInstr().substr(6, 5) << endl;           // (Inst[25-21])
-      cout << "\trd = " << instrMem->getCurrInstr().substr(11, 5) << endl;          // (Inst[20-16])
-      cout << "\trs = " << instrMem->getCurrInstr().substr(16, 5) << endl;          // (Inst[15-11])
+      cout << "\trt = " << instrMem->getCurrInstr().substr(11, 5) << endl;          // (Inst[20-16])
+      cout << "\trd = " << instrMem->getCurrInstr().substr(16, 5) << endl;          // (Inst[15-11])
       cout << "\tshmat = " << instrMem->getCurrInstr().substr(21, 5) << endl;       // (Inst[10-6])
       cout << "\tfunct = " << instrMem->getCurrInstr().substr(26, 6) << endl;       // (Inst[5-0]
       cout << "\timmediate = " << instrMem->getCurrInstr().substr(16, 16) << endl;  // (Inst[15-0])
@@ -442,7 +442,7 @@ int main(int argc, char *argv[])
 
     // execute
     shiftLeftBranch->shiftLeft2(signExtend->getSignExtended());
-    cout << "---------- Shift-left 1 ----------" << endl;
+    cout << "---------- Shift-left 2 ----------" << endl;
     // shiftLeftBranch->printInput();
     cout << "input:" << endl;
     cout << hex << "\t0x" << signExtend->getSignExtended() << endl;
@@ -496,7 +496,7 @@ int main(int argc, char *argv[])
     cout << endl;
 
     if (write_to_file == true) {
-      myfile << "---------- Shift-left 1 ----------" << endl;
+      myfile << "---------- Shift-left 2 ----------" << endl;
       myfile << "input:" << endl;
       myfile << hex << "\t0x" << signExtend->getSignExtended() << endl;
       myfile << "output:" << endl;
@@ -542,7 +542,7 @@ int main(int argc, char *argv[])
 
 
     // memory
-    branchControl = control->getBranch() && alu3->getZero(); // hmm, don't think this will work...
+    branchControl = control->getBranch() && alu3->getZero();
     addressBranch = muxBranch->getResult(alu1->getALUResult(), alu2->getALUResult(), branchControl);
     cout << "---------- Multiplexer 5 ----------" << endl;
     // muxBranch->printInputs();
