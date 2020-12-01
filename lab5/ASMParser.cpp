@@ -99,12 +99,15 @@ ASMParser::ASMParser(string filename)
           break;
         }
 
-        // string mipsInstrustion = opcode + "\t";
-        // for (int i = 0; i < operand_count; i ++) {
-        //   mipsInstrustion += operand[i] + " ";
-        // }
+        // find first char that is not whitespace
+        int len = line.length();
+        int p = 0; // position in line
+        // line.at(p) is whitespace or p >= len
+        while (p < len && isWhitespace(line.at(p)))
+          p++;
 
-        bool success = getOperands(i, o, operand, operand_count, line);
+
+        bool success = getOperands(i, o, operand, operand_count, line.substr(p));
         if(!success){
           myFormatCorrect = false;
           break;
