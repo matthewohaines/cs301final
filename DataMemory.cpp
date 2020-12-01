@@ -72,9 +72,6 @@ void DataMemory::readingAndWritingData(int inputAddress, int readControl, int wr
 	// while(keycomp((*it++).first, address));
 
 
-	// cout << hex << "trying to access address " << address << endl;
-	// error message for accessing memory outside of memory file???
-
 	try {
 		if (memRead == 1){
 			readData = memory.at(address);
