@@ -1,0 +1,3936 @@
+------------------------------ Iteration 1 ------------------------------
+---------- PC ----------
+output: 0x400000
+
+MIPS instruction at address 0x400000: 
+	add $1, $2, $3
+
+---------- Instruction Memory ----------
+input:
+	PCount = 0x400000
+output:
+	opcode = 0x0
+	rs = 0x2
+	rt = 0x3
+	rd = 0x1
+	shamt = 0x0
+	funct = 0x20
+	immediate = 0x820
+	jumpAddress = 0x430820
+
+---------- ALU 1 ----------
+inputs:
+	input 1 = 0x400000
+	input 2 = 0x4
+	control = 0x2
+output:
+	result = 0x400004
+---------- Shift-left 1 ----------
+input:
+	0x430820
+output:
+	0x10c2080
+
+---------- Control ----------
+input: 
+	opcode = 0x0
+output: 
+	RegDst = 0x1
+	jump = 0x0
+	branch = 0x0
+	memRead = 0x0
+	memToReg = 0x1
+	ALUOp = 0x2
+	memWrite = 0x0
+	ALUSrc = 0x0
+	regWrite = 0x1
+
+---------- Multiplexer 1 ----------
+inputs: 
+	rt = 0x3
+	rd = 0x1
+	control = 0x1
+output:
+	result = 0x1
+
+---------- Registers (read) ----------
+inputs: 
+	Read register 1 = 0x2
+	Read register 2 = 0x3
+outputs:
+	Read data 1 = 0x4
+	Read data 2 = 0x1c
+
+---------- Signextend ----------
+input:
+	0x0820
+output:
+	0x00000820
+
+---------- Shift-left 2 ----------
+input:
+	0x820
+output:
+	0x2080
+
+---------- ALU 2 ----------
+inputs:
+	input 1 = 0x400004
+	input 2 = 0x2080
+	control = 0x2
+output:
+	result = 0x402084
+
+---------- Multiplexer 2 ----------
+inputs: 
+	read data 2 = 0x1c
+	signextended immediate = 0x820
+	control = 0x0
+output:
+	result = 0x1c
+
+---------- ALU Control ----------
+inputs:
+	ALU opcode = 0x2
+	function = 0x20
+output:
+	ALU control = 0x2
+
+---------- ALU 3 ----------
+inputs:
+	input 1 = 0x4
+	input 2 = 0x1c
+	control = 0x2
+output:
+	result = 0x20
+
+---------- Multiplexer 5 ----------
+inputs: 
+	PC + 4 = 0x400004
+	branch address = 0x402084
+	control = 0x0
+output:
+	result = 0x400004
+
+---------- Multiplexer 4 ----------
+inputs: 
+	MUX 5 result = 0x400004
+	jump address = 0x10c2080
+	control = 0x0
+output:
+	result = 0x400004
+
+---------- Data Memory ----------
+inputs: 
+	address = 0x20
+	write data = 0x1c
+	memRead = 0x0
+	memWrite = 0x0
+output:
+	read data = 0x0
+
+---------- Multiplexer 3 ----------
+inputs: 
+	read data = 0x0
+	ALU 3 result = 0x20
+	control = 0x1
+output:
+	result = 0x20
+
+---------- Registers (write back) ----------
+inputs: 
+	write register = 0x1
+	write data = 0x20
+	regWrite = 0x1
+
+---------- PC ----------
+input: 0x400004
+
+---------- Print Memory Contents ----------
+Registers:
+0 : 0x58eed051
+1 : 0x20
+2 : 0x4
+3 : 0x1c
+4 : 0xe65e1e87
+5 : 0x8c
+6 : 0xb90037d6
+7 : 0x63322818
+8 : 0x12c
+9 : 0x9de6153f
+10 : 0x1000000c
+11 : 0x0
+12 : 0x9cb2a11c
+13 : 0xddc6522
+14 : 0x604ca9a9
+15 : 0x488a6409
+16 : 0xaaa29086
+17 : 0x95ddcf94
+18 : 0x61d998ef
+19 : 0x8e9a6c56
+20 : 0x5a3e780f
+21 : 0xdaa25db0
+22 : 0xa031e83
+23 : 0x750773f2
+24 : 0x67745ce5
+25 : 0x9b0eae9d
+26 : 0x10000004
+27 : 0x10000020
+28 : 0x70e0b33a
+29 : 0x1b128e28
+30 : 0xea150cc4
+31 : 0x81e72593
+
+Instruction Memory:
+address  : binary encoding                  : MIPS instruction
+0x400000 : 00000000010000110000100000100000 : add $1, $2, $3
+0x400004 : 00000000101000010010000000100010 : sub $4, $5, $1
+0x400008 : 00100000100001100000000010010100 : addi $6, $4, 148
+0x40000c : 00000001000001100011100000101010 : slt $7, $8, $6
+0x400010 : 10001101010000101111111111111100 : lw $2, -4($10)
+0x400014 : 10101101010001100000000000000100 : sw $6, 4($10)
+0x400018 : 00010000111010111111111111111001 : beq $7, $11, loop
+0x40001c : 00001000000100000000000000011011 : j end
+0x400020 : 00010000001000100000000001110111 : beq	$1, $2, 0x200
+0x400024 : 00010000001000100000011101110110 : beq	$1, $2, 0x1e00
+0x400028 : 00001000000100000000000000000011 : j	0x40000c
+0x40002c : 00000000100010000001100000100000 : add	$3, $4, $8
+0x400030 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400034 : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400038 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x40003c : 00000000010000110000100000101010 : slt	$1, $2, $3
+0x400040 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x400044 : 10101111010100010000000000001000 : sw      $17, 8($26)
+0x400048 : 00000000100010000001100000100000 : add	$3, $4, $8
+0x40004c : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400050 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400054 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x400058 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x40005c : 10101111010100010000000000001000 : sw  $17, 8($26)
+0x400060 : 00010000001000101111111111111010 : beq	$1, $2, 0x40004c   
+0x400064 : 00001000000100000000000000010101 : j	0x400054
+0x400068 : 00010000001000101111111111111001 : beq	$1, $2, label1
+0x40006c : 00100010010100010000000000000100 : addi $17, $18, 4
+
+Data Memory:
+address    : data
+0x10000000 : 0x58eed051
+0x10000004 : 0x305f7ea1
+0x10000008 : 0xfffffe00
+0x1000000c : 0xc57b54ba
+0x10000010 : 0xe65e1e87
+0x10000014 : 0x1df23a4f
+0x10000018 : 0xb90037d6
+0x1000001c : 0x63322818
+0x10000020 : 0x10916273
+0x10000024 : 0x9de6153f
+0x10000028 : 0x81fb7b82
+0x1000002c : 0xce7d0a9b
+0x10000030 : 0x9cb2a11c
+0x10000034 : 0xddc6522
+0x10000038 : 0x604ca9a9
+0x1000003c : 0x488a6409
+0x10000040 : 0xaaa29086
+0x10000044 : 0x95ddcf94
+0x10000048 : 0x61d998ef
+0x1000004c : 0x8e9a6c56
+0x10000050 : 0x5a3e780f
+0x10000054 : 0xdaa25db0
+0x10000058 : 0xa031e83
+0x1000005c : 0x750773f2
+0x10000060 : 0x67745ce5
+0x10000064 : 0x1bbb31d
+0x10000068 : 0xd318c95a
+0x1000006c : 0xc3d19c71
+0x10000070 : 0x8c95e985
+
+------------------------------ Iteration 2 ------------------------------
+---------- PC ----------
+output: 0x400004
+
+MIPS instruction at address 0x400004: 
+	sub $4, $5, $1
+
+---------- Instruction Memory ----------
+input:
+	PCount = 0x400004
+output:
+	opcode = 0x0
+	rs = 0x5
+	rt = 0x1
+	rd = 0x4
+	shamt = 0x0
+	funct = 0x22
+	immediate = 0x2022
+	jumpAddress = 0xa12022
+
+---------- ALU 1 ----------
+inputs:
+	input 1 = 0x400004
+	input 2 = 0x4
+	control = 0x2
+output:
+	result = 0x400008
+---------- Shift-left 1 ----------
+input:
+	0xa12022
+output:
+	0x2848088
+
+---------- Control ----------
+input: 
+	opcode = 0x0
+output: 
+	RegDst = 0x1
+	jump = 0x0
+	branch = 0x0
+	memRead = 0x0
+	memToReg = 0x1
+	ALUOp = 0x2
+	memWrite = 0x0
+	ALUSrc = 0x0
+	regWrite = 0x1
+
+---------- Multiplexer 1 ----------
+inputs: 
+	rt = 0x1
+	rd = 0x4
+	control = 0x1
+output:
+	result = 0x4
+
+---------- Registers (read) ----------
+inputs: 
+	Read register 1 = 0x5
+	Read register 2 = 0x1
+outputs:
+	Read data 1 = 0x8c
+	Read data 2 = 0x20
+
+---------- Signextend ----------
+input:
+	0x2022
+output:
+	0x00002022
+
+---------- Shift-left 2 ----------
+input:
+	0x2022
+output:
+	0x8088
+
+---------- ALU 2 ----------
+inputs:
+	input 1 = 0x400008
+	input 2 = 0x8088
+	control = 0x2
+output:
+	result = 0x408090
+
+---------- Multiplexer 2 ----------
+inputs: 
+	read data 2 = 0x20
+	signextended immediate = 0x2022
+	control = 0x0
+output:
+	result = 0x20
+
+---------- ALU Control ----------
+inputs:
+	ALU opcode = 0x2
+	function = 0x22
+output:
+	ALU control = 0x6
+
+---------- ALU 3 ----------
+inputs:
+	input 1 = 0x8c
+	input 2 = 0x20
+	control = 0x6
+output:
+	result = 0x6c
+
+---------- Multiplexer 5 ----------
+inputs: 
+	PC + 4 = 0x400008
+	branch address = 0x408090
+	control = 0x0
+output:
+	result = 0x400008
+
+---------- Multiplexer 4 ----------
+inputs: 
+	MUX 5 result = 0x400008
+	jump address = 0x2848088
+	control = 0x0
+output:
+	result = 0x400008
+
+---------- Data Memory ----------
+inputs: 
+	address = 0x6c
+	write data = 0x20
+	memRead = 0x0
+	memWrite = 0x0
+output:
+	read data = 0x0
+
+---------- Multiplexer 3 ----------
+inputs: 
+	read data = 0x0
+	ALU 3 result = 0x6c
+	control = 0x1
+output:
+	result = 0x6c
+
+---------- Registers (write back) ----------
+inputs: 
+	write register = 0x4
+	write data = 0x6c
+	regWrite = 0x1
+
+---------- PC ----------
+input: 0x400008
+
+---------- Print Memory Contents ----------
+Registers:
+0 : 0x58eed051
+1 : 0x20
+2 : 0x4
+3 : 0x1c
+4 : 0x6c
+5 : 0x8c
+6 : 0xb90037d6
+7 : 0x63322818
+8 : 0x12c
+9 : 0x9de6153f
+10 : 0x1000000c
+11 : 0x0
+12 : 0x9cb2a11c
+13 : 0xddc6522
+14 : 0x604ca9a9
+15 : 0x488a6409
+16 : 0xaaa29086
+17 : 0x95ddcf94
+18 : 0x61d998ef
+19 : 0x8e9a6c56
+20 : 0x5a3e780f
+21 : 0xdaa25db0
+22 : 0xa031e83
+23 : 0x750773f2
+24 : 0x67745ce5
+25 : 0x9b0eae9d
+26 : 0x10000004
+27 : 0x10000020
+28 : 0x70e0b33a
+29 : 0x1b128e28
+30 : 0xea150cc4
+31 : 0x81e72593
+
+Instruction Memory:
+address  : binary encoding                  : MIPS instruction
+0x400000 : 00000000010000110000100000100000 : add $1, $2, $3
+0x400004 : 00000000101000010010000000100010 : sub $4, $5, $1
+0x400008 : 00100000100001100000000010010100 : addi $6, $4, 148
+0x40000c : 00000001000001100011100000101010 : slt $7, $8, $6
+0x400010 : 10001101010000101111111111111100 : lw $2, -4($10)
+0x400014 : 10101101010001100000000000000100 : sw $6, 4($10)
+0x400018 : 00010000111010111111111111111001 : beq $7, $11, loop
+0x40001c : 00001000000100000000000000011011 : j end
+0x400020 : 00010000001000100000000001110111 : beq	$1, $2, 0x200
+0x400024 : 00010000001000100000011101110110 : beq	$1, $2, 0x1e00
+0x400028 : 00001000000100000000000000000011 : j	0x40000c
+0x40002c : 00000000100010000001100000100000 : add	$3, $4, $8
+0x400030 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400034 : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400038 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x40003c : 00000000010000110000100000101010 : slt	$1, $2, $3
+0x400040 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x400044 : 10101111010100010000000000001000 : sw      $17, 8($26)
+0x400048 : 00000000100010000001100000100000 : add	$3, $4, $8
+0x40004c : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400050 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400054 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x400058 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x40005c : 10101111010100010000000000001000 : sw  $17, 8($26)
+0x400060 : 00010000001000101111111111111010 : beq	$1, $2, 0x40004c   
+0x400064 : 00001000000100000000000000010101 : j	0x400054
+0x400068 : 00010000001000101111111111111001 : beq	$1, $2, label1
+0x40006c : 00100010010100010000000000000100 : addi $17, $18, 4
+
+Data Memory:
+address    : data
+0x10000000 : 0x58eed051
+0x10000004 : 0x305f7ea1
+0x10000008 : 0xfffffe00
+0x1000000c : 0xc57b54ba
+0x10000010 : 0xe65e1e87
+0x10000014 : 0x1df23a4f
+0x10000018 : 0xb90037d6
+0x1000001c : 0x63322818
+0x10000020 : 0x10916273
+0x10000024 : 0x9de6153f
+0x10000028 : 0x81fb7b82
+0x1000002c : 0xce7d0a9b
+0x10000030 : 0x9cb2a11c
+0x10000034 : 0xddc6522
+0x10000038 : 0x604ca9a9
+0x1000003c : 0x488a6409
+0x10000040 : 0xaaa29086
+0x10000044 : 0x95ddcf94
+0x10000048 : 0x61d998ef
+0x1000004c : 0x8e9a6c56
+0x10000050 : 0x5a3e780f
+0x10000054 : 0xdaa25db0
+0x10000058 : 0xa031e83
+0x1000005c : 0x750773f2
+0x10000060 : 0x67745ce5
+0x10000064 : 0x1bbb31d
+0x10000068 : 0xd318c95a
+0x1000006c : 0xc3d19c71
+0x10000070 : 0x8c95e985
+
+------------------------------ Iteration 3 ------------------------------
+---------- PC ----------
+output: 0x400008
+
+MIPS instruction at address 0x400008: 
+	addi $6, $4, 148
+
+---------- Instruction Memory ----------
+input:
+	PCount = 0x400008
+output:
+	opcode = 0x8
+	rs = 0x4
+	rt = 0x6
+	rd = 0x0
+	shamt = 0x2
+	funct = 0x14
+	immediate = 0x94
+	jumpAddress = 0x860094
+
+---------- ALU 1 ----------
+inputs:
+	input 1 = 0x400008
+	input 2 = 0x4
+	control = 0x2
+output:
+	result = 0x40000c
+---------- Shift-left 1 ----------
+input:
+	0x860094
+output:
+	0x2180250
+
+---------- Control ----------
+input: 
+	opcode = 0x8
+output: 
+	RegDst = 0x0
+	jump = 0x0
+	branch = 0x0
+	memRead = 0x0
+	memToReg = 0x1
+	ALUOp = 0x3
+	memWrite = 0x0
+	ALUSrc = 0x1
+	regWrite = 0x1
+
+---------- Multiplexer 1 ----------
+inputs: 
+	rt = 0x6
+	rd = 0x0
+	control = 0x0
+output:
+	result = 0x6
+
+---------- Registers (read) ----------
+inputs: 
+	Read register 1 = 0x4
+	Read register 2 = 0x6
+outputs:
+	Read data 1 = 0x6c
+	Read data 2 = 0xb90037d6
+
+---------- Signextend ----------
+input:
+	0x0094
+output:
+	0x00000094
+
+---------- Shift-left 2 ----------
+input:
+	0x94
+output:
+	0x250
+
+---------- ALU 2 ----------
+inputs:
+	input 1 = 0x40000c
+	input 2 = 0x250
+	control = 0x2
+output:
+	result = 0x40025c
+
+---------- Multiplexer 2 ----------
+inputs: 
+	read data 2 = 0xb90037d6
+	signextended immediate = 0x94
+	control = 0x1
+output:
+	result = 0x94
+
+---------- ALU Control ----------
+inputs:
+	ALU opcode = 0x3
+	function = 0x14
+output:
+	ALU control = 0x2
+
+---------- ALU 3 ----------
+inputs:
+	input 1 = 0x6c
+	input 2 = 0x94
+	control = 0x2
+output:
+	result = 0x100
+
+---------- Multiplexer 5 ----------
+inputs: 
+	PC + 4 = 0x40000c
+	branch address = 0x40025c
+	control = 0x0
+output:
+	result = 0x40000c
+
+---------- Multiplexer 4 ----------
+inputs: 
+	MUX 5 result = 0x40000c
+	jump address = 0x2180250
+	control = 0x0
+output:
+	result = 0x40000c
+
+---------- Data Memory ----------
+inputs: 
+	address = 0x100
+	write data = 0xb90037d6
+	memRead = 0x0
+	memWrite = 0x0
+output:
+	read data = 0x0
+
+---------- Multiplexer 3 ----------
+inputs: 
+	read data = 0x0
+	ALU 3 result = 0x100
+	control = 0x1
+output:
+	result = 0x100
+
+---------- Registers (write back) ----------
+inputs: 
+	write register = 0x6
+	write data = 0x100
+	regWrite = 0x1
+
+---------- PC ----------
+input: 0x40000c
+
+---------- Print Memory Contents ----------
+Registers:
+0 : 0x58eed051
+1 : 0x20
+2 : 0x4
+3 : 0x1c
+4 : 0x6c
+5 : 0x8c
+6 : 0x100
+7 : 0x63322818
+8 : 0x12c
+9 : 0x9de6153f
+10 : 0x1000000c
+11 : 0x0
+12 : 0x9cb2a11c
+13 : 0xddc6522
+14 : 0x604ca9a9
+15 : 0x488a6409
+16 : 0xaaa29086
+17 : 0x95ddcf94
+18 : 0x61d998ef
+19 : 0x8e9a6c56
+20 : 0x5a3e780f
+21 : 0xdaa25db0
+22 : 0xa031e83
+23 : 0x750773f2
+24 : 0x67745ce5
+25 : 0x9b0eae9d
+26 : 0x10000004
+27 : 0x10000020
+28 : 0x70e0b33a
+29 : 0x1b128e28
+30 : 0xea150cc4
+31 : 0x81e72593
+
+Instruction Memory:
+address  : binary encoding                  : MIPS instruction
+0x400000 : 00000000010000110000100000100000 : add $1, $2, $3
+0x400004 : 00000000101000010010000000100010 : sub $4, $5, $1
+0x400008 : 00100000100001100000000010010100 : addi $6, $4, 148
+0x40000c : 00000001000001100011100000101010 : slt $7, $8, $6
+0x400010 : 10001101010000101111111111111100 : lw $2, -4($10)
+0x400014 : 10101101010001100000000000000100 : sw $6, 4($10)
+0x400018 : 00010000111010111111111111111001 : beq $7, $11, loop
+0x40001c : 00001000000100000000000000011011 : j end
+0x400020 : 00010000001000100000000001110111 : beq	$1, $2, 0x200
+0x400024 : 00010000001000100000011101110110 : beq	$1, $2, 0x1e00
+0x400028 : 00001000000100000000000000000011 : j	0x40000c
+0x40002c : 00000000100010000001100000100000 : add	$3, $4, $8
+0x400030 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400034 : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400038 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x40003c : 00000000010000110000100000101010 : slt	$1, $2, $3
+0x400040 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x400044 : 10101111010100010000000000001000 : sw      $17, 8($26)
+0x400048 : 00000000100010000001100000100000 : add	$3, $4, $8
+0x40004c : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400050 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400054 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x400058 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x40005c : 10101111010100010000000000001000 : sw  $17, 8($26)
+0x400060 : 00010000001000101111111111111010 : beq	$1, $2, 0x40004c   
+0x400064 : 00001000000100000000000000010101 : j	0x400054
+0x400068 : 00010000001000101111111111111001 : beq	$1, $2, label1
+0x40006c : 00100010010100010000000000000100 : addi $17, $18, 4
+
+Data Memory:
+address    : data
+0x10000000 : 0x58eed051
+0x10000004 : 0x305f7ea1
+0x10000008 : 0xfffffe00
+0x1000000c : 0xc57b54ba
+0x10000010 : 0xe65e1e87
+0x10000014 : 0x1df23a4f
+0x10000018 : 0xb90037d6
+0x1000001c : 0x63322818
+0x10000020 : 0x10916273
+0x10000024 : 0x9de6153f
+0x10000028 : 0x81fb7b82
+0x1000002c : 0xce7d0a9b
+0x10000030 : 0x9cb2a11c
+0x10000034 : 0xddc6522
+0x10000038 : 0x604ca9a9
+0x1000003c : 0x488a6409
+0x10000040 : 0xaaa29086
+0x10000044 : 0x95ddcf94
+0x10000048 : 0x61d998ef
+0x1000004c : 0x8e9a6c56
+0x10000050 : 0x5a3e780f
+0x10000054 : 0xdaa25db0
+0x10000058 : 0xa031e83
+0x1000005c : 0x750773f2
+0x10000060 : 0x67745ce5
+0x10000064 : 0x1bbb31d
+0x10000068 : 0xd318c95a
+0x1000006c : 0xc3d19c71
+0x10000070 : 0x8c95e985
+
+------------------------------ Iteration 4 ------------------------------
+---------- PC ----------
+output: 0x40000c
+
+MIPS instruction at address 0x40000c: 
+	slt $7, $8, $6
+
+---------- Instruction Memory ----------
+input:
+	PCount = 0x40000c
+output:
+	opcode = 0x0
+	rs = 0x8
+	rt = 0x6
+	rd = 0x7
+	shamt = 0x0
+	funct = 0x2a
+	immediate = 0x382a
+	jumpAddress = 0x106382a
+
+---------- ALU 1 ----------
+inputs:
+	input 1 = 0x40000c
+	input 2 = 0x4
+	control = 0x2
+output:
+	result = 0x400010
+---------- Shift-left 1 ----------
+input:
+	0x106382a
+output:
+	0x418e0a8
+
+---------- Control ----------
+input: 
+	opcode = 0x0
+output: 
+	RegDst = 0x1
+	jump = 0x0
+	branch = 0x0
+	memRead = 0x0
+	memToReg = 0x1
+	ALUOp = 0x2
+	memWrite = 0x0
+	ALUSrc = 0x0
+	regWrite = 0x1
+
+---------- Multiplexer 1 ----------
+inputs: 
+	rt = 0x6
+	rd = 0x7
+	control = 0x1
+output:
+	result = 0x7
+
+---------- Registers (read) ----------
+inputs: 
+	Read register 1 = 0x8
+	Read register 2 = 0x6
+outputs:
+	Read data 1 = 0x12c
+	Read data 2 = 0x100
+
+---------- Signextend ----------
+input:
+	0x382a
+output:
+	0x0000382a
+
+---------- Shift-left 2 ----------
+input:
+	0x382a
+output:
+	0xe0a8
+
+---------- ALU 2 ----------
+inputs:
+	input 1 = 0x400010
+	input 2 = 0xe0a8
+	control = 0x2
+output:
+	result = 0x40e0b8
+
+---------- Multiplexer 2 ----------
+inputs: 
+	read data 2 = 0x100
+	signextended immediate = 0x382a
+	control = 0x0
+output:
+	result = 0x100
+
+---------- ALU Control ----------
+inputs:
+	ALU opcode = 0x2
+	function = 0x2a
+output:
+	ALU control = 0x7
+
+---------- ALU 3 ----------
+inputs:
+	input 1 = 0x12c
+	input 2 = 0x100
+	control = 0x7
+output:
+	result = 0x0
+
+---------- Multiplexer 5 ----------
+inputs: 
+	PC + 4 = 0x400010
+	branch address = 0x40e0b8
+	control = 0x0
+output:
+	result = 0x400010
+
+---------- Multiplexer 4 ----------
+inputs: 
+	MUX 5 result = 0x400010
+	jump address = 0x418e0a8
+	control = 0x0
+output:
+	result = 0x400010
+
+---------- Data Memory ----------
+inputs: 
+	address = 0x0
+	write data = 0x100
+	memRead = 0x0
+	memWrite = 0x0
+output:
+	read data = 0x0
+
+---------- Multiplexer 3 ----------
+inputs: 
+	read data = 0x0
+	ALU 3 result = 0x0
+	control = 0x1
+output:
+	result = 0x0
+
+---------- Registers (write back) ----------
+inputs: 
+	write register = 0x7
+	write data = 0x0
+	regWrite = 0x1
+
+---------- PC ----------
+input: 0x400010
+
+---------- Print Memory Contents ----------
+Registers:
+0 : 0x58eed051
+1 : 0x20
+2 : 0x4
+3 : 0x1c
+4 : 0x6c
+5 : 0x8c
+6 : 0x100
+7 : 0x0
+8 : 0x12c
+9 : 0x9de6153f
+10 : 0x1000000c
+11 : 0x0
+12 : 0x9cb2a11c
+13 : 0xddc6522
+14 : 0x604ca9a9
+15 : 0x488a6409
+16 : 0xaaa29086
+17 : 0x95ddcf94
+18 : 0x61d998ef
+19 : 0x8e9a6c56
+20 : 0x5a3e780f
+21 : 0xdaa25db0
+22 : 0xa031e83
+23 : 0x750773f2
+24 : 0x67745ce5
+25 : 0x9b0eae9d
+26 : 0x10000004
+27 : 0x10000020
+28 : 0x70e0b33a
+29 : 0x1b128e28
+30 : 0xea150cc4
+31 : 0x81e72593
+
+Instruction Memory:
+address  : binary encoding                  : MIPS instruction
+0x400000 : 00000000010000110000100000100000 : add $1, $2, $3
+0x400004 : 00000000101000010010000000100010 : sub $4, $5, $1
+0x400008 : 00100000100001100000000010010100 : addi $6, $4, 148
+0x40000c : 00000001000001100011100000101010 : slt $7, $8, $6
+0x400010 : 10001101010000101111111111111100 : lw $2, -4($10)
+0x400014 : 10101101010001100000000000000100 : sw $6, 4($10)
+0x400018 : 00010000111010111111111111111001 : beq $7, $11, loop
+0x40001c : 00001000000100000000000000011011 : j end
+0x400020 : 00010000001000100000000001110111 : beq	$1, $2, 0x200
+0x400024 : 00010000001000100000011101110110 : beq	$1, $2, 0x1e00
+0x400028 : 00001000000100000000000000000011 : j	0x40000c
+0x40002c : 00000000100010000001100000100000 : add	$3, $4, $8
+0x400030 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400034 : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400038 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x40003c : 00000000010000110000100000101010 : slt	$1, $2, $3
+0x400040 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x400044 : 10101111010100010000000000001000 : sw      $17, 8($26)
+0x400048 : 00000000100010000001100000100000 : add	$3, $4, $8
+0x40004c : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400050 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400054 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x400058 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x40005c : 10101111010100010000000000001000 : sw  $17, 8($26)
+0x400060 : 00010000001000101111111111111010 : beq	$1, $2, 0x40004c   
+0x400064 : 00001000000100000000000000010101 : j	0x400054
+0x400068 : 00010000001000101111111111111001 : beq	$1, $2, label1
+0x40006c : 00100010010100010000000000000100 : addi $17, $18, 4
+
+Data Memory:
+address    : data
+0x10000000 : 0x58eed051
+0x10000004 : 0x305f7ea1
+0x10000008 : 0xfffffe00
+0x1000000c : 0xc57b54ba
+0x10000010 : 0xe65e1e87
+0x10000014 : 0x1df23a4f
+0x10000018 : 0xb90037d6
+0x1000001c : 0x63322818
+0x10000020 : 0x10916273
+0x10000024 : 0x9de6153f
+0x10000028 : 0x81fb7b82
+0x1000002c : 0xce7d0a9b
+0x10000030 : 0x9cb2a11c
+0x10000034 : 0xddc6522
+0x10000038 : 0x604ca9a9
+0x1000003c : 0x488a6409
+0x10000040 : 0xaaa29086
+0x10000044 : 0x95ddcf94
+0x10000048 : 0x61d998ef
+0x1000004c : 0x8e9a6c56
+0x10000050 : 0x5a3e780f
+0x10000054 : 0xdaa25db0
+0x10000058 : 0xa031e83
+0x1000005c : 0x750773f2
+0x10000060 : 0x67745ce5
+0x10000064 : 0x1bbb31d
+0x10000068 : 0xd318c95a
+0x1000006c : 0xc3d19c71
+0x10000070 : 0x8c95e985
+
+------------------------------ Iteration 5 ------------------------------
+---------- PC ----------
+output: 0x400010
+
+MIPS instruction at address 0x400010: 
+	lw $2, -4($10)
+
+---------- Instruction Memory ----------
+input:
+	PCount = 0x400010
+output:
+	opcode = 0x23
+	rs = 0xa
+	rt = 0x2
+	rd = 0x1f
+	shamt = 0x1f
+	funct = 0x3c
+	immediate = 0xfffc
+	jumpAddress = 0x142fffc
+
+---------- ALU 1 ----------
+inputs:
+	input 1 = 0x400010
+	input 2 = 0x4
+	control = 0x2
+output:
+	result = 0x400014
+---------- Shift-left 1 ----------
+input:
+	0x142fffc
+output:
+	0x50bfff0
+
+---------- Control ----------
+input: 
+	opcode = 0x23
+output: 
+	RegDst = 0x0
+	jump = 0x0
+	branch = 0x0
+	memRead = 0x1
+	memToReg = 0x0
+	ALUOp = 0x0
+	memWrite = 0x0
+	ALUSrc = 0x1
+	regWrite = 0x1
+
+---------- Multiplexer 1 ----------
+inputs: 
+	rt = 0x2
+	rd = 0x1f
+	control = 0x0
+output:
+	result = 0x2
+
+---------- Registers (read) ----------
+inputs: 
+	Read register 1 = 0xa
+	Read register 2 = 0x2
+outputs:
+	Read data 1 = 0x1000000c
+	Read data 2 = 0x4
+
+---------- Signextend ----------
+input:
+	0xfffc
+output:
+	0xfffffffc
+
+---------- Shift-left 2 ----------
+input:
+	0xfffffffc
+output:
+	0xfffffff0
+
+---------- ALU 2 ----------
+inputs:
+	input 1 = 0x400014
+	input 2 = 0xfffffff0
+	control = 0x2
+output:
+	result = 0x400004
+
+---------- Multiplexer 2 ----------
+inputs: 
+	read data 2 = 0x4
+	signextended immediate = 0xfffffffc
+	control = 0x1
+output:
+	result = 0xfffffffc
+
+---------- ALU Control ----------
+inputs:
+	ALU opcode = 0x0
+	function = 0x3c
+output:
+	ALU control = 0x2
+
+---------- ALU 3 ----------
+inputs:
+	input 1 = 0x1000000c
+	input 2 = 0xfffffffc
+	control = 0x2
+output:
+	result = 0x10000008
+
+---------- Multiplexer 5 ----------
+inputs: 
+	PC + 4 = 0x400014
+	branch address = 0x400004
+	control = 0x0
+output:
+	result = 0x400014
+
+---------- Multiplexer 4 ----------
+inputs: 
+	MUX 5 result = 0x400014
+	jump address = 0x50bfff0
+	control = 0x0
+output:
+	result = 0x400014
+
+---------- Data Memory ----------
+inputs: 
+	address = 0x10000008
+	write data = 0x4
+	memRead = 0x1
+	memWrite = 0x0
+output:
+	read data = 0xfffffe00
+
+---------- Multiplexer 3 ----------
+inputs: 
+	read data = 0xfffffe00
+	ALU 3 result = 0x10000008
+	control = 0x0
+output:
+	result = 0xfffffe00
+
+---------- Registers (write back) ----------
+inputs: 
+	write register = 0x2
+	write data = 0xfffffe00
+	regWrite = 0x1
+
+---------- PC ----------
+input: 0x400014
+
+---------- Print Memory Contents ----------
+Registers:
+0 : 0x58eed051
+1 : 0x20
+2 : 0xfffffe00
+3 : 0x1c
+4 : 0x6c
+5 : 0x8c
+6 : 0x100
+7 : 0x0
+8 : 0x12c
+9 : 0x9de6153f
+10 : 0x1000000c
+11 : 0x0
+12 : 0x9cb2a11c
+13 : 0xddc6522
+14 : 0x604ca9a9
+15 : 0x488a6409
+16 : 0xaaa29086
+17 : 0x95ddcf94
+18 : 0x61d998ef
+19 : 0x8e9a6c56
+20 : 0x5a3e780f
+21 : 0xdaa25db0
+22 : 0xa031e83
+23 : 0x750773f2
+24 : 0x67745ce5
+25 : 0x9b0eae9d
+26 : 0x10000004
+27 : 0x10000020
+28 : 0x70e0b33a
+29 : 0x1b128e28
+30 : 0xea150cc4
+31 : 0x81e72593
+
+Instruction Memory:
+address  : binary encoding                  : MIPS instruction
+0x400000 : 00000000010000110000100000100000 : add $1, $2, $3
+0x400004 : 00000000101000010010000000100010 : sub $4, $5, $1
+0x400008 : 00100000100001100000000010010100 : addi $6, $4, 148
+0x40000c : 00000001000001100011100000101010 : slt $7, $8, $6
+0x400010 : 10001101010000101111111111111100 : lw $2, -4($10)
+0x400014 : 10101101010001100000000000000100 : sw $6, 4($10)
+0x400018 : 00010000111010111111111111111001 : beq $7, $11, loop
+0x40001c : 00001000000100000000000000011011 : j end
+0x400020 : 00010000001000100000000001110111 : beq	$1, $2, 0x200
+0x400024 : 00010000001000100000011101110110 : beq	$1, $2, 0x1e00
+0x400028 : 00001000000100000000000000000011 : j	0x40000c
+0x40002c : 00000000100010000001100000100000 : add	$3, $4, $8
+0x400030 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400034 : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400038 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x40003c : 00000000010000110000100000101010 : slt	$1, $2, $3
+0x400040 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x400044 : 10101111010100010000000000001000 : sw      $17, 8($26)
+0x400048 : 00000000100010000001100000100000 : add	$3, $4, $8
+0x40004c : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400050 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400054 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x400058 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x40005c : 10101111010100010000000000001000 : sw  $17, 8($26)
+0x400060 : 00010000001000101111111111111010 : beq	$1, $2, 0x40004c   
+0x400064 : 00001000000100000000000000010101 : j	0x400054
+0x400068 : 00010000001000101111111111111001 : beq	$1, $2, label1
+0x40006c : 00100010010100010000000000000100 : addi $17, $18, 4
+
+Data Memory:
+address    : data
+0x10000000 : 0x58eed051
+0x10000004 : 0x305f7ea1
+0x10000008 : 0xfffffe00
+0x1000000c : 0xc57b54ba
+0x10000010 : 0xe65e1e87
+0x10000014 : 0x1df23a4f
+0x10000018 : 0xb90037d6
+0x1000001c : 0x63322818
+0x10000020 : 0x10916273
+0x10000024 : 0x9de6153f
+0x10000028 : 0x81fb7b82
+0x1000002c : 0xce7d0a9b
+0x10000030 : 0x9cb2a11c
+0x10000034 : 0xddc6522
+0x10000038 : 0x604ca9a9
+0x1000003c : 0x488a6409
+0x10000040 : 0xaaa29086
+0x10000044 : 0x95ddcf94
+0x10000048 : 0x61d998ef
+0x1000004c : 0x8e9a6c56
+0x10000050 : 0x5a3e780f
+0x10000054 : 0xdaa25db0
+0x10000058 : 0xa031e83
+0x1000005c : 0x750773f2
+0x10000060 : 0x67745ce5
+0x10000064 : 0x1bbb31d
+0x10000068 : 0xd318c95a
+0x1000006c : 0xc3d19c71
+0x10000070 : 0x8c95e985
+
+------------------------------ Iteration 6 ------------------------------
+---------- PC ----------
+output: 0x400014
+
+MIPS instruction at address 0x400014: 
+	sw $6, 4($10)
+
+---------- Instruction Memory ----------
+input:
+	PCount = 0x400014
+output:
+	opcode = 0x2b
+	rs = 0xa
+	rt = 0x6
+	rd = 0x0
+	shamt = 0x0
+	funct = 0x4
+	immediate = 0x4
+	jumpAddress = 0x1460004
+
+---------- ALU 1 ----------
+inputs:
+	input 1 = 0x400014
+	input 2 = 0x4
+	control = 0x2
+output:
+	result = 0x400018
+---------- Shift-left 1 ----------
+input:
+	0x1460004
+output:
+	0x5180010
+
+---------- Control ----------
+input: 
+	opcode = 0x2b
+output: 
+	RegDst = 0xffffffff
+	jump = 0x0
+	branch = 0x0
+	memRead = 0x0
+	memToReg = 0xffffffff
+	ALUOp = 0x0
+	memWrite = 0x1
+	ALUSrc = 0x1
+	regWrite = 0x0
+
+---------- Multiplexer 1 ----------
+inputs: 
+	rt = 0x6
+	rd = 0x0
+	control = 0xffffffff
+output:
+	result = 0x0
+
+---------- Registers (read) ----------
+inputs: 
+	Read register 1 = 0xa
+	Read register 2 = 0x6
+outputs:
+	Read data 1 = 0x1000000c
+	Read data 2 = 0x100
+
+---------- Signextend ----------
+input:
+	0x0004
+output:
+	0x00000004
+
+---------- Shift-left 2 ----------
+input:
+	0x4
+output:
+	0x10
+
+---------- ALU 2 ----------
+inputs:
+	input 1 = 0x400018
+	input 2 = 0x10
+	control = 0x2
+output:
+	result = 0x400028
+
+---------- Multiplexer 2 ----------
+inputs: 
+	read data 2 = 0x100
+	signextended immediate = 0x4
+	control = 0x1
+output:
+	result = 0x4
+
+---------- ALU Control ----------
+inputs:
+	ALU opcode = 0x0
+	function = 0x4
+output:
+	ALU control = 0x2
+
+---------- ALU 3 ----------
+inputs:
+	input 1 = 0x1000000c
+	input 2 = 0x4
+	control = 0x2
+output:
+	result = 0x10000010
+
+---------- Multiplexer 5 ----------
+inputs: 
+	PC + 4 = 0x400018
+	branch address = 0x400028
+	control = 0x0
+output:
+	result = 0x400018
+
+---------- Multiplexer 4 ----------
+inputs: 
+	MUX 5 result = 0x400018
+	jump address = 0x5180010
+	control = 0x0
+output:
+	result = 0x400018
+
+---------- Data Memory ----------
+inputs: 
+	address = 0x10000010
+	write data = 0x100
+	memRead = 0x0
+	memWrite = 0x1
+output:
+	read data = 0xfffffe00
+
+---------- Multiplexer 3 ----------
+inputs: 
+	read data = 0xfffffe00
+	ALU 3 result = 0x10000010
+	control = 0xffffffff
+output:
+	result = 0x10000010
+
+---------- Registers (write back) ----------
+inputs: 
+	write register = 0x0
+	write data = 0x10000010
+	regWrite = 0x0
+
+---------- PC ----------
+input: 0x400018
+
+---------- Print Memory Contents ----------
+Registers:
+0 : 0x58eed051
+1 : 0x20
+2 : 0xfffffe00
+3 : 0x1c
+4 : 0x6c
+5 : 0x8c
+6 : 0x100
+7 : 0x0
+8 : 0x12c
+9 : 0x9de6153f
+10 : 0x1000000c
+11 : 0x0
+12 : 0x9cb2a11c
+13 : 0xddc6522
+14 : 0x604ca9a9
+15 : 0x488a6409
+16 : 0xaaa29086
+17 : 0x95ddcf94
+18 : 0x61d998ef
+19 : 0x8e9a6c56
+20 : 0x5a3e780f
+21 : 0xdaa25db0
+22 : 0xa031e83
+23 : 0x750773f2
+24 : 0x67745ce5
+25 : 0x9b0eae9d
+26 : 0x10000004
+27 : 0x10000020
+28 : 0x70e0b33a
+29 : 0x1b128e28
+30 : 0xea150cc4
+31 : 0x81e72593
+
+Instruction Memory:
+address  : binary encoding                  : MIPS instruction
+0x400000 : 00000000010000110000100000100000 : add $1, $2, $3
+0x400004 : 00000000101000010010000000100010 : sub $4, $5, $1
+0x400008 : 00100000100001100000000010010100 : addi $6, $4, 148
+0x40000c : 00000001000001100011100000101010 : slt $7, $8, $6
+0x400010 : 10001101010000101111111111111100 : lw $2, -4($10)
+0x400014 : 10101101010001100000000000000100 : sw $6, 4($10)
+0x400018 : 00010000111010111111111111111001 : beq $7, $11, loop
+0x40001c : 00001000000100000000000000011011 : j end
+0x400020 : 00010000001000100000000001110111 : beq	$1, $2, 0x200
+0x400024 : 00010000001000100000011101110110 : beq	$1, $2, 0x1e00
+0x400028 : 00001000000100000000000000000011 : j	0x40000c
+0x40002c : 00000000100010000001100000100000 : add	$3, $4, $8
+0x400030 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400034 : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400038 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x40003c : 00000000010000110000100000101010 : slt	$1, $2, $3
+0x400040 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x400044 : 10101111010100010000000000001000 : sw      $17, 8($26)
+0x400048 : 00000000100010000001100000100000 : add	$3, $4, $8
+0x40004c : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400050 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400054 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x400058 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x40005c : 10101111010100010000000000001000 : sw  $17, 8($26)
+0x400060 : 00010000001000101111111111111010 : beq	$1, $2, 0x40004c   
+0x400064 : 00001000000100000000000000010101 : j	0x400054
+0x400068 : 00010000001000101111111111111001 : beq	$1, $2, label1
+0x40006c : 00100010010100010000000000000100 : addi $17, $18, 4
+
+Data Memory:
+address    : data
+0x10000000 : 0x58eed051
+0x10000004 : 0x305f7ea1
+0x10000008 : 0xfffffe00
+0x1000000c : 0xc57b54ba
+0x10000010 : 0x100
+0x10000014 : 0x1df23a4f
+0x10000018 : 0xb90037d6
+0x1000001c : 0x63322818
+0x10000020 : 0x10916273
+0x10000024 : 0x9de6153f
+0x10000028 : 0x81fb7b82
+0x1000002c : 0xce7d0a9b
+0x10000030 : 0x9cb2a11c
+0x10000034 : 0xddc6522
+0x10000038 : 0x604ca9a9
+0x1000003c : 0x488a6409
+0x10000040 : 0xaaa29086
+0x10000044 : 0x95ddcf94
+0x10000048 : 0x61d998ef
+0x1000004c : 0x8e9a6c56
+0x10000050 : 0x5a3e780f
+0x10000054 : 0xdaa25db0
+0x10000058 : 0xa031e83
+0x1000005c : 0x750773f2
+0x10000060 : 0x67745ce5
+0x10000064 : 0x1bbb31d
+0x10000068 : 0xd318c95a
+0x1000006c : 0xc3d19c71
+0x10000070 : 0x8c95e985
+
+------------------------------ Iteration 7 ------------------------------
+---------- PC ----------
+output: 0x400018
+
+MIPS instruction at address 0x400018: 
+	beq $7, $11, loop
+
+---------- Instruction Memory ----------
+input:
+	PCount = 0x400018
+output:
+	opcode = 0x4
+	rs = 0x7
+	rt = 0xb
+	rd = 0x1f
+	shamt = 0x1f
+	funct = 0x39
+	immediate = 0xfff9
+	jumpAddress = 0xebfff9
+
+---------- ALU 1 ----------
+inputs:
+	input 1 = 0x400018
+	input 2 = 0x4
+	control = 0x2
+output:
+	result = 0x40001c
+---------- Shift-left 1 ----------
+input:
+	0xebfff9
+output:
+	0x3afffe4
+
+---------- Control ----------
+input: 
+	opcode = 0x4
+output: 
+	RegDst = 0xffffffff
+	jump = 0x0
+	branch = 0x1
+	memRead = 0x0
+	memToReg = 0xffffffff
+	ALUOp = 0x1
+	memWrite = 0x0
+	ALUSrc = 0x0
+	regWrite = 0x0
+
+---------- Multiplexer 1 ----------
+inputs: 
+	rt = 0xb
+	rd = 0x1f
+	control = 0xffffffff
+output:
+	result = 0x1f
+
+---------- Registers (read) ----------
+inputs: 
+	Read register 1 = 0x7
+	Read register 2 = 0xb
+outputs:
+	Read data 1 = 0x0
+	Read data 2 = 0x0
+
+---------- Signextend ----------
+input:
+	0xfff9
+output:
+	0xfffffff9
+
+---------- Shift-left 2 ----------
+input:
+	0xfffffff9
+output:
+	0xffffffe4
+
+---------- ALU 2 ----------
+inputs:
+	input 1 = 0x40001c
+	input 2 = 0xffffffe4
+	control = 0x2
+output:
+	result = 0x400000
+
+---------- Multiplexer 2 ----------
+inputs: 
+	read data 2 = 0x0
+	signextended immediate = 0xfffffff9
+	control = 0x0
+output:
+	result = 0x0
+
+---------- ALU Control ----------
+inputs:
+	ALU opcode = 0x1
+	function = 0x39
+output:
+	ALU control = 0x6
+
+---------- ALU 3 ----------
+inputs:
+	input 1 = 0x0
+	input 2 = 0x0
+	control = 0x6
+output:
+	result = 0x0
+
+---------- Multiplexer 5 ----------
+inputs: 
+	PC + 4 = 0x40001c
+	branch address = 0x400000
+	control = 0x1
+output:
+	result = 0x400000
+
+---------- Multiplexer 4 ----------
+inputs: 
+	MUX 5 result = 0x400000
+	jump address = 0x3afffe4
+	control = 0x0
+output:
+	result = 0x400000
+
+---------- Data Memory ----------
+inputs: 
+	address = 0x0
+	write data = 0x0
+	memRead = 0x0
+	memWrite = 0x0
+output:
+	read data = 0xfffffe00
+
+---------- Multiplexer 3 ----------
+inputs: 
+	read data = 0xfffffe00
+	ALU 3 result = 0x0
+	control = 0xffffffff
+output:
+	result = 0x0
+
+---------- Registers (write back) ----------
+inputs: 
+	write register = 0x1f
+	write data = 0x0
+	regWrite = 0x0
+
+---------- PC ----------
+input: 0x400000
+
+---------- Print Memory Contents ----------
+Registers:
+0 : 0x58eed051
+1 : 0x20
+2 : 0xfffffe00
+3 : 0x1c
+4 : 0x6c
+5 : 0x8c
+6 : 0x100
+7 : 0x0
+8 : 0x12c
+9 : 0x9de6153f
+10 : 0x1000000c
+11 : 0x0
+12 : 0x9cb2a11c
+13 : 0xddc6522
+14 : 0x604ca9a9
+15 : 0x488a6409
+16 : 0xaaa29086
+17 : 0x95ddcf94
+18 : 0x61d998ef
+19 : 0x8e9a6c56
+20 : 0x5a3e780f
+21 : 0xdaa25db0
+22 : 0xa031e83
+23 : 0x750773f2
+24 : 0x67745ce5
+25 : 0x9b0eae9d
+26 : 0x10000004
+27 : 0x10000020
+28 : 0x70e0b33a
+29 : 0x1b128e28
+30 : 0xea150cc4
+31 : 0x81e72593
+
+Instruction Memory:
+address  : binary encoding                  : MIPS instruction
+0x400000 : 00000000010000110000100000100000 : add $1, $2, $3
+0x400004 : 00000000101000010010000000100010 : sub $4, $5, $1
+0x400008 : 00100000100001100000000010010100 : addi $6, $4, 148
+0x40000c : 00000001000001100011100000101010 : slt $7, $8, $6
+0x400010 : 10001101010000101111111111111100 : lw $2, -4($10)
+0x400014 : 10101101010001100000000000000100 : sw $6, 4($10)
+0x400018 : 00010000111010111111111111111001 : beq $7, $11, loop
+0x40001c : 00001000000100000000000000011011 : j end
+0x400020 : 00010000001000100000000001110111 : beq	$1, $2, 0x200
+0x400024 : 00010000001000100000011101110110 : beq	$1, $2, 0x1e00
+0x400028 : 00001000000100000000000000000011 : j	0x40000c
+0x40002c : 00000000100010000001100000100000 : add	$3, $4, $8
+0x400030 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400034 : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400038 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x40003c : 00000000010000110000100000101010 : slt	$1, $2, $3
+0x400040 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x400044 : 10101111010100010000000000001000 : sw      $17, 8($26)
+0x400048 : 00000000100010000001100000100000 : add	$3, $4, $8
+0x40004c : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400050 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400054 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x400058 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x40005c : 10101111010100010000000000001000 : sw  $17, 8($26)
+0x400060 : 00010000001000101111111111111010 : beq	$1, $2, 0x40004c   
+0x400064 : 00001000000100000000000000010101 : j	0x400054
+0x400068 : 00010000001000101111111111111001 : beq	$1, $2, label1
+0x40006c : 00100010010100010000000000000100 : addi $17, $18, 4
+
+Data Memory:
+address    : data
+0x10000000 : 0x58eed051
+0x10000004 : 0x305f7ea1
+0x10000008 : 0xfffffe00
+0x1000000c : 0xc57b54ba
+0x10000010 : 0x100
+0x10000014 : 0x1df23a4f
+0x10000018 : 0xb90037d6
+0x1000001c : 0x63322818
+0x10000020 : 0x10916273
+0x10000024 : 0x9de6153f
+0x10000028 : 0x81fb7b82
+0x1000002c : 0xce7d0a9b
+0x10000030 : 0x9cb2a11c
+0x10000034 : 0xddc6522
+0x10000038 : 0x604ca9a9
+0x1000003c : 0x488a6409
+0x10000040 : 0xaaa29086
+0x10000044 : 0x95ddcf94
+0x10000048 : 0x61d998ef
+0x1000004c : 0x8e9a6c56
+0x10000050 : 0x5a3e780f
+0x10000054 : 0xdaa25db0
+0x10000058 : 0xa031e83
+0x1000005c : 0x750773f2
+0x10000060 : 0x67745ce5
+0x10000064 : 0x1bbb31d
+0x10000068 : 0xd318c95a
+0x1000006c : 0xc3d19c71
+0x10000070 : 0x8c95e985
+
+------------------------------ Iteration 8 ------------------------------
+---------- PC ----------
+output: 0x400000
+
+MIPS instruction at address 0x400000: 
+	add $1, $2, $3
+
+---------- Instruction Memory ----------
+input:
+	PCount = 0x400000
+output:
+	opcode = 0x0
+	rs = 0x2
+	rt = 0x3
+	rd = 0x1
+	shamt = 0x0
+	funct = 0x20
+	immediate = 0x820
+	jumpAddress = 0x430820
+
+---------- ALU 1 ----------
+inputs:
+	input 1 = 0x400000
+	input 2 = 0x4
+	control = 0x2
+output:
+	result = 0x400004
+---------- Shift-left 1 ----------
+input:
+	0x430820
+output:
+	0x10c2080
+
+---------- Control ----------
+input: 
+	opcode = 0x0
+output: 
+	RegDst = 0x1
+	jump = 0x0
+	branch = 0x0
+	memRead = 0x0
+	memToReg = 0x1
+	ALUOp = 0x2
+	memWrite = 0x0
+	ALUSrc = 0x0
+	regWrite = 0x1
+
+---------- Multiplexer 1 ----------
+inputs: 
+	rt = 0x3
+	rd = 0x1
+	control = 0x1
+output:
+	result = 0x1
+
+---------- Registers (read) ----------
+inputs: 
+	Read register 1 = 0x2
+	Read register 2 = 0x3
+outputs:
+	Read data 1 = 0xfffffe00
+	Read data 2 = 0x1c
+
+---------- Signextend ----------
+input:
+	0x0820
+output:
+	0x00000820
+
+---------- Shift-left 2 ----------
+input:
+	0x820
+output:
+	0x2080
+
+---------- ALU 2 ----------
+inputs:
+	input 1 = 0x400004
+	input 2 = 0x2080
+	control = 0x2
+output:
+	result = 0x402084
+
+---------- Multiplexer 2 ----------
+inputs: 
+	read data 2 = 0x1c
+	signextended immediate = 0x820
+	control = 0x0
+output:
+	result = 0x1c
+
+---------- ALU Control ----------
+inputs:
+	ALU opcode = 0x2
+	function = 0x20
+output:
+	ALU control = 0x2
+
+---------- ALU 3 ----------
+inputs:
+	input 1 = 0xfffffe00
+	input 2 = 0x1c
+	control = 0x2
+output:
+	result = 0xfffffe1c
+
+---------- Multiplexer 5 ----------
+inputs: 
+	PC + 4 = 0x400004
+	branch address = 0x402084
+	control = 0x0
+output:
+	result = 0x400004
+
+---------- Multiplexer 4 ----------
+inputs: 
+	MUX 5 result = 0x400004
+	jump address = 0x10c2080
+	control = 0x0
+output:
+	result = 0x400004
+
+---------- Data Memory ----------
+inputs: 
+	address = 0xfffffe1c
+	write data = 0x1c
+	memRead = 0x0
+	memWrite = 0x0
+output:
+	read data = 0xfffffe00
+
+---------- Multiplexer 3 ----------
+inputs: 
+	read data = 0xfffffe00
+	ALU 3 result = 0xfffffe1c
+	control = 0x1
+output:
+	result = 0xfffffe1c
+
+---------- Registers (write back) ----------
+inputs: 
+	write register = 0x1
+	write data = 0xfffffe1c
+	regWrite = 0x1
+
+---------- PC ----------
+input: 0x400004
+
+---------- Print Memory Contents ----------
+Registers:
+0 : 0x58eed051
+1 : 0xfffffe1c
+2 : 0xfffffe00
+3 : 0x1c
+4 : 0x6c
+5 : 0x8c
+6 : 0x100
+7 : 0x0
+8 : 0x12c
+9 : 0x9de6153f
+10 : 0x1000000c
+11 : 0x0
+12 : 0x9cb2a11c
+13 : 0xddc6522
+14 : 0x604ca9a9
+15 : 0x488a6409
+16 : 0xaaa29086
+17 : 0x95ddcf94
+18 : 0x61d998ef
+19 : 0x8e9a6c56
+20 : 0x5a3e780f
+21 : 0xdaa25db0
+22 : 0xa031e83
+23 : 0x750773f2
+24 : 0x67745ce5
+25 : 0x9b0eae9d
+26 : 0x10000004
+27 : 0x10000020
+28 : 0x70e0b33a
+29 : 0x1b128e28
+30 : 0xea150cc4
+31 : 0x81e72593
+
+Instruction Memory:
+address  : binary encoding                  : MIPS instruction
+0x400000 : 00000000010000110000100000100000 : add $1, $2, $3
+0x400004 : 00000000101000010010000000100010 : sub $4, $5, $1
+0x400008 : 00100000100001100000000010010100 : addi $6, $4, 148
+0x40000c : 00000001000001100011100000101010 : slt $7, $8, $6
+0x400010 : 10001101010000101111111111111100 : lw $2, -4($10)
+0x400014 : 10101101010001100000000000000100 : sw $6, 4($10)
+0x400018 : 00010000111010111111111111111001 : beq $7, $11, loop
+0x40001c : 00001000000100000000000000011011 : j end
+0x400020 : 00010000001000100000000001110111 : beq	$1, $2, 0x200
+0x400024 : 00010000001000100000011101110110 : beq	$1, $2, 0x1e00
+0x400028 : 00001000000100000000000000000011 : j	0x40000c
+0x40002c : 00000000100010000001100000100000 : add	$3, $4, $8
+0x400030 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400034 : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400038 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x40003c : 00000000010000110000100000101010 : slt	$1, $2, $3
+0x400040 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x400044 : 10101111010100010000000000001000 : sw      $17, 8($26)
+0x400048 : 00000000100010000001100000100000 : add	$3, $4, $8
+0x40004c : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400050 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400054 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x400058 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x40005c : 10101111010100010000000000001000 : sw  $17, 8($26)
+0x400060 : 00010000001000101111111111111010 : beq	$1, $2, 0x40004c   
+0x400064 : 00001000000100000000000000010101 : j	0x400054
+0x400068 : 00010000001000101111111111111001 : beq	$1, $2, label1
+0x40006c : 00100010010100010000000000000100 : addi $17, $18, 4
+
+Data Memory:
+address    : data
+0x10000000 : 0x58eed051
+0x10000004 : 0x305f7ea1
+0x10000008 : 0xfffffe00
+0x1000000c : 0xc57b54ba
+0x10000010 : 0x100
+0x10000014 : 0x1df23a4f
+0x10000018 : 0xb90037d6
+0x1000001c : 0x63322818
+0x10000020 : 0x10916273
+0x10000024 : 0x9de6153f
+0x10000028 : 0x81fb7b82
+0x1000002c : 0xce7d0a9b
+0x10000030 : 0x9cb2a11c
+0x10000034 : 0xddc6522
+0x10000038 : 0x604ca9a9
+0x1000003c : 0x488a6409
+0x10000040 : 0xaaa29086
+0x10000044 : 0x95ddcf94
+0x10000048 : 0x61d998ef
+0x1000004c : 0x8e9a6c56
+0x10000050 : 0x5a3e780f
+0x10000054 : 0xdaa25db0
+0x10000058 : 0xa031e83
+0x1000005c : 0x750773f2
+0x10000060 : 0x67745ce5
+0x10000064 : 0x1bbb31d
+0x10000068 : 0xd318c95a
+0x1000006c : 0xc3d19c71
+0x10000070 : 0x8c95e985
+
+------------------------------ Iteration 9 ------------------------------
+---------- PC ----------
+output: 0x400004
+
+MIPS instruction at address 0x400004: 
+	sub $4, $5, $1
+
+---------- Instruction Memory ----------
+input:
+	PCount = 0x400004
+output:
+	opcode = 0x0
+	rs = 0x5
+	rt = 0x1
+	rd = 0x4
+	shamt = 0x0
+	funct = 0x22
+	immediate = 0x2022
+	jumpAddress = 0xa12022
+
+---------- ALU 1 ----------
+inputs:
+	input 1 = 0x400004
+	input 2 = 0x4
+	control = 0x2
+output:
+	result = 0x400008
+---------- Shift-left 1 ----------
+input:
+	0xa12022
+output:
+	0x2848088
+
+---------- Control ----------
+input: 
+	opcode = 0x0
+output: 
+	RegDst = 0x1
+	jump = 0x0
+	branch = 0x0
+	memRead = 0x0
+	memToReg = 0x1
+	ALUOp = 0x2
+	memWrite = 0x0
+	ALUSrc = 0x0
+	regWrite = 0x1
+
+---------- Multiplexer 1 ----------
+inputs: 
+	rt = 0x1
+	rd = 0x4
+	control = 0x1
+output:
+	result = 0x4
+
+---------- Registers (read) ----------
+inputs: 
+	Read register 1 = 0x5
+	Read register 2 = 0x1
+outputs:
+	Read data 1 = 0x8c
+	Read data 2 = 0xfffffe1c
+
+---------- Signextend ----------
+input:
+	0x2022
+output:
+	0x00002022
+
+---------- Shift-left 2 ----------
+input:
+	0x2022
+output:
+	0x8088
+
+---------- ALU 2 ----------
+inputs:
+	input 1 = 0x400008
+	input 2 = 0x8088
+	control = 0x2
+output:
+	result = 0x408090
+
+---------- Multiplexer 2 ----------
+inputs: 
+	read data 2 = 0xfffffe1c
+	signextended immediate = 0x2022
+	control = 0x0
+output:
+	result = 0xfffffe1c
+
+---------- ALU Control ----------
+inputs:
+	ALU opcode = 0x2
+	function = 0x22
+output:
+	ALU control = 0x6
+
+---------- ALU 3 ----------
+inputs:
+	input 1 = 0x8c
+	input 2 = 0xfffffe1c
+	control = 0x6
+output:
+	result = 0x270
+
+---------- Multiplexer 5 ----------
+inputs: 
+	PC + 4 = 0x400008
+	branch address = 0x408090
+	control = 0x0
+output:
+	result = 0x400008
+
+---------- Multiplexer 4 ----------
+inputs: 
+	MUX 5 result = 0x400008
+	jump address = 0x2848088
+	control = 0x0
+output:
+	result = 0x400008
+
+---------- Data Memory ----------
+inputs: 
+	address = 0x270
+	write data = 0xfffffe1c
+	memRead = 0x0
+	memWrite = 0x0
+output:
+	read data = 0xfffffe00
+
+---------- Multiplexer 3 ----------
+inputs: 
+	read data = 0xfffffe00
+	ALU 3 result = 0x270
+	control = 0x1
+output:
+	result = 0x270
+
+---------- Registers (write back) ----------
+inputs: 
+	write register = 0x4
+	write data = 0x270
+	regWrite = 0x1
+
+---------- PC ----------
+input: 0x400008
+
+---------- Print Memory Contents ----------
+Registers:
+0 : 0x58eed051
+1 : 0xfffffe1c
+2 : 0xfffffe00
+3 : 0x1c
+4 : 0x270
+5 : 0x8c
+6 : 0x100
+7 : 0x0
+8 : 0x12c
+9 : 0x9de6153f
+10 : 0x1000000c
+11 : 0x0
+12 : 0x9cb2a11c
+13 : 0xddc6522
+14 : 0x604ca9a9
+15 : 0x488a6409
+16 : 0xaaa29086
+17 : 0x95ddcf94
+18 : 0x61d998ef
+19 : 0x8e9a6c56
+20 : 0x5a3e780f
+21 : 0xdaa25db0
+22 : 0xa031e83
+23 : 0x750773f2
+24 : 0x67745ce5
+25 : 0x9b0eae9d
+26 : 0x10000004
+27 : 0x10000020
+28 : 0x70e0b33a
+29 : 0x1b128e28
+30 : 0xea150cc4
+31 : 0x81e72593
+
+Instruction Memory:
+address  : binary encoding                  : MIPS instruction
+0x400000 : 00000000010000110000100000100000 : add $1, $2, $3
+0x400004 : 00000000101000010010000000100010 : sub $4, $5, $1
+0x400008 : 00100000100001100000000010010100 : addi $6, $4, 148
+0x40000c : 00000001000001100011100000101010 : slt $7, $8, $6
+0x400010 : 10001101010000101111111111111100 : lw $2, -4($10)
+0x400014 : 10101101010001100000000000000100 : sw $6, 4($10)
+0x400018 : 00010000111010111111111111111001 : beq $7, $11, loop
+0x40001c : 00001000000100000000000000011011 : j end
+0x400020 : 00010000001000100000000001110111 : beq	$1, $2, 0x200
+0x400024 : 00010000001000100000011101110110 : beq	$1, $2, 0x1e00
+0x400028 : 00001000000100000000000000000011 : j	0x40000c
+0x40002c : 00000000100010000001100000100000 : add	$3, $4, $8
+0x400030 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400034 : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400038 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x40003c : 00000000010000110000100000101010 : slt	$1, $2, $3
+0x400040 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x400044 : 10101111010100010000000000001000 : sw      $17, 8($26)
+0x400048 : 00000000100010000001100000100000 : add	$3, $4, $8
+0x40004c : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400050 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400054 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x400058 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x40005c : 10101111010100010000000000001000 : sw  $17, 8($26)
+0x400060 : 00010000001000101111111111111010 : beq	$1, $2, 0x40004c   
+0x400064 : 00001000000100000000000000010101 : j	0x400054
+0x400068 : 00010000001000101111111111111001 : beq	$1, $2, label1
+0x40006c : 00100010010100010000000000000100 : addi $17, $18, 4
+
+Data Memory:
+address    : data
+0x10000000 : 0x58eed051
+0x10000004 : 0x305f7ea1
+0x10000008 : 0xfffffe00
+0x1000000c : 0xc57b54ba
+0x10000010 : 0x100
+0x10000014 : 0x1df23a4f
+0x10000018 : 0xb90037d6
+0x1000001c : 0x63322818
+0x10000020 : 0x10916273
+0x10000024 : 0x9de6153f
+0x10000028 : 0x81fb7b82
+0x1000002c : 0xce7d0a9b
+0x10000030 : 0x9cb2a11c
+0x10000034 : 0xddc6522
+0x10000038 : 0x604ca9a9
+0x1000003c : 0x488a6409
+0x10000040 : 0xaaa29086
+0x10000044 : 0x95ddcf94
+0x10000048 : 0x61d998ef
+0x1000004c : 0x8e9a6c56
+0x10000050 : 0x5a3e780f
+0x10000054 : 0xdaa25db0
+0x10000058 : 0xa031e83
+0x1000005c : 0x750773f2
+0x10000060 : 0x67745ce5
+0x10000064 : 0x1bbb31d
+0x10000068 : 0xd318c95a
+0x1000006c : 0xc3d19c71
+0x10000070 : 0x8c95e985
+
+------------------------------ Iteration 10 ------------------------------
+---------- PC ----------
+output: 0x400008
+
+MIPS instruction at address 0x400008: 
+	addi $6, $4, 148
+
+---------- Instruction Memory ----------
+input:
+	PCount = 0x400008
+output:
+	opcode = 0x8
+	rs = 0x4
+	rt = 0x6
+	rd = 0x0
+	shamt = 0x2
+	funct = 0x14
+	immediate = 0x94
+	jumpAddress = 0x860094
+
+---------- ALU 1 ----------
+inputs:
+	input 1 = 0x400008
+	input 2 = 0x4
+	control = 0x2
+output:
+	result = 0x40000c
+---------- Shift-left 1 ----------
+input:
+	0x860094
+output:
+	0x2180250
+
+---------- Control ----------
+input: 
+	opcode = 0x8
+output: 
+	RegDst = 0x0
+	jump = 0x0
+	branch = 0x0
+	memRead = 0x0
+	memToReg = 0x1
+	ALUOp = 0x3
+	memWrite = 0x0
+	ALUSrc = 0x1
+	regWrite = 0x1
+
+---------- Multiplexer 1 ----------
+inputs: 
+	rt = 0x6
+	rd = 0x0
+	control = 0x0
+output:
+	result = 0x6
+
+---------- Registers (read) ----------
+inputs: 
+	Read register 1 = 0x4
+	Read register 2 = 0x6
+outputs:
+	Read data 1 = 0x270
+	Read data 2 = 0x100
+
+---------- Signextend ----------
+input:
+	0x0094
+output:
+	0x00000094
+
+---------- Shift-left 2 ----------
+input:
+	0x94
+output:
+	0x250
+
+---------- ALU 2 ----------
+inputs:
+	input 1 = 0x40000c
+	input 2 = 0x250
+	control = 0x2
+output:
+	result = 0x40025c
+
+---------- Multiplexer 2 ----------
+inputs: 
+	read data 2 = 0x100
+	signextended immediate = 0x94
+	control = 0x1
+output:
+	result = 0x94
+
+---------- ALU Control ----------
+inputs:
+	ALU opcode = 0x3
+	function = 0x14
+output:
+	ALU control = 0x2
+
+---------- ALU 3 ----------
+inputs:
+	input 1 = 0x270
+	input 2 = 0x94
+	control = 0x2
+output:
+	result = 0x304
+
+---------- Multiplexer 5 ----------
+inputs: 
+	PC + 4 = 0x40000c
+	branch address = 0x40025c
+	control = 0x0
+output:
+	result = 0x40000c
+
+---------- Multiplexer 4 ----------
+inputs: 
+	MUX 5 result = 0x40000c
+	jump address = 0x2180250
+	control = 0x0
+output:
+	result = 0x40000c
+
+---------- Data Memory ----------
+inputs: 
+	address = 0x304
+	write data = 0x100
+	memRead = 0x0
+	memWrite = 0x0
+output:
+	read data = 0xfffffe00
+
+---------- Multiplexer 3 ----------
+inputs: 
+	read data = 0xfffffe00
+	ALU 3 result = 0x304
+	control = 0x1
+output:
+	result = 0x304
+
+---------- Registers (write back) ----------
+inputs: 
+	write register = 0x6
+	write data = 0x304
+	regWrite = 0x1
+
+---------- PC ----------
+input: 0x40000c
+
+---------- Print Memory Contents ----------
+Registers:
+0 : 0x58eed051
+1 : 0xfffffe1c
+2 : 0xfffffe00
+3 : 0x1c
+4 : 0x270
+5 : 0x8c
+6 : 0x304
+7 : 0x0
+8 : 0x12c
+9 : 0x9de6153f
+10 : 0x1000000c
+11 : 0x0
+12 : 0x9cb2a11c
+13 : 0xddc6522
+14 : 0x604ca9a9
+15 : 0x488a6409
+16 : 0xaaa29086
+17 : 0x95ddcf94
+18 : 0x61d998ef
+19 : 0x8e9a6c56
+20 : 0x5a3e780f
+21 : 0xdaa25db0
+22 : 0xa031e83
+23 : 0x750773f2
+24 : 0x67745ce5
+25 : 0x9b0eae9d
+26 : 0x10000004
+27 : 0x10000020
+28 : 0x70e0b33a
+29 : 0x1b128e28
+30 : 0xea150cc4
+31 : 0x81e72593
+
+Instruction Memory:
+address  : binary encoding                  : MIPS instruction
+0x400000 : 00000000010000110000100000100000 : add $1, $2, $3
+0x400004 : 00000000101000010010000000100010 : sub $4, $5, $1
+0x400008 : 00100000100001100000000010010100 : addi $6, $4, 148
+0x40000c : 00000001000001100011100000101010 : slt $7, $8, $6
+0x400010 : 10001101010000101111111111111100 : lw $2, -4($10)
+0x400014 : 10101101010001100000000000000100 : sw $6, 4($10)
+0x400018 : 00010000111010111111111111111001 : beq $7, $11, loop
+0x40001c : 00001000000100000000000000011011 : j end
+0x400020 : 00010000001000100000000001110111 : beq	$1, $2, 0x200
+0x400024 : 00010000001000100000011101110110 : beq	$1, $2, 0x1e00
+0x400028 : 00001000000100000000000000000011 : j	0x40000c
+0x40002c : 00000000100010000001100000100000 : add	$3, $4, $8
+0x400030 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400034 : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400038 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x40003c : 00000000010000110000100000101010 : slt	$1, $2, $3
+0x400040 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x400044 : 10101111010100010000000000001000 : sw      $17, 8($26)
+0x400048 : 00000000100010000001100000100000 : add	$3, $4, $8
+0x40004c : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400050 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400054 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x400058 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x40005c : 10101111010100010000000000001000 : sw  $17, 8($26)
+0x400060 : 00010000001000101111111111111010 : beq	$1, $2, 0x40004c   
+0x400064 : 00001000000100000000000000010101 : j	0x400054
+0x400068 : 00010000001000101111111111111001 : beq	$1, $2, label1
+0x40006c : 00100010010100010000000000000100 : addi $17, $18, 4
+
+Data Memory:
+address    : data
+0x10000000 : 0x58eed051
+0x10000004 : 0x305f7ea1
+0x10000008 : 0xfffffe00
+0x1000000c : 0xc57b54ba
+0x10000010 : 0x100
+0x10000014 : 0x1df23a4f
+0x10000018 : 0xb90037d6
+0x1000001c : 0x63322818
+0x10000020 : 0x10916273
+0x10000024 : 0x9de6153f
+0x10000028 : 0x81fb7b82
+0x1000002c : 0xce7d0a9b
+0x10000030 : 0x9cb2a11c
+0x10000034 : 0xddc6522
+0x10000038 : 0x604ca9a9
+0x1000003c : 0x488a6409
+0x10000040 : 0xaaa29086
+0x10000044 : 0x95ddcf94
+0x10000048 : 0x61d998ef
+0x1000004c : 0x8e9a6c56
+0x10000050 : 0x5a3e780f
+0x10000054 : 0xdaa25db0
+0x10000058 : 0xa031e83
+0x1000005c : 0x750773f2
+0x10000060 : 0x67745ce5
+0x10000064 : 0x1bbb31d
+0x10000068 : 0xd318c95a
+0x1000006c : 0xc3d19c71
+0x10000070 : 0x8c95e985
+
+------------------------------ Iteration 11 ------------------------------
+---------- PC ----------
+output: 0x40000c
+
+MIPS instruction at address 0x40000c: 
+	slt $7, $8, $6
+
+---------- Instruction Memory ----------
+input:
+	PCount = 0x40000c
+output:
+	opcode = 0x0
+	rs = 0x8
+	rt = 0x6
+	rd = 0x7
+	shamt = 0x0
+	funct = 0x2a
+	immediate = 0x382a
+	jumpAddress = 0x106382a
+
+---------- ALU 1 ----------
+inputs:
+	input 1 = 0x40000c
+	input 2 = 0x4
+	control = 0x2
+output:
+	result = 0x400010
+---------- Shift-left 1 ----------
+input:
+	0x106382a
+output:
+	0x418e0a8
+
+---------- Control ----------
+input: 
+	opcode = 0x0
+output: 
+	RegDst = 0x1
+	jump = 0x0
+	branch = 0x0
+	memRead = 0x0
+	memToReg = 0x1
+	ALUOp = 0x2
+	memWrite = 0x0
+	ALUSrc = 0x0
+	regWrite = 0x1
+
+---------- Multiplexer 1 ----------
+inputs: 
+	rt = 0x6
+	rd = 0x7
+	control = 0x1
+output:
+	result = 0x7
+
+---------- Registers (read) ----------
+inputs: 
+	Read register 1 = 0x8
+	Read register 2 = 0x6
+outputs:
+	Read data 1 = 0x12c
+	Read data 2 = 0x304
+
+---------- Signextend ----------
+input:
+	0x382a
+output:
+	0x0000382a
+
+---------- Shift-left 2 ----------
+input:
+	0x382a
+output:
+	0xe0a8
+
+---------- ALU 2 ----------
+inputs:
+	input 1 = 0x400010
+	input 2 = 0xe0a8
+	control = 0x2
+output:
+	result = 0x40e0b8
+
+---------- Multiplexer 2 ----------
+inputs: 
+	read data 2 = 0x304
+	signextended immediate = 0x382a
+	control = 0x0
+output:
+	result = 0x304
+
+---------- ALU Control ----------
+inputs:
+	ALU opcode = 0x2
+	function = 0x2a
+output:
+	ALU control = 0x7
+
+---------- ALU 3 ----------
+inputs:
+	input 1 = 0x12c
+	input 2 = 0x304
+	control = 0x7
+output:
+	result = 0x1
+
+---------- Multiplexer 5 ----------
+inputs: 
+	PC + 4 = 0x400010
+	branch address = 0x40e0b8
+	control = 0x0
+output:
+	result = 0x400010
+
+---------- Multiplexer 4 ----------
+inputs: 
+	MUX 5 result = 0x400010
+	jump address = 0x418e0a8
+	control = 0x0
+output:
+	result = 0x400010
+
+---------- Data Memory ----------
+inputs: 
+	address = 0x1
+	write data = 0x304
+	memRead = 0x0
+	memWrite = 0x0
+output:
+	read data = 0xfffffe00
+
+---------- Multiplexer 3 ----------
+inputs: 
+	read data = 0xfffffe00
+	ALU 3 result = 0x1
+	control = 0x1
+output:
+	result = 0x1
+
+---------- Registers (write back) ----------
+inputs: 
+	write register = 0x7
+	write data = 0x1
+	regWrite = 0x1
+
+---------- PC ----------
+input: 0x400010
+
+---------- Print Memory Contents ----------
+Registers:
+0 : 0x58eed051
+1 : 0xfffffe1c
+2 : 0xfffffe00
+3 : 0x1c
+4 : 0x270
+5 : 0x8c
+6 : 0x304
+7 : 0x1
+8 : 0x12c
+9 : 0x9de6153f
+10 : 0x1000000c
+11 : 0x0
+12 : 0x9cb2a11c
+13 : 0xddc6522
+14 : 0x604ca9a9
+15 : 0x488a6409
+16 : 0xaaa29086
+17 : 0x95ddcf94
+18 : 0x61d998ef
+19 : 0x8e9a6c56
+20 : 0x5a3e780f
+21 : 0xdaa25db0
+22 : 0xa031e83
+23 : 0x750773f2
+24 : 0x67745ce5
+25 : 0x9b0eae9d
+26 : 0x10000004
+27 : 0x10000020
+28 : 0x70e0b33a
+29 : 0x1b128e28
+30 : 0xea150cc4
+31 : 0x81e72593
+
+Instruction Memory:
+address  : binary encoding                  : MIPS instruction
+0x400000 : 00000000010000110000100000100000 : add $1, $2, $3
+0x400004 : 00000000101000010010000000100010 : sub $4, $5, $1
+0x400008 : 00100000100001100000000010010100 : addi $6, $4, 148
+0x40000c : 00000001000001100011100000101010 : slt $7, $8, $6
+0x400010 : 10001101010000101111111111111100 : lw $2, -4($10)
+0x400014 : 10101101010001100000000000000100 : sw $6, 4($10)
+0x400018 : 00010000111010111111111111111001 : beq $7, $11, loop
+0x40001c : 00001000000100000000000000011011 : j end
+0x400020 : 00010000001000100000000001110111 : beq	$1, $2, 0x200
+0x400024 : 00010000001000100000011101110110 : beq	$1, $2, 0x1e00
+0x400028 : 00001000000100000000000000000011 : j	0x40000c
+0x40002c : 00000000100010000001100000100000 : add	$3, $4, $8
+0x400030 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400034 : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400038 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x40003c : 00000000010000110000100000101010 : slt	$1, $2, $3
+0x400040 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x400044 : 10101111010100010000000000001000 : sw      $17, 8($26)
+0x400048 : 00000000100010000001100000100000 : add	$3, $4, $8
+0x40004c : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400050 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400054 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x400058 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x40005c : 10101111010100010000000000001000 : sw  $17, 8($26)
+0x400060 : 00010000001000101111111111111010 : beq	$1, $2, 0x40004c   
+0x400064 : 00001000000100000000000000010101 : j	0x400054
+0x400068 : 00010000001000101111111111111001 : beq	$1, $2, label1
+0x40006c : 00100010010100010000000000000100 : addi $17, $18, 4
+
+Data Memory:
+address    : data
+0x10000000 : 0x58eed051
+0x10000004 : 0x305f7ea1
+0x10000008 : 0xfffffe00
+0x1000000c : 0xc57b54ba
+0x10000010 : 0x100
+0x10000014 : 0x1df23a4f
+0x10000018 : 0xb90037d6
+0x1000001c : 0x63322818
+0x10000020 : 0x10916273
+0x10000024 : 0x9de6153f
+0x10000028 : 0x81fb7b82
+0x1000002c : 0xce7d0a9b
+0x10000030 : 0x9cb2a11c
+0x10000034 : 0xddc6522
+0x10000038 : 0x604ca9a9
+0x1000003c : 0x488a6409
+0x10000040 : 0xaaa29086
+0x10000044 : 0x95ddcf94
+0x10000048 : 0x61d998ef
+0x1000004c : 0x8e9a6c56
+0x10000050 : 0x5a3e780f
+0x10000054 : 0xdaa25db0
+0x10000058 : 0xa031e83
+0x1000005c : 0x750773f2
+0x10000060 : 0x67745ce5
+0x10000064 : 0x1bbb31d
+0x10000068 : 0xd318c95a
+0x1000006c : 0xc3d19c71
+0x10000070 : 0x8c95e985
+
+------------------------------ Iteration 12 ------------------------------
+---------- PC ----------
+output: 0x400010
+
+MIPS instruction at address 0x400010: 
+	lw $2, -4($10)
+
+---------- Instruction Memory ----------
+input:
+	PCount = 0x400010
+output:
+	opcode = 0x23
+	rs = 0xa
+	rt = 0x2
+	rd = 0x1f
+	shamt = 0x1f
+	funct = 0x3c
+	immediate = 0xfffc
+	jumpAddress = 0x142fffc
+
+---------- ALU 1 ----------
+inputs:
+	input 1 = 0x400010
+	input 2 = 0x4
+	control = 0x2
+output:
+	result = 0x400014
+---------- Shift-left 1 ----------
+input:
+	0x142fffc
+output:
+	0x50bfff0
+
+---------- Control ----------
+input: 
+	opcode = 0x23
+output: 
+	RegDst = 0x0
+	jump = 0x0
+	branch = 0x0
+	memRead = 0x1
+	memToReg = 0x0
+	ALUOp = 0x0
+	memWrite = 0x0
+	ALUSrc = 0x1
+	regWrite = 0x1
+
+---------- Multiplexer 1 ----------
+inputs: 
+	rt = 0x2
+	rd = 0x1f
+	control = 0x0
+output:
+	result = 0x2
+
+---------- Registers (read) ----------
+inputs: 
+	Read register 1 = 0xa
+	Read register 2 = 0x2
+outputs:
+	Read data 1 = 0x1000000c
+	Read data 2 = 0xfffffe00
+
+---------- Signextend ----------
+input:
+	0xfffc
+output:
+	0xfffffffc
+
+---------- Shift-left 2 ----------
+input:
+	0xfffffffc
+output:
+	0xfffffff0
+
+---------- ALU 2 ----------
+inputs:
+	input 1 = 0x400014
+	input 2 = 0xfffffff0
+	control = 0x2
+output:
+	result = 0x400004
+
+---------- Multiplexer 2 ----------
+inputs: 
+	read data 2 = 0xfffffe00
+	signextended immediate = 0xfffffffc
+	control = 0x1
+output:
+	result = 0xfffffffc
+
+---------- ALU Control ----------
+inputs:
+	ALU opcode = 0x0
+	function = 0x3c
+output:
+	ALU control = 0x2
+
+---------- ALU 3 ----------
+inputs:
+	input 1 = 0x1000000c
+	input 2 = 0xfffffffc
+	control = 0x2
+output:
+	result = 0x10000008
+
+---------- Multiplexer 5 ----------
+inputs: 
+	PC + 4 = 0x400014
+	branch address = 0x400004
+	control = 0x0
+output:
+	result = 0x400014
+
+---------- Multiplexer 4 ----------
+inputs: 
+	MUX 5 result = 0x400014
+	jump address = 0x50bfff0
+	control = 0x0
+output:
+	result = 0x400014
+
+---------- Data Memory ----------
+inputs: 
+	address = 0x10000008
+	write data = 0xfffffe00
+	memRead = 0x1
+	memWrite = 0x0
+output:
+	read data = 0xfffffe00
+
+---------- Multiplexer 3 ----------
+inputs: 
+	read data = 0xfffffe00
+	ALU 3 result = 0x10000008
+	control = 0x0
+output:
+	result = 0xfffffe00
+
+---------- Registers (write back) ----------
+inputs: 
+	write register = 0x2
+	write data = 0xfffffe00
+	regWrite = 0x1
+
+---------- PC ----------
+input: 0x400014
+
+---------- Print Memory Contents ----------
+Registers:
+0 : 0x58eed051
+1 : 0xfffffe1c
+2 : 0xfffffe00
+3 : 0x1c
+4 : 0x270
+5 : 0x8c
+6 : 0x304
+7 : 0x1
+8 : 0x12c
+9 : 0x9de6153f
+10 : 0x1000000c
+11 : 0x0
+12 : 0x9cb2a11c
+13 : 0xddc6522
+14 : 0x604ca9a9
+15 : 0x488a6409
+16 : 0xaaa29086
+17 : 0x95ddcf94
+18 : 0x61d998ef
+19 : 0x8e9a6c56
+20 : 0x5a3e780f
+21 : 0xdaa25db0
+22 : 0xa031e83
+23 : 0x750773f2
+24 : 0x67745ce5
+25 : 0x9b0eae9d
+26 : 0x10000004
+27 : 0x10000020
+28 : 0x70e0b33a
+29 : 0x1b128e28
+30 : 0xea150cc4
+31 : 0x81e72593
+
+Instruction Memory:
+address  : binary encoding                  : MIPS instruction
+0x400000 : 00000000010000110000100000100000 : add $1, $2, $3
+0x400004 : 00000000101000010010000000100010 : sub $4, $5, $1
+0x400008 : 00100000100001100000000010010100 : addi $6, $4, 148
+0x40000c : 00000001000001100011100000101010 : slt $7, $8, $6
+0x400010 : 10001101010000101111111111111100 : lw $2, -4($10)
+0x400014 : 10101101010001100000000000000100 : sw $6, 4($10)
+0x400018 : 00010000111010111111111111111001 : beq $7, $11, loop
+0x40001c : 00001000000100000000000000011011 : j end
+0x400020 : 00010000001000100000000001110111 : beq	$1, $2, 0x200
+0x400024 : 00010000001000100000011101110110 : beq	$1, $2, 0x1e00
+0x400028 : 00001000000100000000000000000011 : j	0x40000c
+0x40002c : 00000000100010000001100000100000 : add	$3, $4, $8
+0x400030 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400034 : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400038 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x40003c : 00000000010000110000100000101010 : slt	$1, $2, $3
+0x400040 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x400044 : 10101111010100010000000000001000 : sw      $17, 8($26)
+0x400048 : 00000000100010000001100000100000 : add	$3, $4, $8
+0x40004c : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400050 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400054 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x400058 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x40005c : 10101111010100010000000000001000 : sw  $17, 8($26)
+0x400060 : 00010000001000101111111111111010 : beq	$1, $2, 0x40004c   
+0x400064 : 00001000000100000000000000010101 : j	0x400054
+0x400068 : 00010000001000101111111111111001 : beq	$1, $2, label1
+0x40006c : 00100010010100010000000000000100 : addi $17, $18, 4
+
+Data Memory:
+address    : data
+0x10000000 : 0x58eed051
+0x10000004 : 0x305f7ea1
+0x10000008 : 0xfffffe00
+0x1000000c : 0xc57b54ba
+0x10000010 : 0x100
+0x10000014 : 0x1df23a4f
+0x10000018 : 0xb90037d6
+0x1000001c : 0x63322818
+0x10000020 : 0x10916273
+0x10000024 : 0x9de6153f
+0x10000028 : 0x81fb7b82
+0x1000002c : 0xce7d0a9b
+0x10000030 : 0x9cb2a11c
+0x10000034 : 0xddc6522
+0x10000038 : 0x604ca9a9
+0x1000003c : 0x488a6409
+0x10000040 : 0xaaa29086
+0x10000044 : 0x95ddcf94
+0x10000048 : 0x61d998ef
+0x1000004c : 0x8e9a6c56
+0x10000050 : 0x5a3e780f
+0x10000054 : 0xdaa25db0
+0x10000058 : 0xa031e83
+0x1000005c : 0x750773f2
+0x10000060 : 0x67745ce5
+0x10000064 : 0x1bbb31d
+0x10000068 : 0xd318c95a
+0x1000006c : 0xc3d19c71
+0x10000070 : 0x8c95e985
+
+------------------------------ Iteration 13 ------------------------------
+---------- PC ----------
+output: 0x400014
+
+MIPS instruction at address 0x400014: 
+	sw $6, 4($10)
+
+---------- Instruction Memory ----------
+input:
+	PCount = 0x400014
+output:
+	opcode = 0x2b
+	rs = 0xa
+	rt = 0x6
+	rd = 0x0
+	shamt = 0x0
+	funct = 0x4
+	immediate = 0x4
+	jumpAddress = 0x1460004
+
+---------- ALU 1 ----------
+inputs:
+	input 1 = 0x400014
+	input 2 = 0x4
+	control = 0x2
+output:
+	result = 0x400018
+---------- Shift-left 1 ----------
+input:
+	0x1460004
+output:
+	0x5180010
+
+---------- Control ----------
+input: 
+	opcode = 0x2b
+output: 
+	RegDst = 0xffffffff
+	jump = 0x0
+	branch = 0x0
+	memRead = 0x0
+	memToReg = 0xffffffff
+	ALUOp = 0x0
+	memWrite = 0x1
+	ALUSrc = 0x1
+	regWrite = 0x0
+
+---------- Multiplexer 1 ----------
+inputs: 
+	rt = 0x6
+	rd = 0x0
+	control = 0xffffffff
+output:
+	result = 0x0
+
+---------- Registers (read) ----------
+inputs: 
+	Read register 1 = 0xa
+	Read register 2 = 0x6
+outputs:
+	Read data 1 = 0x1000000c
+	Read data 2 = 0x304
+
+---------- Signextend ----------
+input:
+	0x0004
+output:
+	0x00000004
+
+---------- Shift-left 2 ----------
+input:
+	0x4
+output:
+	0x10
+
+---------- ALU 2 ----------
+inputs:
+	input 1 = 0x400018
+	input 2 = 0x10
+	control = 0x2
+output:
+	result = 0x400028
+
+---------- Multiplexer 2 ----------
+inputs: 
+	read data 2 = 0x304
+	signextended immediate = 0x4
+	control = 0x1
+output:
+	result = 0x4
+
+---------- ALU Control ----------
+inputs:
+	ALU opcode = 0x0
+	function = 0x4
+output:
+	ALU control = 0x2
+
+---------- ALU 3 ----------
+inputs:
+	input 1 = 0x1000000c
+	input 2 = 0x4
+	control = 0x2
+output:
+	result = 0x10000010
+
+---------- Multiplexer 5 ----------
+inputs: 
+	PC + 4 = 0x400018
+	branch address = 0x400028
+	control = 0x0
+output:
+	result = 0x400018
+
+---------- Multiplexer 4 ----------
+inputs: 
+	MUX 5 result = 0x400018
+	jump address = 0x5180010
+	control = 0x0
+output:
+	result = 0x400018
+
+---------- Data Memory ----------
+inputs: 
+	address = 0x10000010
+	write data = 0x304
+	memRead = 0x0
+	memWrite = 0x1
+output:
+	read data = 0xfffffe00
+
+---------- Multiplexer 3 ----------
+inputs: 
+	read data = 0xfffffe00
+	ALU 3 result = 0x10000010
+	control = 0xffffffff
+output:
+	result = 0x10000010
+
+---------- Registers (write back) ----------
+inputs: 
+	write register = 0x0
+	write data = 0x10000010
+	regWrite = 0x0
+
+---------- PC ----------
+input: 0x400018
+
+---------- Print Memory Contents ----------
+Registers:
+0 : 0x58eed051
+1 : 0xfffffe1c
+2 : 0xfffffe00
+3 : 0x1c
+4 : 0x270
+5 : 0x8c
+6 : 0x304
+7 : 0x1
+8 : 0x12c
+9 : 0x9de6153f
+10 : 0x1000000c
+11 : 0x0
+12 : 0x9cb2a11c
+13 : 0xddc6522
+14 : 0x604ca9a9
+15 : 0x488a6409
+16 : 0xaaa29086
+17 : 0x95ddcf94
+18 : 0x61d998ef
+19 : 0x8e9a6c56
+20 : 0x5a3e780f
+21 : 0xdaa25db0
+22 : 0xa031e83
+23 : 0x750773f2
+24 : 0x67745ce5
+25 : 0x9b0eae9d
+26 : 0x10000004
+27 : 0x10000020
+28 : 0x70e0b33a
+29 : 0x1b128e28
+30 : 0xea150cc4
+31 : 0x81e72593
+
+Instruction Memory:
+address  : binary encoding                  : MIPS instruction
+0x400000 : 00000000010000110000100000100000 : add $1, $2, $3
+0x400004 : 00000000101000010010000000100010 : sub $4, $5, $1
+0x400008 : 00100000100001100000000010010100 : addi $6, $4, 148
+0x40000c : 00000001000001100011100000101010 : slt $7, $8, $6
+0x400010 : 10001101010000101111111111111100 : lw $2, -4($10)
+0x400014 : 10101101010001100000000000000100 : sw $6, 4($10)
+0x400018 : 00010000111010111111111111111001 : beq $7, $11, loop
+0x40001c : 00001000000100000000000000011011 : j end
+0x400020 : 00010000001000100000000001110111 : beq	$1, $2, 0x200
+0x400024 : 00010000001000100000011101110110 : beq	$1, $2, 0x1e00
+0x400028 : 00001000000100000000000000000011 : j	0x40000c
+0x40002c : 00000000100010000001100000100000 : add	$3, $4, $8
+0x400030 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400034 : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400038 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x40003c : 00000000010000110000100000101010 : slt	$1, $2, $3
+0x400040 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x400044 : 10101111010100010000000000001000 : sw      $17, 8($26)
+0x400048 : 00000000100010000001100000100000 : add	$3, $4, $8
+0x40004c : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400050 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400054 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x400058 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x40005c : 10101111010100010000000000001000 : sw  $17, 8($26)
+0x400060 : 00010000001000101111111111111010 : beq	$1, $2, 0x40004c   
+0x400064 : 00001000000100000000000000010101 : j	0x400054
+0x400068 : 00010000001000101111111111111001 : beq	$1, $2, label1
+0x40006c : 00100010010100010000000000000100 : addi $17, $18, 4
+
+Data Memory:
+address    : data
+0x10000000 : 0x58eed051
+0x10000004 : 0x305f7ea1
+0x10000008 : 0xfffffe00
+0x1000000c : 0xc57b54ba
+0x10000010 : 0x304
+0x10000014 : 0x1df23a4f
+0x10000018 : 0xb90037d6
+0x1000001c : 0x63322818
+0x10000020 : 0x10916273
+0x10000024 : 0x9de6153f
+0x10000028 : 0x81fb7b82
+0x1000002c : 0xce7d0a9b
+0x10000030 : 0x9cb2a11c
+0x10000034 : 0xddc6522
+0x10000038 : 0x604ca9a9
+0x1000003c : 0x488a6409
+0x10000040 : 0xaaa29086
+0x10000044 : 0x95ddcf94
+0x10000048 : 0x61d998ef
+0x1000004c : 0x8e9a6c56
+0x10000050 : 0x5a3e780f
+0x10000054 : 0xdaa25db0
+0x10000058 : 0xa031e83
+0x1000005c : 0x750773f2
+0x10000060 : 0x67745ce5
+0x10000064 : 0x1bbb31d
+0x10000068 : 0xd318c95a
+0x1000006c : 0xc3d19c71
+0x10000070 : 0x8c95e985
+
+------------------------------ Iteration 14 ------------------------------
+---------- PC ----------
+output: 0x400018
+
+MIPS instruction at address 0x400018: 
+	beq $7, $11, loop
+
+---------- Instruction Memory ----------
+input:
+	PCount = 0x400018
+output:
+	opcode = 0x4
+	rs = 0x7
+	rt = 0xb
+	rd = 0x1f
+	shamt = 0x1f
+	funct = 0x39
+	immediate = 0xfff9
+	jumpAddress = 0xebfff9
+
+---------- ALU 1 ----------
+inputs:
+	input 1 = 0x400018
+	input 2 = 0x4
+	control = 0x2
+output:
+	result = 0x40001c
+---------- Shift-left 1 ----------
+input:
+	0xebfff9
+output:
+	0x3afffe4
+
+---------- Control ----------
+input: 
+	opcode = 0x4
+output: 
+	RegDst = 0xffffffff
+	jump = 0x0
+	branch = 0x1
+	memRead = 0x0
+	memToReg = 0xffffffff
+	ALUOp = 0x1
+	memWrite = 0x0
+	ALUSrc = 0x0
+	regWrite = 0x0
+
+---------- Multiplexer 1 ----------
+inputs: 
+	rt = 0xb
+	rd = 0x1f
+	control = 0xffffffff
+output:
+	result = 0x1f
+
+---------- Registers (read) ----------
+inputs: 
+	Read register 1 = 0x7
+	Read register 2 = 0xb
+outputs:
+	Read data 1 = 0x1
+	Read data 2 = 0x0
+
+---------- Signextend ----------
+input:
+	0xfff9
+output:
+	0xfffffff9
+
+---------- Shift-left 2 ----------
+input:
+	0xfffffff9
+output:
+	0xffffffe4
+
+---------- ALU 2 ----------
+inputs:
+	input 1 = 0x40001c
+	input 2 = 0xffffffe4
+	control = 0x2
+output:
+	result = 0x400000
+
+---------- Multiplexer 2 ----------
+inputs: 
+	read data 2 = 0x0
+	signextended immediate = 0xfffffff9
+	control = 0x0
+output:
+	result = 0x0
+
+---------- ALU Control ----------
+inputs:
+	ALU opcode = 0x1
+	function = 0x39
+output:
+	ALU control = 0x6
+
+---------- ALU 3 ----------
+inputs:
+	input 1 = 0x1
+	input 2 = 0x0
+	control = 0x6
+output:
+	result = 0x1
+
+---------- Multiplexer 5 ----------
+inputs: 
+	PC + 4 = 0x40001c
+	branch address = 0x400000
+	control = 0x0
+output:
+	result = 0x40001c
+
+---------- Multiplexer 4 ----------
+inputs: 
+	MUX 5 result = 0x40001c
+	jump address = 0x3afffe4
+	control = 0x0
+output:
+	result = 0x40001c
+
+---------- Data Memory ----------
+inputs: 
+	address = 0x1
+	write data = 0x0
+	memRead = 0x0
+	memWrite = 0x0
+output:
+	read data = 0xfffffe00
+
+---------- Multiplexer 3 ----------
+inputs: 
+	read data = 0xfffffe00
+	ALU 3 result = 0x1
+	control = 0xffffffff
+output:
+	result = 0x1
+
+---------- Registers (write back) ----------
+inputs: 
+	write register = 0x1f
+	write data = 0x1
+	regWrite = 0x0
+
+---------- PC ----------
+input: 0x40001c
+
+---------- Print Memory Contents ----------
+Registers:
+0 : 0x58eed051
+1 : 0xfffffe1c
+2 : 0xfffffe00
+3 : 0x1c
+4 : 0x270
+5 : 0x8c
+6 : 0x304
+7 : 0x1
+8 : 0x12c
+9 : 0x9de6153f
+10 : 0x1000000c
+11 : 0x0
+12 : 0x9cb2a11c
+13 : 0xddc6522
+14 : 0x604ca9a9
+15 : 0x488a6409
+16 : 0xaaa29086
+17 : 0x95ddcf94
+18 : 0x61d998ef
+19 : 0x8e9a6c56
+20 : 0x5a3e780f
+21 : 0xdaa25db0
+22 : 0xa031e83
+23 : 0x750773f2
+24 : 0x67745ce5
+25 : 0x9b0eae9d
+26 : 0x10000004
+27 : 0x10000020
+28 : 0x70e0b33a
+29 : 0x1b128e28
+30 : 0xea150cc4
+31 : 0x81e72593
+
+Instruction Memory:
+address  : binary encoding                  : MIPS instruction
+0x400000 : 00000000010000110000100000100000 : add $1, $2, $3
+0x400004 : 00000000101000010010000000100010 : sub $4, $5, $1
+0x400008 : 00100000100001100000000010010100 : addi $6, $4, 148
+0x40000c : 00000001000001100011100000101010 : slt $7, $8, $6
+0x400010 : 10001101010000101111111111111100 : lw $2, -4($10)
+0x400014 : 10101101010001100000000000000100 : sw $6, 4($10)
+0x400018 : 00010000111010111111111111111001 : beq $7, $11, loop
+0x40001c : 00001000000100000000000000011011 : j end
+0x400020 : 00010000001000100000000001110111 : beq	$1, $2, 0x200
+0x400024 : 00010000001000100000011101110110 : beq	$1, $2, 0x1e00
+0x400028 : 00001000000100000000000000000011 : j	0x40000c
+0x40002c : 00000000100010000001100000100000 : add	$3, $4, $8
+0x400030 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400034 : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400038 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x40003c : 00000000010000110000100000101010 : slt	$1, $2, $3
+0x400040 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x400044 : 10101111010100010000000000001000 : sw      $17, 8($26)
+0x400048 : 00000000100010000001100000100000 : add	$3, $4, $8
+0x40004c : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400050 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400054 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x400058 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x40005c : 10101111010100010000000000001000 : sw  $17, 8($26)
+0x400060 : 00010000001000101111111111111010 : beq	$1, $2, 0x40004c   
+0x400064 : 00001000000100000000000000010101 : j	0x400054
+0x400068 : 00010000001000101111111111111001 : beq	$1, $2, label1
+0x40006c : 00100010010100010000000000000100 : addi $17, $18, 4
+
+Data Memory:
+address    : data
+0x10000000 : 0x58eed051
+0x10000004 : 0x305f7ea1
+0x10000008 : 0xfffffe00
+0x1000000c : 0xc57b54ba
+0x10000010 : 0x304
+0x10000014 : 0x1df23a4f
+0x10000018 : 0xb90037d6
+0x1000001c : 0x63322818
+0x10000020 : 0x10916273
+0x10000024 : 0x9de6153f
+0x10000028 : 0x81fb7b82
+0x1000002c : 0xce7d0a9b
+0x10000030 : 0x9cb2a11c
+0x10000034 : 0xddc6522
+0x10000038 : 0x604ca9a9
+0x1000003c : 0x488a6409
+0x10000040 : 0xaaa29086
+0x10000044 : 0x95ddcf94
+0x10000048 : 0x61d998ef
+0x1000004c : 0x8e9a6c56
+0x10000050 : 0x5a3e780f
+0x10000054 : 0xdaa25db0
+0x10000058 : 0xa031e83
+0x1000005c : 0x750773f2
+0x10000060 : 0x67745ce5
+0x10000064 : 0x1bbb31d
+0x10000068 : 0xd318c95a
+0x1000006c : 0xc3d19c71
+0x10000070 : 0x8c95e985
+
+------------------------------ Iteration 15 ------------------------------
+---------- PC ----------
+output: 0x40001c
+
+MIPS instruction at address 0x40001c: 
+	j end
+
+---------- Instruction Memory ----------
+input:
+	PCount = 0x40001c
+output:
+	opcode = 0x2
+	rs = 0x0
+	rt = 0x10
+	rd = 0x0
+	shamt = 0x0
+	funct = 0x1b
+	immediate = 0x1b
+	jumpAddress = 0x10001b
+
+---------- ALU 1 ----------
+inputs:
+	input 1 = 0x40001c
+	input 2 = 0x4
+	control = 0x2
+output:
+	result = 0x400020
+---------- Shift-left 1 ----------
+input:
+	0x10001b
+output:
+	0x40006c
+
+---------- Control ----------
+input: 
+	opcode = 0x2
+output: 
+	RegDst = 0xffffffff
+	jump = 0x1
+	branch = 0x0
+	memRead = 0x0
+	memToReg = 0xffffffff
+	ALUOp = 0xffffffff
+	memWrite = 0x0
+	ALUSrc = 0x0
+	regWrite = 0x0
+
+---------- Multiplexer 1 ----------
+inputs: 
+	rt = 0x10
+	rd = 0x0
+	control = 0xffffffff
+output:
+	result = 0x0
+
+---------- Registers (read) ----------
+inputs: 
+	Read register 1 = 0x0
+	Read register 2 = 0x10
+outputs:
+	Read data 1 = 0x58eed051
+	Read data 2 = 0xaaa29086
+
+---------- Signextend ----------
+input:
+	0x001b
+output:
+	0x0000001b
+
+---------- Shift-left 2 ----------
+input:
+	0x1b
+output:
+	0x6c
+
+---------- ALU 2 ----------
+inputs:
+	input 1 = 0x400020
+	input 2 = 0x6c
+	control = 0x2
+output:
+	result = 0x40008c
+
+---------- Multiplexer 2 ----------
+inputs: 
+	read data 2 = 0xaaa29086
+	signextended immediate = 0x1b
+	control = 0x0
+output:
+	result = 0xaaa29086
+
+---------- ALU Control ----------
+inputs:
+	ALU opcode = 0xffffffff
+	function = 0x1b
+output:
+	ALU control = 0x6
+
+---------- ALU 3 ----------
+inputs:
+	input 1 = 0x58eed051
+	input 2 = 0xaaa29086
+	control = 0x6
+output:
+	result = 0xae4c3fcb
+
+---------- Multiplexer 5 ----------
+inputs: 
+	PC + 4 = 0x400020
+	branch address = 0x40008c
+	control = 0x0
+output:
+	result = 0x400020
+
+---------- Multiplexer 4 ----------
+inputs: 
+	MUX 5 result = 0x400020
+	jump address = 0x40006c
+	control = 0x1
+output:
+	result = 0x40006c
+
+---------- Data Memory ----------
+inputs: 
+	address = 0xae4c3fcb
+	write data = 0xaaa29086
+	memRead = 0x0
+	memWrite = 0x0
+output:
+	read data = 0xfffffe00
+
+---------- Multiplexer 3 ----------
+inputs: 
+	read data = 0xfffffe00
+	ALU 3 result = 0xae4c3fcb
+	control = 0xffffffff
+output:
+	result = 0xae4c3fcb
+
+---------- Registers (write back) ----------
+inputs: 
+	write register = 0x0
+	write data = 0xae4c3fcb
+	regWrite = 0x0
+
+---------- PC ----------
+input: 0x40006c
+
+---------- Print Memory Contents ----------
+Registers:
+0 : 0x58eed051
+1 : 0xfffffe1c
+2 : 0xfffffe00
+3 : 0x1c
+4 : 0x270
+5 : 0x8c
+6 : 0x304
+7 : 0x1
+8 : 0x12c
+9 : 0x9de6153f
+10 : 0x1000000c
+11 : 0x0
+12 : 0x9cb2a11c
+13 : 0xddc6522
+14 : 0x604ca9a9
+15 : 0x488a6409
+16 : 0xaaa29086
+17 : 0x95ddcf94
+18 : 0x61d998ef
+19 : 0x8e9a6c56
+20 : 0x5a3e780f
+21 : 0xdaa25db0
+22 : 0xa031e83
+23 : 0x750773f2
+24 : 0x67745ce5
+25 : 0x9b0eae9d
+26 : 0x10000004
+27 : 0x10000020
+28 : 0x70e0b33a
+29 : 0x1b128e28
+30 : 0xea150cc4
+31 : 0x81e72593
+
+Instruction Memory:
+address  : binary encoding                  : MIPS instruction
+0x400000 : 00000000010000110000100000100000 : add $1, $2, $3
+0x400004 : 00000000101000010010000000100010 : sub $4, $5, $1
+0x400008 : 00100000100001100000000010010100 : addi $6, $4, 148
+0x40000c : 00000001000001100011100000101010 : slt $7, $8, $6
+0x400010 : 10001101010000101111111111111100 : lw $2, -4($10)
+0x400014 : 10101101010001100000000000000100 : sw $6, 4($10)
+0x400018 : 00010000111010111111111111111001 : beq $7, $11, loop
+0x40001c : 00001000000100000000000000011011 : j end
+0x400020 : 00010000001000100000000001110111 : beq	$1, $2, 0x200
+0x400024 : 00010000001000100000011101110110 : beq	$1, $2, 0x1e00
+0x400028 : 00001000000100000000000000000011 : j	0x40000c
+0x40002c : 00000000100010000001100000100000 : add	$3, $4, $8
+0x400030 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400034 : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400038 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x40003c : 00000000010000110000100000101010 : slt	$1, $2, $3
+0x400040 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x400044 : 10101111010100010000000000001000 : sw      $17, 8($26)
+0x400048 : 00000000100010000001100000100000 : add	$3, $4, $8
+0x40004c : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400050 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400054 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x400058 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x40005c : 10101111010100010000000000001000 : sw  $17, 8($26)
+0x400060 : 00010000001000101111111111111010 : beq	$1, $2, 0x40004c   
+0x400064 : 00001000000100000000000000010101 : j	0x400054
+0x400068 : 00010000001000101111111111111001 : beq	$1, $2, label1
+0x40006c : 00100010010100010000000000000100 : addi $17, $18, 4
+
+Data Memory:
+address    : data
+0x10000000 : 0x58eed051
+0x10000004 : 0x305f7ea1
+0x10000008 : 0xfffffe00
+0x1000000c : 0xc57b54ba
+0x10000010 : 0x304
+0x10000014 : 0x1df23a4f
+0x10000018 : 0xb90037d6
+0x1000001c : 0x63322818
+0x10000020 : 0x10916273
+0x10000024 : 0x9de6153f
+0x10000028 : 0x81fb7b82
+0x1000002c : 0xce7d0a9b
+0x10000030 : 0x9cb2a11c
+0x10000034 : 0xddc6522
+0x10000038 : 0x604ca9a9
+0x1000003c : 0x488a6409
+0x10000040 : 0xaaa29086
+0x10000044 : 0x95ddcf94
+0x10000048 : 0x61d998ef
+0x1000004c : 0x8e9a6c56
+0x10000050 : 0x5a3e780f
+0x10000054 : 0xdaa25db0
+0x10000058 : 0xa031e83
+0x1000005c : 0x750773f2
+0x10000060 : 0x67745ce5
+0x10000064 : 0x1bbb31d
+0x10000068 : 0xd318c95a
+0x1000006c : 0xc3d19c71
+0x10000070 : 0x8c95e985
+
+------------------------------ Iteration 16 ------------------------------
+---------- PC ----------
+output: 0x40006c
+
+MIPS instruction at address 0x40006c: 
+	addi $17, $18, 4
+
+---------- Instruction Memory ----------
+input:
+	PCount = 0x40006c
+output:
+	opcode = 0x8
+	rs = 0x12
+	rt = 0x11
+	rd = 0x0
+	shamt = 0x0
+	funct = 0x4
+	immediate = 0x4
+	jumpAddress = 0x2510004
+
+---------- ALU 1 ----------
+inputs:
+	input 1 = 0x40006c
+	input 2 = 0x4
+	control = 0x2
+output:
+	result = 0x400070
+---------- Shift-left 1 ----------
+input:
+	0x2510004
+output:
+	0x9440010
+
+---------- Control ----------
+input: 
+	opcode = 0x8
+output: 
+	RegDst = 0x0
+	jump = 0x0
+	branch = 0x0
+	memRead = 0x0
+	memToReg = 0x1
+	ALUOp = 0x3
+	memWrite = 0x0
+	ALUSrc = 0x1
+	regWrite = 0x1
+
+---------- Multiplexer 1 ----------
+inputs: 
+	rt = 0x11
+	rd = 0x0
+	control = 0x0
+output:
+	result = 0x11
+
+---------- Registers (read) ----------
+inputs: 
+	Read register 1 = 0x12
+	Read register 2 = 0x11
+outputs:
+	Read data 1 = 0x61d998ef
+	Read data 2 = 0x95ddcf94
+
+---------- Signextend ----------
+input:
+	0x0004
+output:
+	0x00000004
+
+---------- Shift-left 2 ----------
+input:
+	0x4
+output:
+	0x10
+
+---------- ALU 2 ----------
+inputs:
+	input 1 = 0x400070
+	input 2 = 0x10
+	control = 0x2
+output:
+	result = 0x400080
+
+---------- Multiplexer 2 ----------
+inputs: 
+	read data 2 = 0x95ddcf94
+	signextended immediate = 0x4
+	control = 0x1
+output:
+	result = 0x4
+
+---------- ALU Control ----------
+inputs:
+	ALU opcode = 0x3
+	function = 0x4
+output:
+	ALU control = 0x2
+
+---------- ALU 3 ----------
+inputs:
+	input 1 = 0x61d998ef
+	input 2 = 0x4
+	control = 0x2
+output:
+	result = 0x61d998f3
+
+---------- Multiplexer 5 ----------
+inputs: 
+	PC + 4 = 0x400070
+	branch address = 0x400080
+	control = 0x0
+output:
+	result = 0x400070
+
+---------- Multiplexer 4 ----------
+inputs: 
+	MUX 5 result = 0x400070
+	jump address = 0x9440010
+	control = 0x0
+output:
+	result = 0x400070
+
+---------- Data Memory ----------
+inputs: 
+	address = 0x61d998f3
+	write data = 0x95ddcf94
+	memRead = 0x0
+	memWrite = 0x0
+output:
+	read data = 0xfffffe00
+
+---------- Multiplexer 3 ----------
+inputs: 
+	read data = 0xfffffe00
+	ALU 3 result = 0x61d998f3
+	control = 0x1
+output:
+	result = 0x61d998f3
+
+---------- Registers (write back) ----------
+inputs: 
+	write register = 0x11
+	write data = 0x61d998f3
+	regWrite = 0x1
+
+---------- PC ----------
+input: 0x400070
+
+---------- Print Memory Contents ----------
+Registers:
+0 : 0x58eed051
+1 : 0xfffffe1c
+2 : 0xfffffe00
+3 : 0x1c
+4 : 0x270
+5 : 0x8c
+6 : 0x304
+7 : 0x1
+8 : 0x12c
+9 : 0x9de6153f
+10 : 0x1000000c
+11 : 0x0
+12 : 0x9cb2a11c
+13 : 0xddc6522
+14 : 0x604ca9a9
+15 : 0x488a6409
+16 : 0xaaa29086
+17 : 0x61d998f3
+18 : 0x61d998ef
+19 : 0x8e9a6c56
+20 : 0x5a3e780f
+21 : 0xdaa25db0
+22 : 0xa031e83
+23 : 0x750773f2
+24 : 0x67745ce5
+25 : 0x9b0eae9d
+26 : 0x10000004
+27 : 0x10000020
+28 : 0x70e0b33a
+29 : 0x1b128e28
+30 : 0xea150cc4
+31 : 0x81e72593
+
+Instruction Memory:
+address  : binary encoding                  : MIPS instruction
+0x400000 : 00000000010000110000100000100000 : add $1, $2, $3
+0x400004 : 00000000101000010010000000100010 : sub $4, $5, $1
+0x400008 : 00100000100001100000000010010100 : addi $6, $4, 148
+0x40000c : 00000001000001100011100000101010 : slt $7, $8, $6
+0x400010 : 10001101010000101111111111111100 : lw $2, -4($10)
+0x400014 : 10101101010001100000000000000100 : sw $6, 4($10)
+0x400018 : 00010000111010111111111111111001 : beq $7, $11, loop
+0x40001c : 00001000000100000000000000011011 : j end
+0x400020 : 00010000001000100000000001110111 : beq	$1, $2, 0x200
+0x400024 : 00010000001000100000011101110110 : beq	$1, $2, 0x1e00
+0x400028 : 00001000000100000000000000000011 : j	0x40000c
+0x40002c : 00000000100010000001100000100000 : add	$3, $4, $8
+0x400030 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400034 : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400038 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x40003c : 00000000010000110000100000101010 : slt	$1, $2, $3
+0x400040 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x400044 : 10101111010100010000000000001000 : sw      $17, 8($26)
+0x400048 : 00000000100010000001100000100000 : add	$3, $4, $8
+0x40004c : 00000000011010010001000000100010 : sub	$2, $3, $9
+0x400050 : 00100000001000100000000001100100 : addi	$2, $1, 100
+0x400054 : 00000000010010100000100000101010 : slt	$1, $2, $10
+0x400058 : 10001111011000010000000000001100 : lw	$1, 12($27)
+0x40005c : 10101111010100010000000000001000 : sw  $17, 8($26)
+0x400060 : 00010000001000101111111111111010 : beq	$1, $2, 0x40004c   
+0x400064 : 00001000000100000000000000010101 : j	0x400054
+0x400068 : 00010000001000101111111111111001 : beq	$1, $2, label1
+0x40006c : 00100010010100010000000000000100 : addi $17, $18, 4
+
+Data Memory:
+address    : data
+0x10000000 : 0x58eed051
+0x10000004 : 0x305f7ea1
+0x10000008 : 0xfffffe00
+0x1000000c : 0xc57b54ba
+0x10000010 : 0x304
+0x10000014 : 0x1df23a4f
+0x10000018 : 0xb90037d6
+0x1000001c : 0x63322818
+0x10000020 : 0x10916273
+0x10000024 : 0x9de6153f
+0x10000028 : 0x81fb7b82
+0x1000002c : 0xce7d0a9b
+0x10000030 : 0x9cb2a11c
+0x10000034 : 0xddc6522
+0x10000038 : 0x604ca9a9
+0x1000003c : 0x488a6409
+0x10000040 : 0xaaa29086
+0x10000044 : 0x95ddcf94
+0x10000048 : 0x61d998ef
+0x1000004c : 0x8e9a6c56
+0x10000050 : 0x5a3e780f
+0x10000054 : 0xdaa25db0
+0x10000058 : 0xa031e83
+0x1000005c : 0x750773f2
+0x10000060 : 0x67745ce5
+0x10000064 : 0x1bbb31d
+0x10000068 : 0xd318c95a
+0x1000006c : 0xc3d19c71
+0x10000070 : 0x8c95e985
+
