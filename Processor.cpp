@@ -173,7 +173,6 @@ int main(int argc, char *argv[])
   int writeReg;
   RegisterFile *registers = new RegisterFile(register_file_input);
   SignExtendUnit *signExtend = new SignExtendUnit();
-  int signExtendedImm;
 
   // execute
   ShiftLeft *shiftLeftBranch = new ShiftLeft();
