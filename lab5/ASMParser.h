@@ -64,6 +64,7 @@ class ASMParser{
   bool isAlphaLower(char c)    { return (c >= 'a' && c <= 'z'); };
   bool isSign(char c)          { return (c == '-' || c == '+'); };
   bool isAlpha(char c)         {return (isAlphaUpper(c) || isAlphaLower(c)); };
+  bool isEmptyLine(string line);
 
   // Returns true if s represents a valid decimal integer
   bool isNumberString(string s);

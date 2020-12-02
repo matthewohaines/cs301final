@@ -69,6 +69,9 @@ int main(int argc, char *argv[])
     string param;
     string value;
     while(getline(in, line)){
+      // remove whitespace
+      line = removeWhitespace(line);
+
       // get rid of comments (could contain "=")
       string::size_type idx = line.find('#');
       if (idx != string::npos)
@@ -78,7 +81,7 @@ int main(int argc, char *argv[])
       string::size_type idx1 = line.find('=');
       if (idx1 != string::npos) {
         param = line.substr(0,idx1);
-        value = removeWhitespace(line.substr(idx1 + 1));
+        value = line.substr(idx1 + 1);
 
         // set the parameters
         if (param.find("program_input") != -1){
