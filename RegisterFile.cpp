@@ -17,7 +17,7 @@ string RegisterFile::removetheWhitespace(string str)
 
   // iterate through string, if we have a non-whitespace character, put it at
   // position count and increment count.
-  for (int i = 0; i < str.length(); i++)
+  for (size_t i = 0; i < str.length(); i++)
   {
     if (!isitWhitespace(str.at(i)))
     {
