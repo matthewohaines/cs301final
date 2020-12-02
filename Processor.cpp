@@ -28,7 +28,7 @@ string removeWhitespace(string str){
 
   // iterate through string, if we have a non-whitespace character, put it at
   // position count and increment count.
-  for (int i = 0; i < str.length(); i++){
+  for (size_t i = 0; i < str.length(); i++){
     if (!isWhitespace(str.at(i))){
       str.at(count++) = str.at(i);
     }
@@ -84,34 +84,34 @@ int main(int argc, char *argv[])
         value = line.substr(idx1 + 1);
 
         // set the parameters
-        if (param.find("program_input") != -1){
+        if (param.find("program_input") != string::npos){
           program_input = value;
         }
-        else if (param.find("memory_contents_input") != -1) {
+        else if (param.find("memory_contents_input") != string::npos) {
           memory_contents_input = value;
         }
-        else if (param.find("register_file_input") != -1) {
+        else if (param.find("register_file_input") != string::npos) {
           register_file_input = value;
         }
-        else if (param.find("output_mode") != -1) {
+        else if (param.find("output_mode") != string::npos) {
           output_mode = value;
         }
-        else if (param.find("debug_mode") != -1) {
+        else if (param.find("debug_mode") != string::npos) {
           if (value.compare("true") == 0)
             debug_mode = true;
           else if (value.compare("false") == 0)
             debug_mode = false;
         }
-        else if (param.find("print_memory_contents") != -1) {
+        else if (param.find("print_memory_contents") != string::npos) {
           if (value.compare("true") == 0)
             print_memory_contents = true;
           else if (value.compare("false") == 0)
             print_memory_contents = false;
         }
-        else if (param.find("output_file") != -1) {
+        else if (param.find("output_file") != string::npos) {
           output_file = value;
         }
-        else if (param.find("write_to_file") != -1) {
+        else if (param.find("write_to_file") != string::npos) {
           if (value.compare("true") == 0)
             write_to_file = true;
           else if (value.compare("false") == 0)
