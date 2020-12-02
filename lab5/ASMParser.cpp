@@ -36,12 +36,15 @@ ASMParser::ASMParser(string filename)
       if(!emptyLine){
         // looking for ":" to find labels
         string::size_type idx1 = line.find(':');
+        bool justLabel = false;
         if (idx1 != string::npos) {
           string label = line.substr(0,idx1);
+          justLabel = isEmptyLine(line.substr(idx1 + 1));
           // add label and its address to the symbolTable map
           symbolTable[label] = myAddress;
         }
-        myAddress += 4;
+        if (!justLabel) // if its just a label, we don't want to increment address
+          myAddress += 4;
       }
     }
   }
@@ -457,4 +460,16 @@ string ASMParser::encodeJTYPE(Instruction i, Opcode op)
     str += "00000100000000000000000000";
 
   return str;
+}
+
+bool ASMParser::isEmptyLine(string line){
+  bool emptyLine = true;
+  int size = line.length();
+  for (int i = 0; i < size; i ++){
+    if (!isWhitespace(line.at(i))){
+      emptyLine = false;
+      break;
+    }
+  }
+  return emptyLine;
 }

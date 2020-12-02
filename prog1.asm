@@ -19,7 +19,8 @@ wow:
 			beq $13, $14 wow
 
       #sw $30, 4($31)
-			j end
+  		j end
+#			j 0x400090
 
 beq	$1, $2, 0x200
 beq	$1, $2, 0x1e00
