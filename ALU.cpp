@@ -21,17 +21,17 @@ using namespace std;
 		if (operation == 6)
 		{
 			result =  subtract(term1, term2);
-		}
-
-		if (operation == 7)
-		{
-			result =  slt(term1, term2);
 			if (result == 0)
 			{
 				zero = 1;
 			}
 			else
 				zero = 0;
+		}
+
+		if (operation == 7)
+		{
+			result =  slt(term1, term2);
 		}
 
 		return;

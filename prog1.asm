@@ -1,52 +1,19 @@
-loop: add $1, $2, $3
-			sub $4, $5, $1
-			addi $6, $4, 148
-			slt $7, $8, $6
-			lw $2, -4($10)
-			sw $6, 4($10)
-			beq $7, $11, loop
-	#		j end
+add	$10, $8, $9        #Value in $10 shoud become 0x11
+add     $12, $11, $12	   #value in $12 should become 0x4
+sub     $14, $13, $14      #value in $14 should become -1 - 129 = -130 = 0xffffff7e
+sub     $30, $28, $29      #value in $30 should become 16 - (-1) = 17 = 0x11
+addi    $15, $15, 301      #value in $15 should become 301 + 301 = 602 = 0x25a
+slt     $16, $16, $0       #value in $16 should be set to 1, since origina value in $16 is negative
+slt     $17, $0, $0        #value in $17 should be set to 0, since 0 is not less than 0
+lw	$18, -8($19)       #address in $19 is 0x1000004c. Value written to $18 should be 0x12345678
+lw      $19, 0($19)        #value written to 19 should be 0x11223344
+j target1	
+add	$3, $4, $8         #never gets executed
+target2: addi $1, $1, -1   # $1 should get value 0xf
+beq $0, $20, target3	
+target1: sub $20, $0, $0   #$20 gets value 0
+j target2 
+target3: add $22, $0, $0   #$22 gets value 0
 
-			sw $0 -4($31)
-			add $13, $0, $0
-			add $30, $0, $0
-			addi $27, $31, 30
-wow:
-			addi $30, $30, 4
-			addi $31, $31, 4
-			sw $30, 0($31)
-			slt $14, $27, $31
-			beq $13, $14 wow
-
-      #sw $30, 4($31)
-  		j end
-#			j 0x400090
-
-beq	$1, $2, 0x200
-beq	$1, $2, 0x1e00
-j	0x40000c
-add	$3, $4, $8
-addi	$2, $1, 100
-sub	$2, $3, $9
-slt	$1, $2, $10
-slt	$1, $2, $3
-lw	$1, 12($27)
-sw      $17, 8($26)
-
-add	$3, $4, $8
-sub	$2, $3, $9
-label1: addi	$2, $1, 100
-slt	$1, $2, $10
-lw	$1, 12($27)
-sw  $17, 8($26)
-beq	$1, $2, 0x40004c   # at address 0x40004c
-j	0x400054
-
-beq	$1, $2, label1
-#lw $12, 700($4)
-
-end: addi $17, $18, 4
-
-# need to check branches to address before it and
-# negative imm values ex. -700($2) needs to be two's
-# compliment
+	
+	
