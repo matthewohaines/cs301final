@@ -479,6 +479,7 @@ int main(int argc, char *argv[])
     cout << hex << "\tcontrol = 0x" << aluControl->getALUControl() << endl;
     cout << "output:" << endl;
     cout << hex << "\tresult = 0x" << alu3->getALUResult() << endl;
+    cout << hex << "\tzero = 0x" << alu3->getZero() << endl;
     cout << endl;
 
     if (write_to_file == true) {
